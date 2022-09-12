@@ -53,6 +53,15 @@ module.exports.signUp = (req, res, next) => {
 
       .catch((error) => res.status(500).json({ error }));
   }
+  /* const { name, email, password } = req.body;
+
+    try {
+      const user = await UserModel.create({ name, email, password });
+      res.status(201).json({ user: user._id });
+    } catch (err) {
+      //  const errors = errors_signUp(err);
+      res.status(200).send(err);
+    } */
 };
 
 // http://localhost:3000/api/user/login

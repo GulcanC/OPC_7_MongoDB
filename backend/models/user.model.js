@@ -57,6 +57,13 @@ const userSchema = new mongoose.Schema(
 /* const uniqueValidator = require("mongoose-unique-validator");
 userSchema.plugin(uniqueValidator); */
 
+// bcrypt
+/* userSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+}); */
+
 // login compare user password with the password which in tha database
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
