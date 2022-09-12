@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minLength: 3,
-      maxLength: 55,
+      maxLength: 20,
       unique: true,
       trim: true,
     },
@@ -21,12 +21,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       validate: [isEmail],
       lowercase: true,
+      unique: true,
       trim: true,
     },
     password: {
       type: String,
       required: true,
-      max: 1024,
+      max: 6,
       minLength: 4,
     },
     picture: {
@@ -35,7 +36,7 @@ const userSchema = new mongoose.Schema(
     },
     bio: {
       type: String,
-      max: 1024,
+      max: 1000,
     },
     followers: {
       type: [String],
@@ -53,15 +54,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const uniqueValidator = require("mongoose-unique-validator");
-userSchema.plugin(uniqueValidator);
+/* const uniqueValidator = require("mongoose-unique-validator");
+userSchema.plugin(uniqueValidator); */
 
-// method "pre" before the save in the database hash the password
-/* userSchema.pre("save", function (next) {
-  const salt = bcrypt.genSalt();
-  this.password = bcrypt.hash(this.password, salt);
-  next();
-}); */
 // login compare user password with the password which in tha database
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
