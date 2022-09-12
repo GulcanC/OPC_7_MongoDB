@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 1024,
-      minLength: 6,
+      minLength: 4,
     },
     picture: {
       type: String,
@@ -53,14 +53,17 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+const uniqueValidator = require("mongoose-unique-validator");
+userSchema.plugin(uniqueValidator);
+
 // method "pre" before the save in the database hash the password
-userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
+userSchema.pre("save", function (next) {
+  const salt = bcrypt.genSalt();
+  this.password = bcrypt.hash(this.password, salt);
   next();
 });
-
-/* userSchema.statics.login = async function (email, password) {
+// login compare user password with the password which in tha database
+userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
@@ -70,7 +73,7 @@ userSchema.pre("save", async function (next) {
     throw Error("⛔️ Password is wrong!");
   }
   throw Error("⛔️ Email is wrong!");
-}; */
+};
 // in tha table its "users" pluriel, it always pluriels for tables
 // this "user" is "users" in the mongoDB
 const UserModel = mongoose.model("user", userSchema);
