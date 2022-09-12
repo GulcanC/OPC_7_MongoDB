@@ -4,9 +4,8 @@ const userController = require("../controllers/user.controller");
 
 //✅ AUTHENTIFICATION
 
-/* 
 // http://localhost:3000/api/user/logout
-router.get("/logout", authController.logout); */
+router.get("/logout", authController.logout);
 
 // http://localhost:3000/api/user/register
 router.post("/register", authController.signUp);

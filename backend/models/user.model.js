@@ -57,11 +57,11 @@ const uniqueValidator = require("mongoose-unique-validator");
 userSchema.plugin(uniqueValidator);
 
 // method "pre" before the save in the database hash the password
-userSchema.pre("save", function (next) {
+/* userSchema.pre("save", function (next) {
   const salt = bcrypt.genSalt();
   this.password = bcrypt.hash(this.password, salt);
   next();
-});
+}); */
 // login compare user password with the password which in tha database
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });

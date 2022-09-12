@@ -74,20 +74,10 @@ module.exports.login = async (req, res) => {
   }
 };
 
-// req.body.email, req.body.password
-/* const { email, password } = req.body;
-  try {
-    const user = await UserModel.login(email, password);
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge });
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    res.status(200).send({ err });
-  } */
-/*
 // http://localhost:3000/api/user/logout
 module.exports.logout = async (req, res) => {
-  console.log("😇 LOGOUT");
-  console.log(req.body);
+  console.log("🟢 Logout is succesfull! No cookies received from the server");
+  // 1 une milisecond
+  res.cookie("jwt", " ", { maxAge: 1 });
+  res.redirect("/");
 };
- */
