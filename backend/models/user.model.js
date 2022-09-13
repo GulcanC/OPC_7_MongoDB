@@ -11,8 +11,8 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minLength: 3,
-      maxLength: 20,
+      min: 3,
+      max: 20,
       unique: true,
       trim: true,
     },
@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      max: 6,
-      minLength: 4,
+      max: 4,
+      min: 4,
     },
     picture: {
       type: String,

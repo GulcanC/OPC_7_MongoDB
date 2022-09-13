@@ -48,20 +48,17 @@ module.exports.signUp = (req, res, next) => {
           .then(() =>
             res.status(201).json({ message: "🔅 User is created and saved!" })
           )
-          .catch(() => res.status(400).json({ error }));
+          .catch((error) =>
+            res
+              .status(200)
+              .send(
+                (message = "⛔️ Provide correct values! Check and try again!")
+              )
+          );
       })
 
       .catch((error) => res.status(500).json({ error }));
   }
-  /* const { name, email, password } = req.body;
-
-    try {
-      const user = await UserModel.create({ name, email, password });
-      res.status(201).json({ user: user._id });
-    } catch (err) {
-      //  const errors = errors_signUp(err);
-      res.status(200).send(err);
-    } */
 };
 
 // http://localhost:3000/api/user/login
@@ -77,9 +74,11 @@ module.exports.login = async (req, res) => {
     console.log(token);
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge });
-    res.status(200).json({ user: user._id });
+    res.status(201).json({ user: user._id });
   } catch (err) {
-    res.status(200).json(err);
+    res
+      .status(200)
+      .send((message = "⛔️ Wrong email or password! Check and try again!"));
   }
 };
 
