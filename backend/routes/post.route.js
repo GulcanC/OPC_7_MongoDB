@@ -6,6 +6,10 @@ const postController = require("../controllers/post.controller");
 router.post("/", postController.createPost);
 
 // get, read post GET
+// http://localhost:3000/api/post/:id
+router.get("/:id", postController.getOnePost);
+
+// get, read post GET
 // http://localhost:3000/api/post
 router.get("/", postController.getPost);
 

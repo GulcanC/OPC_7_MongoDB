@@ -1,4 +1,5 @@
 const PostModel = require("../models/post.model");
+const post = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const ObjectID = require("mongoose").Types.ObjectId;
 
@@ -9,6 +10,9 @@ module.exports.createPost = async (req, res) => {
     dislikes: 0,
     usersLiked: [" "],
     usersdisLiked: [" "],
+
+    // like:[],
+
     comment: [],
     postUserId: req.body.postUserId,
     message: req.body.message,
@@ -21,6 +25,22 @@ module.exports.createPost = async (req, res) => {
   } catch (err) {
     return res.status(400).send(err);
   }
+};
+
+// http://localhost:3000/api/post/:id
+module.exports.getOnePost = (req, res) => {
+  // verify that user id exists in the database, if not stop the function
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("⛔️ id is unknown : " + req.params.id);
+
+  PostModel.findById(req.params.id, (err, docs) => {
+    // docs is the data
+    if (!err) res.send(docs);
+    else {
+      console.log("⛔️ id is unknown : " + err);
+    }
+    // we will send all informations of the user except password
+  });
 };
 
 // http://localhost:3000/api/post
@@ -120,80 +140,72 @@ module.exports.likePost = (req, res) => {
 // http://localhost:3000/api/post/unlikePost/:id
 
 exports.likeDislike = (req, res, next) => {
-  // chercher l'objet dans la bdd et utiliser findOne() pour trouver l'id de l'objet
-  PostModel.findOne({ _id: req.params.id })
+  post
+    .findOne({ _id: req.params.id })
     .then((objectPost) => {
-      // rechercher userId dans le tableau userLiked, au début c'est faux, userLike ne contient pas userId, utiliser l'exclamation pour inverser que c'est true
-      // la requête front like doit etre 1
-      if (!objectPost.usersLiked.includes(req.body.id) && req.body.like === 1) {
+      post;
+      if (
+        !objectPost.usersLiked.includes(req.body.UserId) &&
+        req.body.like === 1
+      ) {
         console.log("LIKE = 1");
-        PostModel.updateOne(
-          { _id: req.params.id },
-          {
-            // Utiliser l'opérateur $inc MongoDB qui incrémente un champ d'une valeur spécifiée
-            $inc: { likes: 1 },
-            // L'opérateur $push MongoDB ajoute une valeur spécifiée à un tableau.
-            $push: { usersLiked: req.body.id },
-          }
-        )
-          .then(() => res.status(201).json({ message: "Sauce like +1" }))
+        post
+          .updateOne(
+            { _id: req.params.id },
+            {
+              $inc: { likes: 1 },
+              $push: { usersLiked: req.body.userId },
+            }
+          )
+          .then(() => res.status(201).json({ message: "Post like +1" }))
           .catch((error) => res.status(400).json({ error }));
-      }
-
-      // 2) like = 0 (likes = 0), Si like = 0, l'utilisateur annule son like
-      // Si le tableau userLiked contient le userId et like est 0, l'utilisateur annule son like
-      else if (
-        objectPost.usersLiked.includes(req.body.id) &&
+      } else if (
+        objectPost.usersLiked.includes(req.body.userId) &&
         req.body.like === 0
       ) {
         console.log("LIKE = 0");
-        PostModel.updateOne(
-          { _id: req.params.id },
-          {
-            // To obtain 0 likes should be -1, we will increase from -1
-            $inc: { likes: -1 },
-            // Si l'utilisateur avait déjà aimé la sauce et qu'il l'a changée, l'opérateur $pull supprimera l'userId du tableau usersLiked
-            $pull: { usersLiked: req.body.id },
-          }
-        )
+        post
+          .updateOne(
+            { _id: req.params.id },
+            {
+              $inc: { likes: -1 },
+              $pull: { usersLiked: req.body.id },
+            }
+          )
           .then(() =>
             res
               .status(201)
               .json({ message: "User like 0, user a annulé son like!" })
           )
           .catch((error) => res.status(400).json({ error }));
-      }
-
-      // 3) like -1 (dislikes +1), Si like = -1, l'utilisateur n'aime pas la sauce.
-      // I will search the userId in the array userDisliked in the object, at first it is false, userDisliked does not include userId, use ! to cenvert it true
-      else if (
-        !objectPost.usersDisliked.includes(req.body.id) &&
+      } else if (
+        !objectPost.usersDisliked.includes(req.body.userId) &&
         req.body.like === -1
       ) {
         console.log("DISLIKE = 1");
-        PostModel.updateOne(
-          { _id: req.params.id },
-          {
-            $inc: { dislikes: 1 },
-            $push: { usersDisliked: req.body.id },
-          }
-        )
+        post
+          .updateOne(
+            { _id: req.params.id },
+            {
+              $inc: { dislikes: 1 },
+              $push: { usersDisliked: req.body.id },
+            }
+          )
           .then(() => res.status(201).json({ message: "User disLike +1" }))
           .catch((error) => res.status(400).json({ error }));
-      }
-      // 4) like = 0 (dislikes 0) If the user cancel her dislike, we will see likes = 0, and we will remove the userId from the array userDisliked
-      else if (
-        objectPost.usersDisliked.includes(req.body.id) &&
+      } else if (
+        objectPost.usersDisliked.includes(req.body.userId) &&
         req.body.like === 0
       ) {
         console.log("DISLIKE = 0");
-        PostModel.updateOne(
-          { _id: req.params.id },
-          {
-            $inc: { dislikes: -1 },
-            $pull: { usersDisliked: req.body.id },
-          }
-        )
+        post
+          .updateOne(
+            { _id: req.params.id },
+            {
+              $inc: { dislikes: -1 },
+              $pull: { usersDisliked: req.body.id },
+            }
+          )
           .then(() =>
             res
               .status(201)
@@ -204,7 +216,7 @@ exports.likeDislike = (req, res, next) => {
     })
     .catch((error) => res.status(404).json({ error }));
 
-  console.log("💧 Like sauce 💧");
+  console.log("💧 Like post 💧");
   console.log(req.body); // la requete sera envoyé par le body
   console.log("_id =" + " " + req.params.id); // récupérer l'id de l'URL de la requête
   console.log(req.params); // récupérer l'id de l'URL de la requête
