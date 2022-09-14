@@ -31,3 +31,16 @@ app.use("/api/post", postRoutes);
 app.listen(process.env.PORT, () => {
   console.log(`✅ Listening on port ${process.env.PORT}`);
 });
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // tout le monde peut se connecter a notre API
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization" // On donne l'autorisation d'utiliser certains headers sur l'objet requête
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  ); // On donne l'autorisation d'utiliser certains methodes sur l'objet requête; get post put delete patch
+  next(); // permet de passer à la lecture des autres middlewares
+});

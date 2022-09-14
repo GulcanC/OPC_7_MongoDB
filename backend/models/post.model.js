@@ -16,10 +16,17 @@ const postSchema = new mongoose.Schema(
     video: {
       type: String,
     },
-    like: {
+    // "like" is a user who likes the post of the user "likes" comes from user.model.js
+    //likers
+    /*  like: {
       type: [String],
       required: true,
-    },
+    }, */
+
+    likes: { type: Number },
+    dislikes: { type: Number },
+    usersLiked: { type: [String] },
+    usersDisliked: { type: [String] },
     comment: {
       type: [
         {
@@ -33,7 +40,7 @@ const postSchema = new mongoose.Schema(
     },
   },
   {
-    timeStamp: true,
+    timestamps: true,
   }
 );
 

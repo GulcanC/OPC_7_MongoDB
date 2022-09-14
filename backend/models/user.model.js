@@ -8,6 +8,7 @@ const { isEmail } = require("validator");
 // unique, the same email can not be used
 const userSchema = new mongoose.Schema(
   {
+    // pseudo
     name: {
       type: String,
       required: true,
@@ -46,6 +47,7 @@ const userSchema = new mongoose.Schema(
     },
     likes: {
       type: [String],
+      required: true,
     },
   },
 
