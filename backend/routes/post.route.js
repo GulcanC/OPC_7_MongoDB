@@ -28,6 +28,12 @@ router.delete("/:id", postController.deletePost);
 // unlike post PATCH
 // http://localhost:3000/api/post/:id
 // router.patch("/unlikePost/:id/", postController.unlikePost);
-
 router.post("/:id/like", postController.likeDislike);
+
+// http://localhost:3000/api/post/commentPost/:id
+router.patch("/commentPost/:id", postController.commentPost);
+// http://localhost:3000/api/post/editCommentPost/:id
+router.patch("/editCommentPost/:id", postController.editCommentPost);
+// http://localhost:3000/api/post/deleteCommentPost/:id
+router.patch("/deleteCommentPost/:id", postController.deleteCommentPost);
 module.exports = router;

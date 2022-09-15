@@ -1,7 +1,7 @@
 const UserModel = require("../models/user.model");
 const ObjectID = require("mongoose").Types.ObjectId;
 
-// use request GET to get users
+// use request GET to get all users
 // http://localhost:3000/api/user
 module.exports.getAllUsers = async (req, res) => {
   // we do not want to send our password, all the informations are visibles sur postman except "password", for doing this use method select and this syntax
@@ -11,7 +11,7 @@ module.exports.getAllUsers = async (req, res) => {
 
 // use request GET to get a specific user
 // http://localhost:3000/api/user/:id
-module.exports.userInfo = (req, res) => {
+module.exports.getOneUser = (req, res) => {
   // verify that user id exists in the database, if not stop the function
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("⛔️ id is unknown : " + req.params.id);

@@ -12,23 +12,24 @@ const postSchema = new mongoose.Schema(
     },
     picture: {
       type: String,
+      default: " ",
     },
     video: {
       type: String,
     },
     // "like" is a user who likes the post of the user "likes" comes from user.model.js
     //likers
-    /*  like: {
-      type: [String],
-      required: true,
-    }, */
+    // like: {
+    // type: [String],
+    // required: true,
+    // },
 
     likes: { type: Number },
     dislikes: { type: Number },
     usersLiked: { type: [String] },
     usersDisliked: { type: [String] },
 
-    comment: {
+    comments: {
       type: [
         {
           commentUserId: String,

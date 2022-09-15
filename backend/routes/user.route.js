@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const authController = require("../controllers/auth.controller");
 const userController = require("../controllers/user.controller");
-
+/* const uploadController = require("../controllers/upload.controller");
+const multer = require("multer");
+const upload = multer();
+ */
 //✅ AUTHENTIFICATION
 
 // http://localhost:3000/api/user/logout
@@ -18,7 +21,7 @@ router.post("/login", authController.login);
 router.get("/", userController.getAllUsers);
 
 // http://localhost:3000/api/user/:id
-router.get("/:id", userController.userInfo);
+router.get("/:id", userController.getOneUser);
 
 // http://localhost:3000/api/user/:id
 router.put("/:id", userController.updateUser);
@@ -34,5 +37,9 @@ router.patch("/unfollow/:id", userController.unfollowUser);
 
 // http://localhost:3000/api/user/unfollow/:id
 router.patch("/unfollow/:id", userController.unfollowUser);
+
+//✅ multer IMAGE
+// http://localhost:3000/api/user/upload
+// router.post("/upload", upload.single("file"), uploadController.uploadProfil);
 
 module.exports = router;
