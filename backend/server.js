@@ -1,46 +1,59 @@
-// GROUPMANIA MONGOO
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const userRoutes = require("./routes/user.route");
-const postRoutes = require("./routes/post.route");
-const { checkUser, requireAuth } = require("./middleware/auth.middleware");
+const http = require("http");
 
-require("dotenv").config({ path: "./config/.env" });
-require("./config/db");
+const app = require("./app");
 
-const app = express();
+// s'assure que lorsque nous configurons un port et que nous le recevons via une variable d'environnement, il s'agit d'un nombre valide
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+const normalizePort = (originalPort) => {
+  // analyser  notre port et elle renvoie un entier
+  const port = parseInt(originalPort, 10);
 
-// jsonwebtoken
-app.get("*", checkUser);
+  // si le numero de port est illegal, il renvoie notre port d'origine
+  if (isNaN(port)) {
+    return originalPort;
+  }
+  // si le numero de port >= 0 , il renvoie le port que nous avons analysé
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+};
 
-// get token and user id, http://localhost:3000/jwtid
-app.get("/jwtid", requireAuth, (req, res) => {
-  res.status(200).send(res.locals.user._id);
-});
+// controler quelle type erreur s'est produite
+const errorHandler = (error) => {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+  const address = server.address();
+  const bind =
+    typeof address === "string" ? "pipe " + address : "port: " + port;
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges."); // l'autherisation d'acces refusée
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use."); // l'addresse déja utilisée
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
 
-//routes user, post
-app.use("/api/user", userRoutes);
-app.use("/api/post", postRoutes);
+// pour enregistrer que nous écoutons les requête entrantes
+const onListening = () => {
+  const address = server.address();
+  const bind = typeof address === "string" ? "pipe " + address : "port " + port;
+  console.log("✅ Listening on " + bind);
+};
 
-//server
-app.listen(process.env.PORT, () => {
-  console.log(`✅ Listening on port ${process.env.PORT}`);
-});
+// configurer le port, appeler la fonc, passer 3000 sous forme de chaîne
+const port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // tout le monde peut se connecter a notre API
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization" // On donne l'autorisation d'utiliser certains headers sur l'objet requête
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  ); // On donne l'autorisation d'utiliser certains methodes sur l'objet requête; get post put delete patch
-  next(); // permet de passer à la lecture des autres middlewares
-});
+// attacher le serveur pour l'erreur et pour l'ecouteur, demarrer le serveur
+const server = http.createServer(app);
+server.on("error", errorHandler);
+server.on("listening", onListening);
+server.listen(port);
