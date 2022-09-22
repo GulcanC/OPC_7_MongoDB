@@ -1,17 +1,23 @@
-//******* vérifier les tokens d'authentification de l'utilisateur
-
-//utilisation du package jsonwebtoken
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//logique
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1]; //récupère le token en splitant le header
-    const decodedToken = jwt.verify(token, process.env.JWT_KEY_TOKEN); //décode et vérifie si le token est valide
-    const userId = decodedToken.userId; //récupère userId du token décodé
+    // pour recuperer notre token nous recuperons le header et utilisons la methode split() pour diviser la chaine et obtenir la deuxime valeur separer par un espace
+    const token = req.headers.authorization.split(" ")[1];
+    console.log("🎉🎉🎉TOKEN🎉🎉🎉");
+    console.log(req.headers.authorization);
+
+    // maintenant nous avons le token il faut le decoder
+    // utiliser verify() pour recuperer l'id de l'utilisateur
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY_TOKEN);
+    console.log("🎉🎉🎉decodedToken🎉🎉🎉");
+    console.log(decodedToken);
+
+    // Verifier que le token est valide
+    const userId = decodedToken.userId;
     req.auth = {
-      userId: userId, //ajoute sa valeur à la req qui sera transmit aux routes ou middleware
+      userId: userId,
     };
 
     next();

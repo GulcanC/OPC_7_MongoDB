@@ -7,66 +7,71 @@ const fs = require("fs");
 
 require("dotenv").config();
 
-//permet de créer un user + utiliser le shéma de password et de crypter le mot de passe lors d'une inscription
+// http://localhost:3000/api/auth/signup
 exports.signup = (req, res, next) => {
+  console.log("🎉🎉🎉USER SIGNUP🎉🎉🎉");
+  console.log(req.body);
+
+  // check the password is valid ?
   if (!Password.validate(req.body.password)) {
-    // si le mot de passe n'est pas valide
     return res.status(400).json({
       message:
-        "Le mot de passe doit contenir au min 8 caractères, 1 majuscule et 1 chiffre",
+        "⛔️ Password must contain 1 uppercase letter, 1 lowercase letter, 1 special character and 1 digit!",
     });
   } else if (req.body.password != req.body.passwordConfirm) {
-    // si le mot de passe n'est pas le même
     return res.status(400).json({
-      message: "Les mots de passe ne sont pas identiques",
+      message: "⛔️ Password  is not correct!",
     });
   } else if (
     Password.validate(req.body.password) &&
     req.body.password === req.body.passwordConfirm
   ) {
-    // si le mot de passe est ok
+    // if the password is correct
     bcrypt
-      .hash(req.body.password, 10) //on appel bcrypt auquel on passe le mot de passe et on sel 10fois avec l'algo de hachage
+      .hash(req.body.password, 10)
       .then((hash) => {
-        //crée un nouvel user avec le model existant
+        // create a new user
         const user = new User({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          password: hash, //enregistre le mot de passe haché
+          password: hash,
           picture: "",
           description: "",
           admin: false,
         });
         user
-          .save() //enregistre dans la base de données le nouvel utilisateur
-          .then(() => res.status(201).json({ message: "Utilisateur créé !" })) //201 création de ressource
-          .catch((error) => res.status(400).json({ error })); //mauvaise requête
+          .save() // save the new user in the database
+          .then(() => res.status(201).json({ message: "✅ User created!" }))
+          .catch((error) => res.status(400).json({ error }));
       })
-      .catch((error) => res.status(500).json({ error })); //500 erreur serveur
+      .catch((error) => res.status(500).json({ error }));
   }
 };
-//permet à l'utilisateur de se connecter
+
+// http://localhost:3000/api/auth/login
 exports.login = (req, res, next) => {
+  console.log("🎉🎉🎉USER LOGIN🎉🎉🎉");
+  console.log(req.body);
+
+  // if email exist in the database, check the password
   User.findOne({ email: req.body.email })
     .then((user) => {
-      //vérifie si l'utilisateur existe
       if (user === null) {
         res
           .status(401)
-          .json({ message: "Identifiant/mot de passe incorrecte" });
+          .json({ message: "⛔️ Email and password do not match!" });
       } else {
-        //verifie si le mot de passe correspond avec le hash de la BDD grace à la méthode compare de bcrypt
+        // compare the password which is in the database and user password
         bcrypt
           .compare(req.body.password, user.password)
           .then((valid) => {
             if (!valid) {
               res
                 .status(401)
-                .json({ message: "Identifiant/mot de passe incorrecte" });
+                .json({ message: "⛔️ Email and password do not match" });
             } else {
               res.status(200).json({
-                //permet d'encoder un nouveau token avec méthode sign
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -76,8 +81,8 @@ exports.login = (req, res, next) => {
                 admin: user.admin,
                 token: jwt.sign(
                   { userId: user._id },
-                  process.env.JWT_KEY_TOKEN, //clé secrète
-                  { expiresIn: "24h" } //au dela de 24h le token ne sera plus valide, l'user devra se reconnecter
+                  process.env.JWT_KEY_TOKEN,
+                  { expiresIn: "24h" }
                 ),
               });
             }

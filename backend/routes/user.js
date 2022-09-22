@@ -1,14 +1,10 @@
-//Permet d'utiliser express + son middleware "router"
 const express = require("express");
 const router = express.Router();
 const multer = require("../middleware/multer-config");
 
-//associe controllers et routes
 const userControllers = require("../controllers/user");
-// récupère la fonction pour limiter les essais de mot de passe
-const limiter = require("../middleware/limiter");
 
-//créer les routes pour se créer/connecter un compte
+// http://localhost:3000/api/auth/signup
 router.post("/signup", userControllers.signup);
 router.post("/login", userControllers.login);
 router.post("/identify", userControllers.identifyUser);

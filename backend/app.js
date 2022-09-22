@@ -76,6 +76,7 @@ app.use(
   })
 );
 
+// http://localhost:3000/api
 app.use("/api/publication", publicationRoutes);
 app.use("/api/auth", userRoutes);
 

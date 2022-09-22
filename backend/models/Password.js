@@ -1,26 +1,25 @@
 //récupération du plugin password-validator qui permettra de renforcer le choix du mot de passe
 const passwordValidator = require("password-validator");
 
-
-// Creation du schema pour renforcer le password
+// npm install password-validator
 const passwordSchema = new passwordValidator();
 passwordSchema
   .is()
-  .min(8) // Minimum length 8
+  .min(4) // Minimum 4 characters
   .is()
-  .max(100) // Maximum length 100
+  .max(4) // Maximum 4 characters
   .has()
-  .uppercase(1) // Must have uppercase letters
+  .uppercase(1) // 1 uppercase letter
   .has()
-  .lowercase() // Must have lowercase letters
+  .lowercase(1) // 1 lowercase letters
   .has()
-  .digits(1) // Must have at least 1 digits
+  .digits(1) // 1 digit
+  .has()
+  .symbols(1) // 1 special character
   .has()
   .not()
-  .spaces() // Should not have spaces
+  .spaces()
   .is()
   .not()
-  .oneOf(["Passw0rd", "Password123"]); // Blacklist these values
-
-
+  .oneOf(["Passw0rd", "Password123"]);
 module.exports = passwordSchema;
