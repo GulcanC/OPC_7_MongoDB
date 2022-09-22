@@ -7,33 +7,33 @@
 </template>
 
 <script>
-  import HeaderComp from '@/components/HeaderComp.vue'
-  import FooterComp from './components/FooterComp.vue'
-  import axios from 'axios'
+import HeaderComp from "@/components/HeaderComp.vue";
+import FooterComp from "./components/FooterComp.vue";
+import axios from "axios";
 
-  export default {
-    components: {
-      FooterComp,
-      HeaderComp,
-    },
-    created() {
-      const token = localStorage.getItem('token')
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-      if (token) {
-        axios
-          .post('http://localhost:3000/api/auth//identify', {}, config)
-          .then((res) => {
-            console.log(res.data)
-            this.$store.commit('setUser', res.data)
-            this.$router.push('/actu')
-          })
-      } else if (!token) {
-        this.$router.push('/')
-      }
-    },
-  };
+export default {
+  components: {
+    FooterComp,
+    HeaderComp,
+  },
+  created() {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    if (token) {
+      axios
+        .post("http://localhost:3000/api/auth//identify", {}, config)
+        .then((res) => {
+          console.log(res.data);
+          this.$store.commit("setUser", res.data);
+          this.$router.push("/actu");
+        });
+    } else if (!token) {
+      this.$router.push("/");
+    }
+  },
+};
 </script>
 
 <style>
@@ -58,4 +58,3 @@
   border-color: var(--tertiary-color) !important;
 }
 </style>
-

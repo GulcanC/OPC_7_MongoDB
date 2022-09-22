@@ -97,7 +97,7 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-// http://localhost:3000/api/auth/updateUser/:id
+// http://localhost:3000/api/auth/:id
 exports.updateUser = (req, res, next) => {
   let imageUrl = null;
 
@@ -124,6 +124,9 @@ exports.updateUser = (req, res, next) => {
     .catch((err) => res.status(500).json({ msg: err }));
 };
 
+// findById(id) is almost equivalent to findOne({ _id: id }). If you want to query by a document's _id, use findById() instead of findOne()
+
+// http://localhost:3000/api/auth/:id
 exports.deleteUser = (req, res, next) => {
   User.findOne({ _id: req.params.id });
   try {
@@ -138,7 +141,7 @@ exports.deleteUser = (req, res, next) => {
   }
 };
 
-/* exports.identifyUser = (req, res) => {
+exports.identifyUser = (req, res) => {
   if (!req.headers.authorization) {
     res.status(403).json({
       message: "Il n'y a pas de headers d'authentification",
@@ -164,4 +167,4 @@ exports.deleteUser = (req, res, next) => {
       }
     });
   }
-}; */
+};

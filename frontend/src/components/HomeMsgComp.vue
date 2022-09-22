@@ -1,24 +1,30 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+  <h1>Welcome to your new business social network!</h1>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "HomeMsgComp",
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1{
-  margin: 60px
+<style>
+:root {
+  --primary-color: "#FD2D01";
+  --secondary-color: #ffd7d7;
+  --tertiary-color: "#4E5166";
 }
-h3 {
+
+* {
+  font-family: "CURSIVE";
+  background-image: ;
+}
+
+/* h3 {
   margin: 40px 0 0;
 }
 ul {
@@ -31,5 +37,5 @@ li {
 }
 a {
   color: #42b983;
-}
+} */
 </style>
