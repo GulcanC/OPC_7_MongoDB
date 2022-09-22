@@ -7,8 +7,9 @@ const userControllers = require("../controllers/user");
 // http://localhost:3000/api/auth/signup
 router.post("/signup", userControllers.signup);
 router.post("/login", userControllers.login);
-router.post("/identify", userControllers.identifyUser);
 router.put("/:id", multer, userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
 
 module.exports = router;
+
+// router.post("/identify", userControllers.identifyUser);

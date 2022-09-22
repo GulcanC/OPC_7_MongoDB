@@ -54,15 +54,16 @@ exports.login = (req, res, next) => {
   console.log("🎉🎉🎉USER LOGIN🎉🎉🎉");
   console.log(req.body);
 
-  // if email exist in the database, check the password
+  // check whether email exists in the database
   User.findOne({ email: req.body.email })
     .then((user) => {
+      // if the value is null, user does not exist in the database
       if (user === null) {
         res
           .status(401)
           .json({ message: "⛔️ Email and password do not match!" });
+        // if we have a value, compare the password which is in the database and user password
       } else {
-        // compare the password which is in the database and user password
         bcrypt
           .compare(req.body.password, user.password)
           .then((valid) => {
@@ -70,7 +71,9 @@ exports.login = (req, res, next) => {
               res
                 .status(401)
                 .json({ message: "⛔️ Email and password do not match" });
-            } else {
+            }
+            // if password is correct we have userId and token
+            else {
               res.status(200).json({
                 email: user.email,
                 firstName: user.firstName,
@@ -79,6 +82,7 @@ exports.login = (req, res, next) => {
                 description: user.description,
                 _id: user._id,
                 admin: user.admin,
+
                 token: jwt.sign(
                   { userId: user._id },
                   process.env.JWT_KEY_TOKEN,
@@ -93,8 +97,48 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//identifier l'utilisateur en fonction du token
-exports.identifyUser = (req, res) => {
+// http://localhost:3000/api/auth/updateUser/:id
+exports.updateUser = (req, res, next) => {
+  let imageUrl = null;
+
+  // vérifier qu'il y a une image a traiter
+  if (req.file) {
+    imageUrl = `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`;
+  }
+  // The $set operator replaces the value of a field with the specified value.
+  User.updateOne(
+    { _id: req.params.id },
+    {
+      $set: { picture: imageUrl, description: req.body.description },
+    }
+  )
+    .then(() => {
+      User.findById({ _id: req.params.id }).then((user) =>
+        res
+          .status(200)
+          .json({ picture: user.picture, description: user.description })
+      );
+    })
+    .catch((err) => res.status(500).json({ msg: err }));
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id });
+  try {
+    User.deleteOne({ _id: req.params.id })
+      .then(() => {
+        console.log("✅ User has been succesfully deleted!");
+        res.status(200);
+      })
+      .catch((error) => res.status(400).json(error));
+  } catch {
+    (error) => res.status(500).json(error);
+  }
+};
+
+/* exports.identifyUser = (req, res) => {
   if (!req.headers.authorization) {
     res.status(403).json({
       message: "Il n'y a pas de headers d'authentification",
@@ -120,43 +164,4 @@ exports.identifyUser = (req, res) => {
       }
     });
   }
-};
-
-exports.updateUser = (req, res, next) => {
-  let imageUrl = null;
-
-  // vérifier qu'il y a une image a traiter
-  if (req.file) {
-    imageUrl = `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`;
-  }
-  User.updateOne(
-    { _id: req.params.id },
-    {
-      $set: { picture: imageUrl, description: req.body.description },
-    }
-  )
-    .then(() => {
-      User.findById({ _id: req.params.id }).then((user) =>
-        res
-          .status(200)
-          .json({ picture: user.picture, description: user.description })
-      );
-    })
-    .catch((err) => res.status(500).json({ msg: err }));
-};
-
-exports.deleteUser = (req, res, next) => {
-  User.findOne({ _id: req.params.id });
-  try {
-    User.deleteOne({ _id: req.params.id })
-      .then(() => {
-        console.log("User supprimé");
-        res.status(200);
-      })
-      .catch((error) => res.status(400).json(error));
-  } catch {
-    (error) => res.status(500).json(error);
-  }
-};
+}; */
