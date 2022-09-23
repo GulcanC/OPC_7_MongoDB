@@ -7,25 +7,28 @@
     <div class="connection p-4">
       <router-link to="/signup"
         ><button type="button" class="btn-connection">
-          Signup
+          Sign up
         </button></router-link
       >
       <router-link to="/login"
         ><button type="button" class="btn-connection">
-          Login
+          Sign in
         </button></router-link
       >
     </div>
   </main>
+  <FooterComp />
 </template>
 
 <script>
 // @ is an alias to /src
 import HomeMsgComp from "@/components/HomeMsgComp.vue";
+import FooterComp from "@/components/FooterComp.vue";
 export default {
   name: "HomePage",
   components: {
     HomeMsgComp,
+    FooterComp,
   },
 };
 </script>

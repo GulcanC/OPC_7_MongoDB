@@ -13,7 +13,8 @@ export default {
   },
 };
 </script>
-<style scoped>
+
+<style>
 .home h1 {
   display: inline-block;
   background-image: linear-gradient(to right, #fd2d01, #4e5166);

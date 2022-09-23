@@ -4,7 +4,7 @@
     <form
       @submit.prevent="login"
       method="post"
-      aria-label="Formulaire de connexion"
+      aria-label="Sign in form"
       class="form-login"
     >
       <div class="form-group">
@@ -12,31 +12,30 @@
         <input
           type="email"
           id="email"
-          aria-label="email"
           placeholder="xxxx@xxxx.com"
-          v-model="user.email"
           class="form-control"
+          v-model="user.email"
         />
       </div>
+      <br />
       <div class="form-group">
         <label for="password">Password</label>
         <input
           type="password"
           id="password"
-          aria-label="Mot de passe"
           placeholder="Password"
-          v-model="user.password"
           class="form-control"
+          v-model="user.password"
         />
       </div>
-      <button role="button" class="btn-login" type="submit">Login</button>
+      <button role="button" class="btn-login" type="submit">Sign in</button>
     </form>
   </div>
   <p class="form-error-message">{{ errMsg }}</p>
   <div class="go-to-login">
-    <p>Already have an account?</p>
+    <p>If you have not registered yet, click!</p>
     <router-link to="/signup" class="go-to-login-button">
-      <p>Login &rarr;</p>
+      <p>Sign up &rarr;</p>
     </router-link>
   </div>
 </template>
@@ -74,7 +73,7 @@ export default {
               : error;
           } else {
             this.errMsg =
-              "Nous n'avons pas accès au serveur pour le moment, merci de réssayer plus tard.";
+              "⛔️ We don't have access to the server at the moment, please try again later.";
           }
         });
     },

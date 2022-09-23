@@ -2,13 +2,12 @@
   <div class="container-flex">
     <HeaderComp />
     <router-view />
-    <FooterComp />
   </div>
 </template>
 
 <script>
 import HeaderComp from "@/components/HeaderComp.vue";
-import FooterComp from "./components/FooterComp.vue";
+import FooterComp from "@/components/FooterComp.vue";
 import axios from "axios";
 
 export default {
@@ -51,15 +50,5 @@ export default {
   --primary-color: "#fd2d01";
   --secondary-color: #ffd7d7;
   --tertiary-color: "#4E5166";
-}
-
-.card {
-  border-color: transparent;
-  border-radius: 8px;
-}
-
-.btn-primary {
-  background-color: var(--tertiary-color) !important;
-  border-color: var(--tertiary-color) !important;
 }
 </style>

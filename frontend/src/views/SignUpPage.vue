@@ -17,6 +17,7 @@
           v-model="user.firstName"
         />
       </div>
+      <br />
 
       <div class="form-group">
         <label for="lastname">Last Name</label>
@@ -28,7 +29,7 @@
           v-model="user.lastName"
         />
       </div>
-
+      <br />
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -39,7 +40,7 @@
           class="form-control"
         />
       </div>
-
+      <br />
       <div class="form-group">
         <label for="password">Password</label>
         <input
@@ -50,7 +51,7 @@
           class="form-control"
         />
       </div>
-
+      <br />
       <div class="form-group">
         <label for="password">Confirm your Password</label>
         <input
@@ -63,13 +64,13 @@
       </div>
       <p class="form-error-message">{{ errMsg }}</p>
 
-      <button role="button" class="btn-login" type="submit">S'inscrire</button>
+      <button role="button" class="btn-login" type="submit">Sign up</button>
     </form>
   </div>
   <div class="go-to-login">
     <p>Already have an account?</p>
     <router-link to="/login" class="go-to-login-button">
-      <p>Login &rarr;</p>
+      <p>Sign in &rarr;</p>
     </router-link>
   </div>
 </template>
@@ -114,7 +115,7 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errMsg =
-            "Nous n'avons pas accès au serveur pour le moment, merci de réssayer plus tard.";
+            "⛔️ We don't have access to the server at the moment, please try again later.";
         });
     },
   },
@@ -124,13 +125,18 @@ export default {
 <style>
 .login {
   border-radius: 0.3rem;
-  background-color: #fd2d01;
-  color: black;
   font-size: 1rem;
   text-align: left;
-  padding: 0.9rem;
+  padding: 1.2rem;
   width: 25rem;
   margin: auto;
+}
+.form-group,
+.form-login,
+.form-group label,
+.btn-login,
+.form-error-message {
+  background-color: #4e5166;
 }
 
 .form-login {
@@ -139,18 +145,22 @@ export default {
   align-items: center;
 }
 .form-group label {
-  margin-top: 1rem;
+  margin: 0.5rem 0 0 0;
+  font-weight: bold;
 }
 
-.btn-login {
+.form-group label {
   color: white;
-  background-color: #fd2d01;
+}
+.btn-login {
   border: none;
   padding: 0.5rem;
   margin: 1rem;
   display: inline-block;
   transition: 0.1s ease-in-out;
   transition: all 0.2s;
+  border-radius: 1.2rem;
+  width: 6rem;
 }
 .btn-login:hover {
   background: #4e5166;
@@ -159,16 +169,19 @@ export default {
   transform: translateY(0.1rem);
 }
 
-.go-to-login-button {
+.go-to-login-button,
+.btn-login {
   color: #fd2d01;
+  font-weight: bold;
 }
 
-.go-to-login-button:hover {
+.go-to-login-button:hover,
+.btn-login {
   background-color: white;
   text-decoration: none;
-  color: #fd2d01;
 }
 .form-error-message {
   color: black;
+  margin: 1rem 0 0 0;
 }
 </style>
