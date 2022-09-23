@@ -1,41 +1,32 @@
 <template>
-  <h1>Welcome to your new business social network!</h1>
+  <div class="home">
+    <h1>Welcome to your new business social network!</h1>
+  </div>
 </template>
 
 <script>
 export default {
   name: "HomeMsgComp",
+  // addd your message as a props to be shown in the HomeView page
   props: {
-    msg: String,
+    message: String,
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-:root {
-  --primary-color: "#FD2D01";
-  --secondary-color: #ffd7d7;
-  --tertiary-color: "#4E5166";
-}
-
-* {
-  font-family: "CURSIVE";
-  background-image: ;
-}
-
-/* h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
+<style scoped>
+.home h1 {
   display: inline-block;
-  margin: 0 10px;
+  background-image: linear-gradient(to right, #fd2d01, #4e5166);
+  font-weight: bold;
+  background-clip: text;
+  -ms-background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  color: transparent;
+  letter-spacing: 0.2rem;
+  transition: all 0.2s;
 }
-a {
-  color: #42b983;
-} */
+.home h1:hover {
+  transform: skewY(2deg);
+}
 </style>

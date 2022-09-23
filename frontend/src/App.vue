@@ -37,15 +37,20 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "CURSIVE";
+  background-color: var(--secondary-color);
+}
 #app {
-  font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  --primary-color: #fd2d01;
+}
+
+:root {
+  --primary-color: "#fd2d01";
   --secondary-color: #ffd7d7;
-  --tertiary-color: #4e5166;
-  color: var(--tertiary-color);
+  --tertiary-color: "#4E5166";
 }
 
 .card {

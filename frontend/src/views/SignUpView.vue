@@ -1,11 +1,6 @@
 <template>
   <!---- S'inscrire ---->
   <div class="login">
-    <img
-      id="logo"
-      alt="Groupomania logo"
-      src="../assets/icon-left-font-monochrome-black.svg"
-    />
     <form
       @submit.prevent="signup"
       method="post"
@@ -13,60 +8,68 @@
       class="form-login"
     >
       <div class="form-group">
-        <label>First Name</label>
+        <label for="firstname">First Name</label>
         <input
           type="text"
+          id="firstname"
           class="form-control"
-          placeholder="👩🏻‍💼 First Name"
+          placeholder="First Name"
           v-model="user.firstName"
-          style="font-family: FontAwesome"
         />
       </div>
+
       <div class="form-group">
-        <label>Last Name</label>
+        <label for="lastname">Last Name</label>
         <input
           type="text"
+          id="lastname"
           class="form-control"
-          placeholder="👩🏻‍💼 Last Name"
+          placeholder="Last Name"
           v-model="user.lastName"
         />
       </div>
+
       <div class="form-group">
         <label for="email">Email</label>
         <input
           type="email"
           id="email"
-          placeholder="📧 xxxx@xxxx.com"
+          placeholder="xxxx@xxxx.com"
+          v-model="user.email"
           class="form-control"
         />
       </div>
+
       <div class="form-group">
-        <label for="password">Mot de passe</label>
+        <label for="password">Password</label>
         <input
           type="password"
           id="password"
-          placeholder="🔓 Password"
+          placeholder="Xx1-"
+          v-model="user.password"
           class="form-control"
         />
       </div>
+
       <div class="form-group">
-        <label for="password">Confirmer le mot de passe</label>
+        <label for="password">Confirm your Password</label>
         <input
           type="password"
           id="confirm-password"
-          placeholder="🔐 Confirm your password"
+          placeholder="Confirm your Password"
           v-model="user.passwordConfirm"
           class="form-control"
         />
       </div>
-      <p>{{ errMsg }}</p>
+      <p class="form-error-message">{{ errMsg }}</p>
+
       <button role="button" class="btn-login" type="submit">S'inscrire</button>
     </form>
   </div>
-  <div class="bloc-switch-connexion">
-    <router-link to="/login" class="switch-connexion">
-      Déjà un compte?<br />
-      Se connecter
+  <div class="go-to-login">
+    <p>Already have an account?</p>
+    <router-link to="/login" class="go-to-login-button">
+      <p>Login &rarr;</p>
     </router-link>
   </div>
 </template>
@@ -99,37 +102,10 @@ export default {
         !this.user.password ||
         !this.user.passwordConfirm
       ) {
-        this.errMsg = "Err! Remplissez tous les champs du formulaire";
-        return;
-      }
-      /* regex */
-      let regExpName = new RegExp(/^[a-zA-Z\s\'\-]{3,10}$/);
-      let regExpEmail = new RegExp(
-        /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
-      );
-      let regExpPassword = new RegExp(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{4}$/
-      ); ///((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,32})/^(?=.{8,100}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$__/^[a-zA-Z0-9]{8,100}$
-      /* véfifications */
-      if (!regExpName.test(this.user.firstName || this.user.lastName)) {
-        this.errMsg = "Format nom et/ou prénom incorrect";
-        return;
-      }
-      if (!regExpEmail.test(this.user.email)) {
         this.errMsg =
-          "L'email inscrit n'a pas le bon format (exemple@mail.com)";
+          "⛔️ Please fill in all the fields of the form and check your password.";
         return;
       }
-      if (!regExpPassword.test(this.user.password)) {
-        this.errMsg =
-          "Le mot de passe doit contenir entre 8 et 100 caractères + 1 maj + 1 chiffre";
-        return;
-      }
-      if (this.user.password !== this.user.passwordConfirm) {
-        this.errMsg = "Les mots de passe ne sont pas identiques";
-        return;
-      }
-      /*Se connecter*/
       const response = await axios
         .post("auth/signup", this.user)
         .then((response) => {
@@ -146,15 +122,14 @@ export default {
 </script>
 
 <style>
-:root {
-  --main-bg-color: brown;
-}
 .login {
-  border-radius: 15px;
-  background: #4e5166;
-  color: white;
-  padding: 20px;
-  width: 375px;
+  border-radius: 0.3rem;
+  background-color: #fd2d01;
+  color: black;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.9rem;
+  width: 25rem;
   margin: auto;
 }
 
@@ -163,32 +138,37 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
-.input-login {
-  border-radius: 5px;
-  border-color: white;
+.form-group label {
+  margin-top: 1rem;
 }
+
 .btn-login {
-  width: 65%;
-  transition: all 300ms ease-in-out;
   color: white;
-  background-color: var(--tertiary-color);
+  background-color: #fd2d01;
   border: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 0.5rem;
+  margin: 1rem;
+  display: inline-block;
+  transition: 0.1s ease-in-out;
+  transition: all 0.2s;
 }
 .btn-login:hover {
-  transform: scale(1.15);
+  background: #4e5166;
+  padding: 0.4rem;
+  border-bottom: none;
+  transform: translateY(0.1rem);
 }
 
-.bloc-switch-connexion {
-  margin-top: 30px;
-  margin-bottom: 40px;
+.go-to-login-button {
+  color: #fd2d01;
 }
-.switch-connexion {
-  color: var(--tertiary-color);
+
+.go-to-login-button:hover {
+  background-color: white;
+  text-decoration: none;
+  color: #fd2d01;
 }
-.switch-connexion:hover {
-  color: var(--tertiary-color);
+.form-error-message {
+  color: black;
 }
 </style>
