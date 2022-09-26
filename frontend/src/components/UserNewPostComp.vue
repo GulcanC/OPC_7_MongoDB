@@ -1,49 +1,50 @@
 <template>
-  <article class="card post card mb-4 shadow-sm">
+  <article class="card post-card mb-4 shadow-sm">
     <form
+      action=""
       @submit.prevent="createPost"
-      id="myForm"
       class="form-post p-2"
       name="myForm"
-      aria-label="Creta epost form"
+      id="myForm"
+      aria-label="Formulaire de création d'un post"
     >
       <div class="row">
         <div class="col-2">
           <ProfilPictureComp></ProfilPictureComp>
         </div>
         <div class="col-10">
-          <label for="postContent" class="new-post">New post</label>
+          <label class="new-post" for="postContent">Nouveau post</label>
 
           <div>
             <textarea
               name="post"
               id="floatingTextarea"
-              cols="30"
-              rows="10"
+              rows="2"
+              placeholder="Que voulez vous partager aujourd'hui?"
               class="form-control text-left"
-              placeholder="What do you want to share today?"
-              aria-label="fields for post message"
               v-model="post"
+              aria-label="champs pour le message du post"
             ></textarea>
 
             <div class="mb-5">
               <label for="formFile" class="form-label"
-                >Add an image below</label
+                >Ajoutez une image ci dessous</label
               >
               <input
-                @change="uploadFile"
                 :key="fileInputKey"
-                accept="image/*"
                 name="file"
-                type="file"
+                accept="image/*"
                 class="form-control"
+                type="file"
+                aria-label="Chargez une image"
+                @change="uploadFile"
                 id="formFile"
-                aria-label="Upload an image"
               />
             </div>
-            <p class="err-msg">{{ errorMessage }}</p>
-            <button class="btn-post" role="button" type="submit">
-              <fa icon="chack" />Publish
+            <p class="err-msg">{{ errMsg }}</p>
+            <button role="button" type="submit" class="btn-post">
+              <fa icon="check" />
+              Publier
             </button>
           </div>
         </div>
@@ -56,7 +57,6 @@
 import axios from "axios";
 
 import ProfilPictureComp from "./ProfilPictureComp.vue";
-
 export default {
   components: { ProfilPictureComp },
   name: "UserNewPostComp",
@@ -65,7 +65,7 @@ export default {
     return {
       post: "",
       file: "",
-      errorMessage: null,
+      errMsg: null,
       fileInputKey: 0,
     };
   },
@@ -76,14 +76,87 @@ export default {
     },
 
     createPost() {
+      /*Il faut qu'il y est quelque chose à poster*/
       if (!this.post && !this.file) {
-        this.errorMessage = "You have to publish a picture and a massage!";
+        this.errMsg = "Vous devez publier une image ou un texte!";
         return;
       }
 
+      /* on créé un objet formData qui va contenir les élements à poster*/
       let formData = new FormData();
       formData.append("post", this.post);
+      formData.append("file", this.file);
+      formData.append("userId", this.$store.state.user._id);
+      formData.append("authorImg", this.$store.state.user.picture);
+      formData.append(
+        "userName",
+        this.$store.state.user.firstName + " " + this.$store.state.user.lastName
+      );
+
+      /* envoi de l'objet formData via axios.post */
+      axios
+        .post("publication", formData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            this.$store.commit("ajouterPost", response.data.post);
+            this.post = "";
+            this.file = "";
+            this.fileInputKey++;
+            this.$emit("postCree", true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errMsg = error.response.data.message
+            ? error.response.data.message
+            : error;
+        });
     },
   },
 };
 </script>
+
+<style scoped>
+.card {
+  margin: auto;
+}
+
+.post-card {
+  border: none;
+}
+.form-post {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.btn-post {
+  border-radius: 15px;
+  background-color: var(--tertiary-color);
+  transition: all 300ms ease-in-out;
+  border: none;
+  padding: 5px 13px;
+  color: white;
+}
+.btn-post:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.1);
+}
+.err-msg {
+  color: var(--primary-color);
+  font-weight: 400;
+}
+@media (max-width: 768px) {
+  .new-post {
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+  .mb-5 {
+    margin-top: 1rem;
+    margin-bottom: 2rem !important;
+  }
+}
+</style>

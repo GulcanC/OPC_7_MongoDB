@@ -1,6 +1,5 @@
 <template>
   <div class="container-flex">
-    <HeaderComp />
     <router-view />
   </div>
 </template>
@@ -38,6 +37,7 @@ export default {
 <style>
 * {
   font-family: "CURSIVE";
+
   background-color: var(--secondary-color);
 }
 #app {
@@ -45,6 +45,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: var(--secondary-color);
+  font-size: normal;
 }
 
 :root {

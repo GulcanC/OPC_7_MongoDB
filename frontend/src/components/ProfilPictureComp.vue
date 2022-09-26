@@ -1,15 +1,15 @@
 <template>
   <div class="picture-user-container mx-auto">
     <img
-      v-if="$store.state.user.picture"
-      :src="store.state.user.picture"
-      alt="user profil picture"
       class="picture-user-profile shadow"
+      v-if="$store.state.user.picture"
+      :src="$store.state.user.picture"
+      alt="image de profil"
     />
     <img
       v-else
       src="../assets/avatar.png"
-      alt="default profil picture"
+      alt="image de profil par défaut"
       class="picture-user-profile shadow"
     />
   </div>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "ProfilPictureComp",
+  name: "AvatarCompo",
 };
 </script>
 

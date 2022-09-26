@@ -1,82 +1,85 @@
 <template>
-  <!---- S'inscrire ---->
-  <div class="login">
-    <form
-      @submit.prevent="signup"
-      method="post"
-      aria-label="Signup Form"
-      class="form-login"
-    >
-      <div class="form-group">
-        <label for="firstname">First Name</label>
-        <input
-          type="text"
-          id="firstname"
-          class="form-control"
-          placeholder="First Name"
-          v-model="user.firstName"
-        />
-      </div>
-      <br />
+  <div>
+    <HeaderComp />
+    <div class="login">
+      <form
+        @submit.prevent="signup"
+        method="post"
+        aria-label="Signup Form"
+        class="form-login"
+      >
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input
+            type="text"
+            id="firstname"
+            class="form-control"
+            placeholder="First Name"
+            v-model="user.firstName"
+          />
+        </div>
+        <br />
 
-      <div class="form-group">
-        <label for="lastname">Last Name</label>
-        <input
-          type="text"
-          id="lastname"
-          class="form-control"
-          placeholder="Last Name"
-          v-model="user.lastName"
-        />
-      </div>
-      <br />
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="xxxx@xxxx.com"
-          v-model="user.email"
-          class="form-control"
-        />
-      </div>
-      <br />
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Xx1-"
-          v-model="user.password"
-          class="form-control"
-        />
-      </div>
-      <br />
-      <div class="form-group">
-        <label for="password">Confirm your Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="Confirm your Password"
-          v-model="user.passwordConfirm"
-          class="form-control"
-        />
-      </div>
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <input
+            type="text"
+            id="lastname"
+            class="form-control"
+            placeholder="Last Name"
+            v-model="user.lastName"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="xxxx@xxxx.com"
+            v-model="user.email"
+            class="form-control"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Xx1-"
+            v-model="user.password"
+            class="form-control"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="password">Confirm your Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="Confirm your Password"
+            v-model="user.passwordConfirm"
+            class="form-control"
+          />
+        </div>
 
-      <button role="button" class="btn-login" type="submit">Sign up</button>
-      <p class="form-error-message">{{ errorMessage }}</p>
-    </form>
-  </div>
-  <div class="go-to-login">
-    <p>Already have an account?</p>
-    <router-link to="/login" class="go-to-login-button">
-      <p>Sign in &rarr;</p>
-    </router-link>
+        <button role="button" class="btn-login" type="submit">Sign up</button>
+        <p class="form-error-message">{{ errorMessage }}</p>
+      </form>
+    </div>
+    <div class="go-to-login">
+      <p>Already have an account?</p>
+      <router-link to="/login" class="go-to-login-button">
+        <p>Sign in &rarr;</p>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import HeaderComp from "@/components/HeaderComp.vue";
 
 export default {
   name: "Signup",
@@ -92,7 +95,7 @@ export default {
       errorMessage: null,
     };
   },
-  components: {},
+  components: { HeaderComp },
   methods: {
     async signup() {
       /* vérifie si tous les champs sont bien remplis */

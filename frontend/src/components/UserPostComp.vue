@@ -3,128 +3,129 @@
     <div class="post-user">
       <figure
         class="post-user-info"
-        aria-label="information about the owner of the post"
+        aria-label="informations de l'utilisateur qui à publié"
       >
         <div class="picture-user-container mx-auto mt-1 ms-4">
           <img
+            class="picture-user-profile shadow"
             v-if="post.authorImg"
             :src="post.authorImg"
-            alt="profil picture"
-            class="picture-user-profil shadow"
+            alt="image de profil"
           />
-
           <img
             v-else
             src="../assets/avatar.png"
-            alt="default profil picture"
-            class="picture-user-profil shadow"
+            alt="image de profil par défaut"
+            class="picture-user-profile shadow"
           />
         </div>
 
-        <figcaption aria-label="user name and date of the post">
+        <figcaption aria-label="Nom de l'utilisateur et date de publication">
           {{ post.userName }} <br />
-          <span class="date">{{ timestamp }}</span>
+          <span class="date"> {{ timestamp }} </span>
         </figcaption>
       </figure>
-
       <div class="modif">
         <button
-          @click="ShowModalPost = true"
-          v-if="post.userId == user.userId || user.admin == true"
           role="button"
+          aria-label="Modifier ma publication"
+          v-if="post.userId == user.userId || user.admin == true"
           type="button"
           class="btn btn-primary"
-          aria-label="update the post"
+          @click="showModalPost = true"
         >
-          <fa icon="pencil" alt="icon" />
+          <fa icon="pencil" alt="image d'un crayon" />
         </button>
 
         <transition name="modalFade">
-          <update-post-modal-comp
+          <UpdatePostModalComp
             v-if="showModalPost"
-            @closeModal="showModalPost = false"
-            title="Update the post"
+            title="Modifiez votre publication"
+            @fermeLeModal="showModalPost = false"
           >
-            <h2>Update your post and profil picture</h2>
-
+            <h2>Modifier votre message et/ou votre image</h2>
             <form
               @submit.prevent="UpdatePost"
               style="text-align: left"
-              aria-label="Edit post fields"
+              aria-label="modification des champs du post"
             >
               <div class="mb-3">
                 <div class="form-floating">
                   <textarea
+                    aria-label="champs de modification du message"
                     class="form-control text-left"
+                    placeholder="ajoutez vos modifications"
                     id="floatingTextarea"
-                    name="textarea"
-                    placeholder="Add your modifications"
-                    cols="30"
-                    rows="10"
                     v-model="newPost.post"
                   ></textarea>
-
-                  <label for="floatingTextarea">Change or add a message</label>
+                  <label for="floatingTextarea"
+                    >Changez ou ajoutez un message</label
+                  >
                 </div>
               </div>
               <div class="mb-5">
                 <label for="formFile" class="form-label"
-                  >Change or add a message</label
+                  >Changez ou ajoutez une image</label
                 >
                 <input
-                  @change="uploadFile"
                   accept="image/*"
-                  type="file"
                   class="form-control"
+                  type="file"
+                  aria-label="changer l'image"
+                  @change="uploadFile"
                   id="formFile"
-                  aria-label="change picture"
                 />
               </div>
-
               <div class="d-flex justify-content-between">
                 <button
-                  @click="deletePost"
-                  class="btn btn-danger"
                   role="button"
                   type="button"
-                  aria-label="delete the post"
+                  aria-label="Supprimer la publication"
+                  class="btn btn-danger"
+                  @click="deletePost"
                 >
-                  <fa icon="trash-alt" class="me-2" alt="icon" />Delete the post
+                  <fa
+                    icon="trash-alt"
+                    class="me-2"
+                    alt="image d'une poubelle"
+                  />
+                  Supprimer ma publication
                 </button>
 
                 <button
-                  class="btn btn-primary"
                   role="button"
+                  aria-label="Enregistrer les modifications"
                   type="submit"
-                  aria-label="Save the modifications"
+                  class="btn btn-primary"
                 >
-                  Save the modifications
+                  Enregistrer les modifications
                 </button>
               </div>
-              <p>{{ errorMessage }}</p>
+
+              <p>{{ errMsg }}</p>
             </form>
-          </update-post-modal-comp>
+          </UpdatePostModalComp>
         </transition>
       </div>
     </div>
 
     <div class="post-content">
       <p>{{ post.post }}</p>
-      <div v-if="post.imageUrl != null" class="post-content--img">
-        <img :src="post.imageUrl" alt="post picture" />
+      <div class="post-content--img" v-if="post.imageUrl != null">
+        <img :src="post.imageUrl" alt="image du post" />
       </div>
     </div>
 
     <div class="like">
       <button
-        @click="likeIt()"
-        class="btn like-button"
         type="button"
         role="button"
-        aria-label="like"
+        aria-label="ajouter un like à ce post"
+        class="btn like-btn"
+        @click="likeIt()"
       >
-        <span class="badge" aria-label="like"> {{ post.likes }}</span>
-        <fa icon="heart" alt="image" />
+        <span aria-label="nombre de like" class="badge">{{ post.likes }}</span>
+        <fa icon="heart" alt="image de coeur" />
       </button>
     </div>
   </article>
@@ -132,11 +133,13 @@
 
 <script>
 import axios from "axios";
-import UpdatePostModalComp from ".UpdatePostModalComp.vue";
+import UpdatePostModalComp from "./UpdatePostModalComp.vue";
 
 export default {
   name: "UserPostComp",
-  components: { UpdatePostModalComp },
+  components: {
+    UpdatePostModalComp,
+  },
 
   data() {
     return {
@@ -151,7 +154,7 @@ export default {
         userId: this.$store.state.user._id,
       },
       timestamp: "",
-      errorMessage: "",
+      errMsg: "",
     };
   },
   created() {
@@ -163,8 +166,8 @@ export default {
       required: true,
     },
   },
-
   methods: {
+    //afficher la date sur le post
     getNow: function () {
       const today = new Date();
       const date =
@@ -176,10 +179,12 @@ export default {
       this.timestamp = date;
     },
 
+    /*Choisir une nouvelle image*/
     uploadFile(event) {
       this.newPost.image = event.target.files[0];
     },
 
+    /* Modifier et envoyer le nouveau post */
     UpdatePost() {
       const token = localStorage.getItem("token");
       let formData = new FormData();
@@ -190,22 +195,24 @@ export default {
         formData.append("file", this.newPost.image);
       }
       let id = this.post._id;
+
       axios
         .put(`publication/${id}`, formData, {
           headers: {
             Authorization: "Bearer " + token,
           },
         })
-        .then((response) => {
+        .then((res) => {
           this.$store.commit("updatePost", res.data.post);
           this.showModalPost = false;
         })
         .catch((error) => {
           console.log(error);
-          this.errorMessage =
-            "You cannot edit your post at this time, please try again later.";
+          this.errMsg =
+            "Vous ne pouvez pas modifier votre publication pour le moment, veuillez réessayer plus tard.";
         });
     },
+    /* Supprimer le post */
 
     deletePost() {
       const token = localStorage.getItem("token");
@@ -216,16 +223,17 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log("response du delete", response.data);
           if (response.data.delPost.acknowledged) {
+            //appel la fonction pour remettre l'ensemble des post
             this.$store.dispatch("getAllPosts");
           }
           this.showModalPost = false;
         })
         .catch((error) => {
           console.log(error);
-          this.errorMessage =
-            "You cannot delete your post at this time, please try again later.";
+          this.errMsg =
+            "Vous ne pouvez pas supprimer votre publication pour le moment, veuillez réessayer plus tard.";
         });
     },
 
@@ -251,6 +259,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .post-card {
   border: none;

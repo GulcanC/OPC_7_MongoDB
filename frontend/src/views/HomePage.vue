@@ -1,32 +1,37 @@
 <template>
-  <!---- Page de connexion ---->
-  <main class="home">
-    <h1>
-      <HomeMsgComp>{{ message }}</HomeMsgComp>
-    </h1>
-    <div class="connection p-4">
-      <router-link to="/signup"
-        ><button type="button" class="btn-connection">
-          Sign up
-        </button></router-link
-      >
-      <router-link to="/login"
-        ><button type="button" class="btn-connection">
-          Sign in
-        </button></router-link
-      >
-    </div>
-  </main>
-  <FooterComp />
+  <div>
+    <HeaderComp />
+    <main class="home">
+      <h1>
+        <HomeMsgComp>{{ message }}</HomeMsgComp>
+      </h1>
+      <div class="connection p-4">
+        <router-link to="/signup"
+          ><button type="button" class="btn-connection">
+            Sign up
+          </button></router-link
+        >
+        <router-link to="/login"
+          ><button type="button" class="btn-connection">
+            Sign in
+          </button></router-link
+        >
+      </div>
+    </main>
+    <FooterComp />
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import HeaderComp from "@/components/HeaderComp.vue";
 import HomeMsgComp from "@/components/HomeMsgComp.vue";
 import FooterComp from "@/components/FooterComp.vue";
+
 export default {
   name: "HomePage",
   components: {
+    HeaderComp,
     HomeMsgComp,
     FooterComp,
   },
@@ -81,8 +86,7 @@ export default {
   color: white;
 }
 
-@media (max-width: 992px) {
-  .connection {
-  }
-}
+/* @media (max-width: 992px) {
+  
+} */
 </style>

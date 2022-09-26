@@ -22,10 +22,26 @@ footer p {
   margin: 1.7rem;
   background: transparent;
   color: white;
-  font-size: large;
+  font-size: 1rem;
   transition: all 0.2s;
 }
 footer p:hover {
   color: #ffd7d7;
 }
+
+/* @media (max-width: 992px) {
+  footer {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 398px) {
+  footer {
+    background-color: #4e5166;
+    width: 120%;
+    height: auto;
+    position: absolute;
+    text-align: center;
+  }
+} */
 </style>

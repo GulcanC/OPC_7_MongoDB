@@ -6,34 +6,33 @@
     aria-labelledby="modalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" role="Update the post">
+    <div class="modal-dialog" role="Modifier la publication">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">{{ title }}</h5>
           <button
-            @click="$emit('closeModal')"
-            class="close btn"
             role="button"
             type="button"
-            aria-label="close"
+            class="close btn"
+            aria-label="Close"
+            @click="$emit('fermeLeModal')"
           >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <div class="modal-body">
           <slot></slot>
         </div>
         <div class="modal-footer">
           <button
-            @click="$emit('closeModal')"
-            class="btn btn-secondary"
             role="button"
+            aria-label="annuler les modifications"
             type="button"
-            aria-label="cancel changes"
+            class="btn btn-secondary"
             data-dismiss="modal"
+            @click="$emit('fermeLeModal')"
           >
-            Cancel
+            Annuler
           </button>
         </div>
       </div>
