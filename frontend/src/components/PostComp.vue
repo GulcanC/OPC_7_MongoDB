@@ -1,4 +1,4 @@
-<!-- <template>
+ <template>
 
   <article class="post-card p-2 mb-4 shadow-sm">
     <div class="post-user">
@@ -378,4 +378,4 @@ figcaption {
   }
 }
 </style>
- -->
+

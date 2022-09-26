@@ -1,16 +1,16 @@
 <template>
-  <div class="profil-picture-container">
+  <div class="picture-user-container mx-auto">
     <img
       v-if="$store.state.user.picture"
       :src="store.state.user.picture"
       alt="user profil picture"
-      class="profil-picture-user"
+      class="picture-user-profile shadow"
     />
     <img
       v-else
       src="../assets/avatar.png"
       alt="default profil picture"
-      class="profil-picture-user"
+      class="picture-user-profile shadow"
     />
   </div>
 </template>
@@ -21,14 +21,23 @@ export default {
 };
 </script>
 
-<style>
-.profil-picture-user {
-  width: 3rem;
-  height: 3rem;
+<style scoped>
+.picture-user-container {
+  width: 78px;
+  margin-top: 10px;
+}
+.picture-user-profile {
   border-radius: 50%;
+  padding: 0;
+  height: 78px;
   object-fit: cover;
 }
-
 @media (max-width: 768px) {
+  .picture-user-container {
+    width: 65px !important;
+  }
+  .picture-user-profile {
+    height: 70px;
+  }
 }
 </style>

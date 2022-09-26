@@ -6,33 +6,34 @@
     aria-labelledby="modalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" role="Modifier la publication">
+    <div class="modal-dialog" role="Update the post">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">{{ title }}</h5>
           <button
+            @click="$emit('closeModal')"
+            class="close btn"
             role="button"
             type="button"
-            class="close btn"
-            aria-label="Close"
-            @click="$emit('fermeLeModal')"
+            aria-label="close"
           >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body">
           <slot></slot>
         </div>
         <div class="modal-footer">
           <button
-            role="button"
-            aria-label="annuler les modifications"
-            type="button"
+            @click="$emit('closeModal')"
             class="btn btn-secondary"
+            role="button"
+            type="button"
+            aria-label="cancel changes"
             data-dismiss="modal"
-            @click="$emit('fermeLeModal')"
           >
-            Annuler
+            Cancel
           </button>
         </div>
       </div>
@@ -42,7 +43,7 @@
 
 <script>
 export default {
-  name: "ModalUpdatePostComp",
+  name: "UpdatePostModalComp",
   props: ["title"],
 };
 </script>
