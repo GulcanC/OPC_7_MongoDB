@@ -71,12 +71,71 @@
                 <label for="formFile" class="form-label"
                   >Change or add a message</label
                 >
-                <input type="file" class="form-control" id="formFile" />
+                <input
+                  @change="uploadFile"
+                  accept="image/*"
+                  type="file"
+                  class="form-control"
+                  id="formFile"
+                  aria-label="change picture"
+                />
               </div>
+
+              <div class="d-flex justify-content-between">
+                <button
+                  @click="deletePost"
+                  class="btn btn-danger"
+                  role="button"
+                  type="button"
+                  aria-label="delete the post"
+                >
+                  <fa icon="trash-alt" class="me-2" alt="icon" />Delete the post
+                </button>
+
+                <button
+                  class="btn btn-primary"
+                  role="button"
+                  type="submit"
+                  aria-label="Save the modifications"
+                >
+                  Save the modifications
+                </button>
+              </div>
+              <p>{{ errorMessage }}</p>
             </form>
           </UpdatePostModalComp>
         </transition>
       </div>
     </div>
+
+    <div class="post-content">
+      <p>{{ post.post }}</p>
+      <div v-if="post.imageUrl != null" class="post-content--img">
+        <img :src="post.imageUrl" alt="post picture" />
+      </div>
+    </div>
+
+    <div class="like">
+      <button
+        @click="likeIt()"
+        class="btn like-button"
+        type="button"
+        role="button"
+        aria-label="like"
+      >
+        <span class="badge" aria-label="like"> {{ post.likes }}</span>
+        <fa icon="heart" alt="image" />
+      </button>
+    </div>
   </article>
 </template>
+
+<script>
+import axios from "axios";
+import UpdatePostModalComp from "./UpdatePostModalComp.vue";
+
+export default {
+  name: "UserPostComp",
+  components: "UpdatePostModalComp",
+};
+</script>
