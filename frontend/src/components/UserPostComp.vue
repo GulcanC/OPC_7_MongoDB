@@ -40,7 +40,7 @@
         </button>
 
         <transition name="modalFade">
-          <UpdatePostModalComp
+          <update-post-modal-comp
             v-if="showModalPost"
             @closeModal="showModalPost = false"
             title="Update the post"
@@ -103,7 +103,7 @@
               </div>
               <p>{{ errorMessage }}</p>
             </form>
-          </UpdatePostModalComp>
+          </update-post-modal-comp>
         </transition>
       </div>
     </div>
@@ -132,10 +132,113 @@
 
 <script>
 import axios from "axios";
-import UpdatePostModalComp from "./UpdatePostModalComp.vue";
+import UpdatePostModalComp from ".UpdatePostModalComp.vue";
 
 export default {
   name: "UserPostComp",
-  components: "UpdatePostModalComp",
+  components: { UpdatePostModalComp },
+
+  data() {
+    return {
+      publications: [],
+      showModalPost: false,
+      newPost: {
+        post: "",
+        image: "",
+      },
+      user: {
+        admin: this.$store.state.user.admin,
+        userId: this.$store.state.user._id,
+      },
+      timestamp: "",
+      errorMessage: "",
+    };
+  },
+  created() {
+    setInterval(this.getNow, 1000);
+  },
+  props: {
+    post: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  methods: {
+    getNow: function () {
+      const today = new Date();
+      const date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      this.timestamp = date;
+    },
+
+    uploadFile(event) {
+      this.newPost.image = event.target.files[0];
+    },
+
+    UpdatePost() {
+      const token = localStorage.getItem("token");
+      let formData = new FormData();
+      formData.append("post", this.newPost.post);
+      formData.append("id", this.post._id);
+
+      if (this.newPost.image != "") {
+        formData.append("file", this.newPost.image);
+      }
+      let id = this.post._id;
+      axios
+        .put(`publication/${id}`, formData, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+        .then((response) => {
+          this.$store.commit("updatePost", res.data.post);
+          this.showModalPost = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errorMessage =
+            "You cannot edit your post at this time, please try again later.";
+        });
+    },
+
+    deletePost() {
+      const token = localStorage.getItem("token");
+      axios
+        .delete("publication/" + this.post._id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.delPost.acknowledged) {
+            this.$store.dispatch("getAllPosts");
+          }
+          this.showModalPost = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errorMessage =
+            "You cannot delete your post at this time, please try again later.";
+        });
+    },
+
+    likeIt() {
+      const userId = this.$store.state.user._id;
+      const likeData = {
+        userId,
+        postId: this.post._id,
+        like: 1,
+      };
+
+      axios.post;
+    },
+  },
 };
 </script>

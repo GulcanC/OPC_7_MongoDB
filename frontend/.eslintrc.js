@@ -1,5 +1,8 @@
-/* module.exports = {
+module.exports = {
   root: true,
+
+  // to solve the problem : "Parsing Error The keyword import is reserve" add =>  parser: "babel-eslint"
+  parser: "babel-eslint",
   env: {
     node: true,
   },
@@ -12,4 +15,3 @@
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
   },
 };
- */
