@@ -29,9 +29,10 @@
         />
       </div>
       <button role="button" class="btn-login" type="submit">Sign in</button>
+      <p class="form-error-message">{{ errorMessage }}</p>
     </form>
   </div>
-  <p class="form-error-message">{{ errMsg }}</p>
+
   <div class="go-to-login">
     <p>If you have not registered yet, click!</p>
     <router-link to="/signup" class="go-to-login-button">
@@ -51,7 +52,7 @@ export default {
         email: "",
         password: "",
       },
-      errMsg: "",
+      errorMessage: "",
     };
   },
   components: {},
@@ -62,17 +63,17 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             localStorage.setItem("token", response.data.token);
-            this.$router.push("/actu");
+            this.$router.push("/post");
             this.$store.commit("setUser", response.data);
           }
         })
         .catch((error) => {
           if (error.response.status == 401) {
-            this.errMsg = error.response.data.message
+            this.errorMessage = error.response.data.message
               ? error.response.data.message
               : error;
           } else {
-            this.errMsg =
+            this.errorMessage =
               "⛔️ We don't have access to the server at the moment, please try again later.";
           }
         });

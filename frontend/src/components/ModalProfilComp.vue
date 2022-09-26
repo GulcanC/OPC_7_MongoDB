@@ -2,20 +2,21 @@
   <div>
     <div
       class="modal"
-      tabindex="-1"
       role="dialog"
-      aria-labelledby="Modifications des informations de l'utilisateur"
+      tabindex="-1"
+      aria-labelledby="Update user information"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalLabel">{{ title }}</h5>
+            <h4 class="modal-title" id="modal-title">{{ modal - title }}</h4>
             <button
+              class="close"
               type="button"
-              class="close btn"
+              data-dismiss="modal"
               aria-label="Close"
-              @click="$emit('fermeLModal')"
+              @click="$emit('closeModal')"
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -25,13 +26,13 @@
           </div>
           <div class="modal-footer">
             <button
-              aria-label="Annuler les modififcations"
-              type="button"
               class="btn btn-secondary"
+              type="button"
+              aria-label="Remove the modification"
               data-dismiss="modal"
-              @click="$emit('fermeLModal')"
+              @click="$emit('closeModal')"
             >
-              Annuler
+              Do not save modififcations
             </button>
           </div>
         </div>
@@ -39,9 +40,10 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
-  name: "ModalComp",
+  name: "ModalProfilComp",
   props: ["title"],
 };
 </script>
@@ -49,11 +51,9 @@ export default {
 <style scoped>
 .modal {
   display: block;
-  background-color: #4d47478a;
-  backdrop-filter: blur(1px);
+  margin-top: 25rem;
 }
-
 .close {
-  font-size: 1.5em;
+  font-size: 1.2rem;
 }
 </style>

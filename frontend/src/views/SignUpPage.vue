@@ -62,9 +62,9 @@
           class="form-control"
         />
       </div>
-      <p class="form-error-message">{{ errMsg }}</p>
 
       <button role="button" class="btn-login" type="submit">Sign up</button>
+      <p class="form-error-message">{{ errorMessage }}</p>
     </form>
   </div>
   <div class="go-to-login">
@@ -89,7 +89,7 @@ export default {
         password: "",
         passwordConfirm: "",
       },
-      errMsg: null,
+      errorMessage: null,
     };
   },
   components: {},
@@ -103,7 +103,7 @@ export default {
         !this.user.password ||
         !this.user.passwordConfirm
       ) {
-        this.errMsg =
+        this.errorMessage =
           "⛔️ Please fill in all the fields of the form and check your password.";
         return;
       }
@@ -114,7 +114,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg =
+          this.errorMessage =
             "⛔️ We don't have access to the server at the moment, please try again later.";
         });
     },
@@ -134,8 +134,7 @@ export default {
 .form-group,
 .form-login,
 .form-group label,
-.btn-login,
-.form-error-message {
+.btn-login {
   background-color: #4e5166;
 }
 
@@ -143,6 +142,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 0.3rem;
+  box-shadow: 0.3rem 0.3rem 0.3rem black;
 }
 .form-group label {
   margin: 0.5rem 0 0 0;
@@ -181,7 +182,8 @@ export default {
   text-decoration: none;
 }
 .form-error-message {
-  color: black;
-  margin: 1rem 0 0 0;
+  color: white;
+  margin: 1rem 0.5rem 1rem 0.5rem;
+  background-color: transparent;
 }
 </style>

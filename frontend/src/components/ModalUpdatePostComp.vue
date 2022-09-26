@@ -1,5 +1,5 @@
-<template>
-<!---- Modal pour mettre à jour un post ---->
+<!-- <template>
+
 <div
       class="modal"
       tabindex="-1"
@@ -59,4 +59,4 @@ export default {
 .close{
   font-size: 1.5em;
 }
-</style>
+</style> -->

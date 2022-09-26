@@ -26,7 +26,7 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.$store.commit("setUser", res.data);
-          this.$router.push("/actu");
+          this.$router.push("/post");
         });
     } else if (!token) {
       this.$router.push("/");
@@ -44,6 +44,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: var(--secondary-color);
 }
 
 :root {

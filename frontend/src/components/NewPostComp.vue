@@ -1,5 +1,5 @@
-<template>
-<!----Créer un nouveau post ---->
+<!-- <template>
+
   <article class="card post-card mb-4 shadow-sm">
     <form
       action=""
@@ -167,3 +167,4 @@
     }
   }
 </style>
+ -->

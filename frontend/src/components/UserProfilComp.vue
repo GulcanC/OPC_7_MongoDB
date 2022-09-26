@@ -1,116 +1,112 @@
 <template>
-  <article class="card shadow-sm container">
-    <avatar-compo></avatar-compo>
-    <h2>Mon compte</h2>
-    <span
-      ><h3 class="profil-username">
-        {{ $store.state.user.firstName }}
-        {{ $store.state.user.lastName }}
-      </h3></span
-    >
-
+  <article class="card container shadow-sm">
+    <ProfilComp />
+    <h2>My account</h2>
+    <span>
+      <h3 class="profil-username">
+        {{ $store.state.user.firstname }}
+        {{ $store.state.user.lastname }}
+      </h3>
+    </span>
     <p v-if="$store.state.user.description">
       {{ $store.state.user.description }}
     </p>
 
     <button
-      role="button"
-      aria-label="Modifier mon profil"
-      type="button"
       class="btn btn-primary my-2 px-5"
+      role="button"
+      type="button"
+      aria-label="Edit my profile"
       @click="showModal = true"
     >
-      Editer le profil
-      <fa icon="pen-to-square" class="ms-4" alt="image d'un crayon" />
+      Edit my Profile <fa icon="pen-to-square" class="ms-4" alt="icon"></fa>
     </button>
 
     <transition name="modalFade">
-      <modal-comp
+      <modal-profil-comp
         v-if="showModal"
-        title="Personnalisez votre profil"
-        @fermeLModal="showModal = false"
+        title="Customize your profile"
+        @closeModal="showModal = false"
       >
-        <h2>Ajoutez une description et une photo de profil</h2>
+        <h2>Add a description and profile picture</h2>
         <form
           @submit.prevent="save"
           style="text-align: left"
-          aria-label="modification des informations utilisateur"
+          aria-label="modification of user information"
         >
           <div class="mb-3">
             <div
               class="form-floating"
-              aria-label="Modification de la description utilisateur"
+              aria-label="modification of user information"
             >
               <textarea
-                aria-label="champs description utilisateur"
                 class="form-control text-left"
-                placeholder="description"
                 id="floatingTextarea"
+                description="description"
+                cols="30"
+                rows="10"
+                aria-label="user description fields"
                 v-model="user.description"
               ></textarea>
-              <label for="floatingTextarea">Description</label>
+              <label for="floatingTextarea"></label>
             </div>
           </div>
-          <div class="mb-5" aria-label="Modification image profil">
+          <div class="mb-5" aria-label="Change profil picture">
             <label for="formFile" class="form-label"
-              >Change ta photo de profil ici</label
-            >
+              >Change your profile picture
+            </label>
             <input
-              class="form-control"
               type="file"
-              aria-label="Chargez une image"
-              @change="uploadProfilFile"
+              class="form-control"
               id="formFile"
+              aria-label="Upload an image"
+              @change="uploadProfilFile"
             />
           </div>
 
           <div class="d-flex justify-content-between">
             <button
-              role="button"
-              aria-label="Supprimer mon compte"
               class="btn btn-danger"
+              role="button"
+              aria-label="Delete my account"
               @click.prevent="deleteAccount"
             >
-              <fa icon="trash-alt" class="me-2" alt="image d'une poubelle" />
-              Supprimer mon compte
+              <fa icon="trash-alt" class="me-2" alt="delete account"></fa>Delete
+              account
             </button>
 
             <button
               role="button"
-              aria-label="Enregister les modifications"
               type="submit"
               class="btn btn-primary"
+              aria-label="save the modifications"
             >
               Submit
             </button>
           </div>
-          <p class="err-msg">{{ errMsg }}</p>
-        </form>
-      </modal-comp>
+          <p class="err-msg">{{ errorMessage }}</p>
+        </form></modal-profil-comp
+      >
     </transition>
     <button
       role="button"
-      aria-label="Déconnexion du compte"
       class="btn btn-outline-secondary my-2"
+      aria-label="Logout"
       @click="handleClick"
     >
-      Déconnexion
-      <fa
-        icon="right-from-bracket"
-        class="ms-4"
-        alt="image d'une flèche de sortie"
-      />
+      Logout <fa icon="right-from-bracket" class="ms-4" alt="icon"></fa>
     </button>
   </article>
 </template>
 
 <script>
 import axios from "axios";
-import ModalComp from "./ModalComp.vue";
-import AvatarCompo from "./AvatarCompo.vue";
+import ModalProfilComp from "./ModalProfilComp.vue";
+import ProfilPictureComp from "./ProfilPictureComp.vue";
+
 export default {
-  components: { ModalComp, AvatarCompo },
-  name: "ProfileComp",
+  components: { ModalProfilComp, ProfilPictureComp },
+  name: "UserProfilComp",
   data() {
     return {
       user: {
@@ -118,7 +114,7 @@ export default {
         description: "",
       },
       showModal: false,
-      errMsg: "",
+      errorMessage: "",
     };
   },
   created() {
@@ -138,7 +134,7 @@ export default {
     deleteAccount() {
       const token = localStorage.getItem("token");
       const id = this.$store.state.user._id;
-      if (confirm("Attention cette action supprimera votre compte")) {
+      if (confirm("Do you really want to delete your account?")) {
         axios
           .delete("auth/" + id, {
             headers: {
@@ -174,7 +170,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg = error.response.data.message
+          this.errorMessage = error.response.data.message
             ? error.response.data.message
             : error;
         });
@@ -182,7 +178,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .card {
   border: none;

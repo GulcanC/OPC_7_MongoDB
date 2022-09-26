@@ -1,5 +1,5 @@
-<template>
-  <!---- Composition du post ---->
+<!-- <template>
+
   <article class="post-card p-2 mb-4 shadow-sm">
     <div class="post-user">
       <figure
@@ -27,7 +27,7 @@
         </figcaption>
       </figure>
       <div class="modif">
-        <!---- Button modal ---->
+
         <button
           role="button"
           aria-label="Modifier ma publication"
@@ -39,7 +39,7 @@
           <fa icon="pencil" alt="image d'un crayon" />
         </button>
 
-        <!---- Modal pour editer le post ---->
+  
         <transition name="modalFade">
           <modal-update-post-comp
             v-if="showModalPost"
@@ -111,14 +111,14 @@
         </transition>
       </div>
     </div>
-    <!---- Fin modal - affichage des éléments sur le post -->
+
     <div class="post-content">
       <p>{{ post.post }}</p>
       <div class="post-content--img" v-if="post.imageUrl != null">
         <img :src="post.imageUrl" alt="image du post" />
       </div>
     </div>
-    <!---- Partie Like ---->
+
 
     <div class="like">
       <button
@@ -241,7 +241,7 @@
           })
       },
 
-      /****************Like et dislikes*************** */
+ 
       likeIt() {
         const userId = this.$store.state.user._id
         const likeData = {
@@ -378,3 +378,4 @@ figcaption {
   }
 }
 </style>
+ -->
