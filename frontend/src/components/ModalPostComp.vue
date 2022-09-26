@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: "UpdatePostModalComp",
+  name: "ModalPostComp",
   props: ["title"],
 };
 </script>

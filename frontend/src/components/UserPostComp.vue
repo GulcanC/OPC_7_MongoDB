@@ -38,7 +38,7 @@
         </button>
 
         <transition name="modalFade">
-          <UpdatePostModalComp
+          <ModalPostComp
             v-if="showModalPost"
             title="Modifiez votre publication"
             @fermeLeModal="showModalPost = false"
@@ -104,7 +104,7 @@
 
               <p>{{ errMsg }}</p>
             </form>
-          </UpdatePostModalComp>
+          </ModalPostComp>
         </transition>
       </div>
     </div>
@@ -133,12 +133,12 @@
 
 <script>
 import axios from "axios";
-import UpdatePostModalComp from "./UpdatePostModalComp.vue";
+import ModalPostComp from "./ModalPostComp.vue";
 
 export default {
   name: "UserPostComp",
   components: {
-    UpdatePostModalComp,
+    ModalPostComp,
   },
 
   data() {

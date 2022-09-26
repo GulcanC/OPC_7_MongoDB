@@ -1,5 +1,5 @@
 <template>
-  <div class="picture-user-container mx-auto">
+  <div class="picture-user-container">
     <img
       class="picture-user-profile shadow"
       v-if="$store.state.user.picture"
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "AvatarCompo",
+  name: "ProfilPictureComp",
 };
 </script>
 
