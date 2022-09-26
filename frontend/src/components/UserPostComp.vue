@@ -237,8 +237,126 @@ export default {
         like: 1,
       };
 
-      axios.post;
+      axios
+        .post(`publication/${this.post._id}/like/`, likeData, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.$store.commit("updateLikes", response.data.updatedPost);
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
 </script>
+<style>
+.post-card {
+  border: none;
+}
+.post-user {
+  display: flex;
+  justify-content: space-between;
+}
+.post-user-info {
+  display: flex;
+}
+
+.fa-heart {
+  color: #dd0303;
+  font-size: 1.7em;
+  transition: all 600ms ease;
+}
+
+.post-content {
+  margin: -10px 100px;
+}
+
+.post-content img {
+  max-height: 300px;
+  width: 100%;
+  margin: 10px 0px;
+  object-fit: contain;
+}
+figcaption {
+  min-width: fit-content;
+  margin: 5px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  width: 80px;
+  box-shadow: 1px 1px grey;
+  height: 80px;
+  object-position: center;
+  object-fit: cover;
+}
+
+.date {
+  color: #b2b2b2;
+  font-size: 12px;
+}
+.modalFade-enter-from {
+  opacity: 0;
+}
+.modalFade-enter-to {
+  opacity: 1;
+}
+.modalFade-enter-active,
+.modalFade-leave-active {
+  transition: all 300ms ease;
+}
+.modalFade-leave-from {
+  opacity: 1;
+}
+
+.modalFade-leave-to {
+  opacity: 0;
+}
+
+.picture-user-container {
+  width: 78px;
+}
+.picture-user-profile {
+  border-radius: 50%;
+  padding: 0;
+  height: 78px;
+  width: 78px;
+  object-fit: cover;
+}
+
+.badge {
+  color: var(--tertiary-color);
+}
+.like {
+  margin: 0px 100px;
+  display: flex;
+  justify-content: flex-end;
+}
+.like-btn {
+  display: flex;
+  align-items: center;
+}
+.like .like-btn:hover,
+.like .like-btn:focus,
+.like .like-btn:active {
+  background-color: white;
+  border-color: white;
+}
+
+.like .like-btn:hover .fa-heart {
+  transform: scale(1.2);
+}
+.fa-pencil {
+  font-size: 1.2em;
+}
+@media (max-width: 768px) {
+  .picture-user-container {
+    width: 65px !important;
+  }
+  .picture-user-profile {
+    height: 70px;
+  }
+}
+</style>

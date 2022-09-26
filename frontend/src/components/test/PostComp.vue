@@ -1,5 +1,4 @@
- <template>
-
+<template>
   <article class="post-card p-2 mb-4 shadow-sm">
     <div class="post-user">
       <figure
@@ -27,7 +26,6 @@
         </figcaption>
       </figure>
       <div class="modif">
-
         <button
           role="button"
           aria-label="Modifier ma publication"
@@ -39,7 +37,6 @@
           <fa icon="pencil" alt="image d'un crayon" />
         </button>
 
-  
         <transition name="modalFade">
           <modal-update-post-comp
             v-if="showModalPost"
@@ -119,7 +116,6 @@
       </div>
     </div>
 
-
     <div class="like">
       <button
         type="button"
@@ -136,137 +132,132 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import ModalUpdatePostComp from './ModalUpdatePostComp.vue'
+import axios from "axios";
+import ModalUpdatePostComp from "./ModalUpdatePostComp.vue";
 
-  export default {
-    name: 'PostComp',
-    components: {
-      ModalUpdatePostComp,
+export default {
+  name: "PostComp",
+  components: {
+    ModalUpdatePostComp,
+  },
+
+  data() {
+    return {
+      publications: [],
+      showModalPost: false,
+      newPost: {
+        post: "",
+        image: "",
+      },
+      user: {
+        admin: this.$store.state.user.admin,
+        userId: this.$store.state.user._id,
+      },
+      timestamp: "",
+      errMsg: "",
+    };
+  },
+  created() {
+    setInterval(this.getNow, 1000);
+  },
+  props: {
+    post: {
+      type: Object,
+      required: true,
     },
-    
-    data() {
-      return {
-        publications: [],
-        showModalPost: false,
-        newPost: {
-          post: '',
-          image: '',
-        },
-        user: {
-          admin: this.$store.state.user.admin,
-          userId: this.$store.state.user._id
-        },
-        timestamp: '',
-        errMsg: '',
+  },
+  methods: {
+    //afficher la date sur le post
+    getNow: function () {
+      const today = new Date();
+      const date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      this.timestamp = date;
+    },
+
+    /*Choisir une nouvelle image*/
+    uploadFile(event) {
+      this.newPost.image = event.target.files[0];
+    },
+
+    /* Modifier et envoyer le nouveau post */
+    UpdatePost() {
+      const token = localStorage.getItem("token");
+      let formData = new FormData();
+      formData.append("post", this.newPost.post);
+      formData.append("id", this.post._id);
+
+      if (this.newPost.image != "") {
+        formData.append("file", this.newPost.image);
       }
+      let id = this.post._id;
+
+      axios
+        .put(`publication/${id}`, formData, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+        .then((res) => {
+          this.$store.commit("updatePost", res.data.post);
+          this.showModalPost = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errMsg =
+            "Vous ne pouvez pas modifier votre publication pour le moment, veuillez réessayer plus tard.";
+        });
     },
-    created() {
-      setInterval(this.getNow, 1000)
+    /* Supprimer le post */
+
+    deletePost() {
+      const token = localStorage.getItem("token");
+      axios
+        .delete("publication/" + this.post._id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log("response du delete", response.data);
+          if (response.data.delPost.acknowledged) {
+            //appel la fonction pour remettre l'ensemble des post
+            this.$store.dispatch("getAllPosts");
+          }
+          this.showModalPost = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errMsg =
+            "Vous ne pouvez pas supprimer votre publication pour le moment, veuillez réessayer plus tard.";
+        });
     },
-    props: {
-      post: {
-        type: Object,
-        required: true,
-      },
+
+    likeIt() {
+      const userId = this.$store.state.user._id;
+      const likeData = {
+        userId,
+        postId: this.post._id,
+        like: 1,
+      };
+
+      axios
+        .post(`publication/${this.post._id}/like/`, likeData, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.$store.commit("updateLikes", response.data.updatedPost);
+        })
+        .catch((error) => console.log(error));
     },
-    methods: {
-
-      //afficher la date sur le post
-      getNow: function () {
-        const today = new Date()
-        const date =
-          today.getDate() +
-          '-' +
-          (today.getMonth() + 1) +
-          '-' +
-          today.getFullYear()
-        this.timestamp = date
-      },
-
-      /*Choisir une nouvelle image*/
-      uploadFile(event) {
-        this.newPost.image = event.target.files[0]
-      },
-
-      /* Modifier et envoyer le nouveau post */
-      UpdatePost() {
-        const token = localStorage.getItem('token')
-        let formData = new FormData()
-        formData.append('post', this.newPost.post)
-        formData.append('id', this.post._id)
-
-        if (this.newPost.image != '') {
-          formData.append('file', this.newPost.image)
-        }
-        let id = this.post._id
-
-        axios
-          .put(`publication/${id}`, formData, {
-            headers: {
-              Authorization: 'Bearer ' + token,
-            },
-          })
-          .then((res) => {
-            this.$store.commit('updatePost', res.data.post)
-            this.showModalPost = false
-          })
-          .catch((error) => {
-            console.log(error)
-            this.errMsg = 'Vous ne pouvez pas modifier votre publication pour le moment, veuillez réessayer plus tard.'
-          })
-      },
-      /* Supprimer le post */
-
-      deletePost() {
-        const token = localStorage.getItem('token')
-        axios
-          .delete('publication/' + this.post._id, {
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-          })
-          .then((response) => {
-            console.log('response du delete', response.data)
-            if (response.data.delPost.acknowledged) {
-              //appel la fonction pour remettre l'ensemble des post
-              this.$store.dispatch("getAllPosts")
-            }
-            this.showModalPost = false
-
-          })
-          .catch((error) => {
-            console.log(error)
-            this.errMsg = 'Vous ne pouvez pas supprimer votre publication pour le moment, veuillez réessayer plus tard.'
-          })
-      },
-
- 
-      likeIt() {
-        const userId = this.$store.state.user._id
-        const likeData = {
-          userId,
-          postId: this.post._id,
-          like: 1,
-        }
-
-
-        axios
-          .post(`publication/${this.post._id}/like/`, likeData, {
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-
-          })
-          .then((response) => {
-            this.$store.commit('updateLikes', response.data.updatedPost)
-          })
-          .catch((error) => console.log(error))
-      },
-
-
-    },
-  };
+  },
+};
 </script>
 
 <style>
@@ -378,4 +369,3 @@ figcaption {
   }
 }
 </style>
-
