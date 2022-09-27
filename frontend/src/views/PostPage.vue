@@ -1,11 +1,10 @@
-<!-- <template>
-
+<template>
   <main class="main">
     <div class="row overflow-hidden flex-row-reverse conteiner-main">
-    <section class="col-lg-3 mx-4 conteiner-profil">
+      <section class="col-lg-3 mx-4 conteiner-profil">
         <UserProfilComp />
-      </section> 
-         <section class="col-lg-8">
+      </section>
+      <section class="col-lg-8">
         <h1 v-if="firstPost" class="first-post">Partager quelque chose!</h1>
         <UserNewPostComp @postCree="this.firstPost = false" />
         <UserPostComp
@@ -15,7 +14,7 @@
           :post="post"
         >
         </UserPostComp>
-      </section> 
+      </section>
     </div>
   </main>
 </template>
@@ -75,4 +74,3 @@ export default {
   }
 }
 </style>
- -->

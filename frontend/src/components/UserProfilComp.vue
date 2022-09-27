@@ -17,7 +17,7 @@
 
     <button
       role="button"
-      aria-label="update the profile"
+      aria-label="edit the profile"
       type="button"
       class="btn btn-outline-secondary d-flex flex-row align-items-center gap-4 border-0 mb-3"
       @click="showModal = true"
@@ -25,71 +25,81 @@
       <fa icon="pen-to-square" class="fa-icon" alt="icon" />
       Edit your profile
     </button>
-
-    <transition name="modalFade">
-      <ModalProfilComp
-        v-if="showModal"
-        title="Customize your profile"
-        @closeModal="showModal = false"
+    <!-- This part will go to the part "modal body" in the file ModalProfilComp -->
+    <!-- To achive this we will use <slot></slot> in the file ModalProfilComp -->
+    <!-- The showModal() method shows the dialog. When this method is used to show a dialog window, the user is not able to interact with other elements on the page.-->
+    <ModalProfilComp
+      v-if="showModal"
+      title="Customize your profile"
+      @closeModal="showModal = false"
+    >
+      <form
+        @submit.prevent="save"
+        style="text-align: left"
+        aria-label="user profil update form"
       >
-        <h2>Ajoutez une description et une photo de profil</h2>
-        <form
-          @submit.prevent="save"
-          style="text-align: left"
-          aria-label="modification des informations utilisateur"
-        >
-          <div class="mb-3">
-            <div
-              class="form-floating"
-              aria-label="Modification de la description utilisateur"
-            >
-              <textarea
-                aria-label="champs description utilisateur"
-                class="form-control text-left"
-                placeholder="description"
-                id="floatingTextarea"
-                v-model="user.description"
-              ></textarea>
-              <label for="floatingTextarea">Description</label>
-            </div>
-          </div>
-          <div class="mb-5" aria-label="Modification image profil">
-            <label for="formFile" class="form-label"
-              >Change ta photo de profil ici</label
-            >
-            <input
-              class="form-control"
-              type="file"
-              aria-label="Chargez une image"
-              @change="uploadProfilFile"
-              id="formFile"
-            />
-          </div>
+        <!-- hello message by calling the name of the user-->
+        <h5 class="text-capitalize text-light text-center">
+          Hello! {{ $store.state.user.firstName }}
+        </h5>
 
-          <div class="d-flex justify-content-between">
-            <button
-              role="button"
-              aria-label="Supprimer mon compte"
-              class="btn btn-danger"
-              @click.prevent="deleteAccount"
-            >
-              <fa icon="trash-alt" class="me-2" alt="image d'une poubelle" />
-              Supprimer mon compte
-            </button>
+        <!-- change profil picture -->
+        <div class="mb-4" aria-label="update profil picture">
+          <label for="formFile" class="form-label text-capitalize text-light"
+            >You can change your profil picture</label
+          >
+          <input
+            id="formFile"
+            class="form-control"
+            type="file"
+            aria-label="upload picture"
+            @change="uploadProfilFile"
+          />
+        </div>
 
-            <button
-              role="button"
-              aria-label="Enregister les modifications"
-              type="submit"
-              class="btn btn-primary"
-            >
-              Submit
-            </button>
+        <p class="text-capitalize text-light">
+          {{ $store.state.user.firstName }}, describe yourself in one sentence
+        </p>
+        <div class="mb-3">
+          <div
+            class="form-floating"
+            aria-label="Modification de la description utilisateur"
+          >
+            <textarea
+              aria-label="champs description utilisateur"
+              class="form-control text-left"
+              placeholder="describe yourself"
+              id="floatingTextarea"
+              v-model="user.description"
+            ></textarea>
+            <label for="floatingTextarea">Description</label>
           </div>
-          <p class="err-msg">{{ errMsg }}</p>
-        </form>
-      </ModalProfilComp>
-    </transition>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button
+            role="button"
+            aria-label="Supprimer mon compte"
+            class="btn btn-danger"
+            @click.prevent="deleteAccount"
+          >
+            <fa icon="trash-alt" class="me-2" alt="image d'une poubelle" />
+            Supprimer mon compte
+          </button>
+
+          <button
+            role="button"
+            aria-label="Enregister les modifications"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Submit
+          </button>
+        </div>
+        <p class="err-msg">{{ errMsg }}</p>
+      </form>
+    </ModalProfilComp>
+
     <button
       role="button"
       aria-label="Déconnexion du compte"
@@ -206,43 +216,11 @@ article button:hover {
 h2 {
   font-size: 1.2rem;
   font-weight: 600;
+  color: #4e5166;
 }
 .profil-username {
   font-weight: 700;
   font-size: medium;
   margin-top: 8px;
-}
-
-.modalFade-enter-from {
-  opacity: 0;
-}
-.modalFade-enter-to {
-  opacity: 1;
-}
-.modalFade-enter-active,
-.modalFade-leave-active {
-  transition: all 300ms ease;
-}
-.modalFade-leave-from {
-  opacity: 1;
-}
-
-.modalFade-leave-to {
-  opacity: 0;
-}
-
-.picture-user-container {
-  width: 78px;
-}
-.picture-user-profile {
-  border-radius: 50%;
-  padding: 0;
-  height: 78px;
-  object-fit: cover;
-}
-.err-msg {
-  color: var(--primary-color);
-  font-weight: 400;
-  margin-top: 20px;
 }
 </style>

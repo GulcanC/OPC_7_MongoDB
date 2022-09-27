@@ -31,6 +31,7 @@
           />
         </div>
         <br />
+
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -164,7 +165,7 @@ export default {
   box-shadow: 0.3rem 0.3rem 0.3rem black;
 }
 .form-group label {
-  margin: 0.5rem 0 0 0;
+  margin: 0.5rem 0 0 0.4rem;
   font-weight: bold;
 }
 

@@ -32,7 +32,7 @@
           v-if="post.userId == user.userId || user.admin == true"
           type="button"
           class="btn btn-primary"
-          @click="showModalPost = true"
+          @click="Post = true"
         >
           <fa icon="pencil" alt="image d'un crayon" />
         </button>

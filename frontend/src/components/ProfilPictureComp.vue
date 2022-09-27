@@ -4,12 +4,12 @@
       class="picture-user-profile shadow"
       v-if="$store.state.user.picture"
       :src="$store.state.user.picture"
-      alt="image de profil"
+      alt="profil picture"
     />
     <img
       v-else
       src="../assets/avatar.png"
-      alt="image de profil par défaut"
+      alt="default profil picture"
       class="picture-user-profile shadow"
     />
   </div>

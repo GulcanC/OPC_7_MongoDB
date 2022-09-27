@@ -33,24 +33,11 @@
             </button>
           </div>
 
-          <!--modal body-->
-          <!--is a placeholder inside a web component that you can fill with your own markup, -->
-          <!-- which lets you create separate DOM trees and present them together.-->
+          <!-- modal body -->
+          <!-- is a placeholder inside a web component that you can fill with your own markup, -->
+          <!-- which lets you create separate DOM trees and present them together. -->
           <!-- The some part of the file "UserProfilComp" will be replaced with "slot" -->
           <div class="modal-body"><slot></slot></div>
-
-          <!--modal footer-->
-          <div class="modal-footer">
-            <button
-              aria-label="Cancel the modififcations"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="$emit('closeModal')"
-            >
-              Cancel
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -82,15 +69,9 @@ div.modal-footer,
 .close.btn span {
   color: white;
 }
-.modal-footer button {
-  background-color: white;
-  color: #fd2d01;
-  border: none;
-}
-.modal-footer button:hover {
-  background-color: #fd2d01;
-  color: white;
-  border: 0.1rem solid white;
+
+.modal-body {
+  background-color: #4e5166;
 }
 
 .close {

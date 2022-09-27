@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "HomeMsgComp",
-  // addd your message as a props to be shown in the HomeView page
+  // add your message as a props to be shown in the HomePage page
   props: {
     message: String,
   },
