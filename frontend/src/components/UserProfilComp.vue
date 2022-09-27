@@ -27,8 +27,8 @@
     <transition name="modalFade">
       <ModalProfilComp
         v-if="showModal"
-        title="Personnalisez votre profil"
-        @fermeLModal="showModal = false"
+        title="Customize your profile"
+        @closeModal="showModal = false"
       >
         <h2>Ajoutez une description et une photo de profil</h2>
         <form
