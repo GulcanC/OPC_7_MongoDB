@@ -23,13 +23,13 @@ export default {
 
 <style scoped>
 .picture-user-container {
-  width: 78px;
+  width: 7rem;
   margin-top: 10px;
+  background-color: transparent;
 }
 .picture-user-profile {
   border-radius: 50%;
   padding: 0;
-  height: 78px;
   object-fit: cover;
 }
 @media (max-width: 768px) {

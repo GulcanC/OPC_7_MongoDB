@@ -1,9 +1,11 @@
 <template>
-  <article class="card shadow-sm container">
+  <article
+    class="card container d-flex justify-content-center align-items-center border-0 text-light"
+  >
     <ProfilPictureComp></ProfilPictureComp>
-    <h2>Mon compte</h2>
+    <h2>MY ACCOUNT</h2>
     <span
-      ><h3 class="profil-username">
+      ><h3 class="text-capitalize profil-username">
         {{ $store.state.user.firstName }}
         {{ $store.state.user.lastName }}
       </h3></span
@@ -15,13 +17,13 @@
 
     <button
       role="button"
-      aria-label="Modifier mon profil"
+      aria-label="update the profile"
       type="button"
-      class="btn btn-primary my-2 px-5"
+      class="btn btn-outline-secondary d-flex flex-row align-items-center gap-4 border-0 mb-3"
       @click="showModal = true"
     >
-      Editer le profil
-      <fa icon="pen-to-square" class="ms-4" alt="image d'un crayon" />
+      <fa icon="pen-to-square" class="fa-icon" alt="icon" />
+      Edit your profile
     </button>
 
     <transition name="modalFade">
@@ -91,15 +93,15 @@
     <button
       role="button"
       aria-label="Déconnexion du compte"
-      class="btn btn-outline-secondary my-2"
+      class="btn btn-outline-secondary d-flex flex-row align-items-center gap-4 border-0 mb-3"
       @click="handleClick"
     >
-      Déconnexion
       <fa
         icon="right-from-bracket"
-        class="ms-4"
+        class="fa-icon"
         alt="image d'une flèche de sortie"
       />
+      Log out
     </button>
   </article>
 </template>
@@ -184,12 +186,25 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  border: none;
-  margin-bottom: 20px;
+article.card {
+  background-color: #fd2d01;
+  margin-top: 6rem;
+  opacity: 0.7;
 }
+article.card:hover {
+  opacity: 1;
+}
+article button {
+  background-color: white;
+  color: #4e5166;
+}
+article button:hover {
+  background-color: white;
+  color: #4e5166;
+}
+
 h2 {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 .profil-username {

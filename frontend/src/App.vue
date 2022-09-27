@@ -37,17 +37,17 @@ export default {
 <style>
 * {
   font-family: "CURSIVE";
-
-  background-color: var(--secondary-color);
 }
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: var(--secondary-color);
   font-size: normal;
+  background-color: #ffd7d7;
 }
-
+html {
+  background-color: #ffd7d7;
+}
 :root {
   --primary-color: "#fd2d01";
   --secondary-color: #ffd7d7;

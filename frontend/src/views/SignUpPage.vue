@@ -41,6 +41,7 @@
             class="form-control"
           />
         </div>
+
         <br />
         <div class="form-group">
           <label for="password">Password</label>
@@ -98,7 +99,21 @@ export default {
   components: { HeaderComp },
   methods: {
     async signup() {
-      /* vérifie si tous les champs sont bien remplis */
+      /*     let regExPassword = new RegExp(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{4}$/
+      );
+      let regExEmail = new RegExp(
+        /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
+      );
+
+      let testEmail = regExEmail.test(req.body.user.email);
+      let testPassword = regExPassword.test(req.body.user.password);
+
+      if (testEmail && testPassword === false) {
+        this.errorMessage = "⛔️ error regex";
+        return;
+      }  */
+
       if (
         !this.user.firstName ||
         !this.user.lastName ||
