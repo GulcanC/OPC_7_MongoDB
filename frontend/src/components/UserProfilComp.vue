@@ -2,7 +2,7 @@
 <template>
   <article class="card shadow-sm container">
     <ProfilPictureComp></ProfilPictureComp>
-    <h2>Mon compte</h2>
+    <h2>My account</h2>
     <span
       ><h3 class="profil-username">
         {{ $store.state.user.firstName }}
