@@ -1,34 +1,38 @@
+<!-- the first card at the top of post page to create a new post by users -->
 <template>
-  <article class="card post-card mb-4 shadow-sm">
+  <article class="card p-2 mb-4">
     <form
-      action=""
       @submit.prevent="createPost"
       class="form-post p-2"
-      name="myForm"
-      id="myForm"
-      aria-label="Formulaire de création d'un post"
+      aria-label="form to create new post "
     >
-      <div class="row">
-        <div class="col-2">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <!-- add profil picture component to the card -->
+        <div>
           <ProfilPictureComp></ProfilPictureComp>
         </div>
-        <div class="col-10">
-          <label class="new-post" for="postContent">Nouveau post</label>
-
+        <!-- new post card body -->
+        <div class="w-75">
+          <label for="floatingTextarea" class="m-2 text-light fs-5"
+            ><span class="text-capitalize">{{
+              $store.state.user.firstName
+            }}</span
+            >, write your message</label
+          >
+          <!-- add image for the post -->
           <div>
             <textarea
               name="post"
               id="floatingTextarea"
               rows="2"
-              placeholder="Que voulez vous partager aujourd'hui?"
-              class="form-control text-left"
+              placeholder="Write your message"
+              class="form-control text-justify"
               v-model="post"
-              aria-label="champs pour le message du post"
             ></textarea>
 
-            <div class="mb-5">
-              <label for="formFile" class="form-label"
-                >Ajoutez une image ci dessous</label
+            <div class="mb-3">
+              <label for="formFile" class="form-label m-2 text-light fs-5"
+                >Add the image for your message</label
               >
               <input
                 :key="fileInputKey"
@@ -36,15 +40,21 @@
                 accept="image/*"
                 class="form-control"
                 type="file"
-                aria-label="Chargez une image"
+                aria-label="upload image"
                 @change="uploadFile"
                 id="formFile"
               />
             </div>
-            <p class="err-msg">{{ errMsg }}</p>
-            <button role="button" type="submit" class="btn-post">
-              <fa icon="check" />
-              Publier
+
+            <p class="text-light">{{ errorMessage }}</p>
+
+            <button
+              role="button"
+              type="submit"
+              class="btn btn-outline-secondary mb-3"
+            >
+              <fa icon="fa-paper-plane" />
+              Submit
             </button>
           </div>
         </div>
@@ -65,7 +75,7 @@ export default {
     return {
       post: "",
       file: "",
-      errMsg: null,
+      errorMessage: null,
       fileInputKey: 0,
     };
   },
@@ -78,7 +88,7 @@ export default {
     createPost() {
       /*Il faut qu'il y est quelque chose à poster*/
       if (!this.post && !this.file) {
-        this.errMsg = "Vous devez publier une image ou un texte!";
+        this.errorMessage = "⛔️ Please write a message and choose an image!";
         return;
       }
 
@@ -111,7 +121,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg = error.response.data.message
+          this.errorMessage = error.response.data.message
             ? error.response.data.message
             : error;
         });
@@ -123,40 +133,23 @@ export default {
 <style scoped>
 .card {
   margin: auto;
+  background-color: #4e5166 !important;
 }
 
-.post-card {
-  border: none;
+article button {
+  background-color: white;
+  color: #4e5166;
+  transition: all 0.3s;
 }
-.form-post {
-  padding: 5%;
-  display: flex;
-  flex-direction: column;
+article button:hover {
+  background-color: #4e5166 !important;
+  color: white !important;
+  border: 0.1rem solid white !important;
 }
-.btn-post {
-  border-radius: 15px;
-  background-color: var(--tertiary-color);
-  transition: all 300ms ease-in-out;
-  border: none;
-  padding: 5px 13px;
-  color: white;
-}
-.btn-post:hover {
-  background-color: var(--primary-color);
-  transform: scale(1.1);
-}
-.err-msg {
-  color: var(--primary-color);
-  font-weight: 400;
-}
+
 @media (max-width: 768px) {
-  .new-post {
-    margin-top: 15px;
-    margin-bottom: 20px;
-  }
-  .mb-5 {
-    margin-top: 1rem;
-    margin-bottom: 2rem !important;
+  .card {
+    margin: auto 3rem;
   }
 }
 </style>

@@ -22,6 +22,7 @@
             <!-- This is useful for things like: emitting data from an input, closing modals from inside the modal itself.-->
 
             <button
+              role="button"
               type="button"
               class="close btn"
               aria-label="Close"
@@ -52,7 +53,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .modal {
   display: block;
   background-color: #4d47478a;
@@ -60,7 +61,6 @@ export default {
   backdrop-filter: blur(5px);
 }
 div.modal-header,
-div.modal-footer,
 #modalTitle,
 .close.btn span {
   background-color: #fd2d01;
@@ -69,11 +69,9 @@ div.modal-footer,
 .close.btn span {
   color: white;
 }
-
 .modal-body {
   background-color: #4e5166;
 }
-
 .close {
   font-size: 1.5em;
 }

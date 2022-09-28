@@ -1,5 +1,5 @@
+<!-- modal to edit user's post -->
 <template>
-  <!---- Composition du post ---->
   <article class="post-card p-2 mb-4 shadow-sm">
     <div class="post-user">
       <figure
@@ -44,7 +44,7 @@
           <ModalPostComp
             v-if="showModalPost"
             title="Modifiez votre publication"
-            @fermeLeModal="showModalPost = false"
+            @closePostModal="showModalPost = false"
           >
             <h2>Modifier votre message et/ou votre image</h2>
             <form

@@ -2,10 +2,12 @@
   <article
     class="card container d-flex justify-content-center align-items-center border-0 text-light"
   >
+    <!-- add profil picture comp -->
     <ProfilPictureComp></ProfilPictureComp>
-    <h2>MY ACCOUNT</h2>
+    <!-- fs-1 font size xlarge, fw font weight -->
+    <h2 class="fs-5 fw-bold mt-2">MY ACCOUNT</h2>
     <span
-      ><h3 class="text-capitalize profil-username">
+      ><h3 class="text-capitalize fs-5">
         {{ $store.state.user.firstName }}
         {{ $store.state.user.lastName }}
       </h3></span
@@ -43,7 +45,7 @@
           Hello! {{ $store.state.user.firstName }}
         </h5>
 
-        <!-- change profil picture -->
+        <!-- change profil picture, here the file input field is default bootstrap, so it can not be changed -->
         <div class="mb-4" aria-label="update profil picture">
           <label for="formFile" class="form-label text-capitalize text-light"
             >You can change your profil picture</label
@@ -57,46 +59,47 @@
           />
         </div>
 
-        <p class="text-capitalize text-light">
-          {{ $store.state.user.firstName }}, describe yourself in one sentence
-        </p>
+        <!-- User description field-->
+        <!-- class="form-floating", When there’s a value already defined, <label>s will automatically adjust to their floated position.-->
         <div class="mb-3">
-          <div
-            class="form-floating"
-            aria-label="Modification de la description utilisateur"
-          >
+          <div class="form-floating" aria-label="describe user">
+            <!-- Here it does not accept label, I do not know why, so I used <p> tag-->
+            <label for="comment"></label>
+            <p class="text-capitalize text-light">
+              {{ $store.state.user.firstName }}, describe yourself in one
+              sentence
+            </p>
             <textarea
-              aria-label="champs description utilisateur"
               class="form-control text-left"
-              placeholder="describe yourself"
-              id="floatingTextarea"
+              id="comment"
+              row="2"
               v-model="user.description"
             ></textarea>
-            <label for="floatingTextarea">Description</label>
           </div>
         </div>
 
         <div class="d-flex justify-content-between">
           <button
             role="button"
-            aria-label="Supprimer mon compte"
-            class="btn btn-danger"
+            title="Delete account"
             @click.prevent="deleteAccount"
+            class="btn btn-outline-secondary d-flex flex-row align-items-center gap-4 border-0 mb-3"
           >
-            <fa icon="trash-alt" class="me-2" alt="image d'une poubelle" />
-            Supprimer mon compte
+            <fa icon="fa fa-trash-alt" alt="icon" />
+            Delete my account
           </button>
 
           <button
             role="button"
-            aria-label="Enregister les modifications"
+            title="Save changes"
             type="submit"
-            class="btn btn-primary"
+            class="btn btn-outline-secondary d-flex flex-row align-items-center gap-4 border-0 mb-3"
           >
-            Submit
+            <fa icon="fa fa-paper-plane" alt="icon" />
+            Save changes
           </button>
         </div>
-        <p class="err-msg">{{ errMsg }}</p>
+        <p class="err-msg">{{ errorMessage }}</p>
       </form>
     </ModalProfilComp>
 
@@ -130,7 +133,7 @@ export default {
         description: "",
       },
       showModal: false,
-      errMsg: "",
+      errorMessage: "",
     };
   },
   created() {
@@ -150,7 +153,7 @@ export default {
     deleteAccount() {
       const token = localStorage.getItem("token");
       const id = this.$store.state.user._id;
-      if (confirm("Attention cette action supprimera votre compte")) {
+      if (alert("⚠️ Are you sure you want to delete your account? ⚠️")) {
         axios
           .delete("auth/" + id, {
             headers: {
@@ -186,7 +189,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg = error.response.data.message
+          this.errorMessage = error.response.data.message
             ? error.response.data.message
             : error;
         });
@@ -204,23 +207,19 @@ article.card {
 article.card:hover {
   opacity: 1;
 }
+
 article button {
   background-color: white;
   color: #4e5166;
+  transition: all 0.3s;
 }
 article button:hover {
-  background-color: white;
-  color: #4e5166;
+  background-color: #4e5166 !important;
+  color: white !important;
+  border: 0.1rem solid white !important;
 }
 
 h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
   color: #4e5166;
-}
-.profil-username {
-  font-weight: 700;
-  font-size: medium;
-  margin-top: 8px;
 }
 </style>
