@@ -1,5 +1,5 @@
-<!-- modal to edit user's post -->
 <template>
+  <!---- Composition du post ---->
   <article class="post-card p-2 mb-4 shadow-sm">
     <div class="post-user">
       <figure
@@ -34,7 +34,7 @@
           v-if="post.userId == user.userId || user.admin == true"
           type="button"
           class="btn btn-primary"
-          @click="showModalPost = true"
+          @click="showModal = true"
         >
           <fa icon="pencil" alt="image d'un crayon" />
         </button>
@@ -42,9 +42,9 @@
         <!---- Modal pour editer le post ---->
         <transition name="modalFade">
           <ModalPostComp
-            v-if="showModalPost"
+            v-if="showModal"
             title="Modifiez votre publication"
-            @closePostModal="showModalPost = false"
+            @fermeLeModal="showModal = false"
           >
             <h2>Modifier votre message et/ou votre image</h2>
             <form
@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       publications: [],
-      showModalPost: false,
+      showModal: false,
       newPost: {
         post: "",
         image: "",
@@ -208,7 +208,7 @@ export default {
         })
         .then((res) => {
           this.$store.commit("updatePost", res.data.post);
-          this.showModalPost = false;
+          this.showModal = false;
         })
         .catch((error) => {
           console.log(error);
@@ -232,7 +232,7 @@ export default {
             //appel la fonction pour remettre l'ensemble des post
             this.$store.dispatch("getAllPosts");
           }
-          this.showModalPost = false;
+          this.showModal = false;
         })
         .catch((error) => {
           console.log(error);

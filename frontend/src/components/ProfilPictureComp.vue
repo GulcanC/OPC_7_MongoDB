@@ -31,13 +31,16 @@ export default {
   border-radius: 50%;
   padding: 0;
   object-fit: cover;
+  height: 6rem;
+  width: 6rem;
 }
+
 @media (max-width: 768px) {
   .picture-user-container {
-    width: 65px !important;
+    width: 5rem !important;
   }
   .picture-user-profile {
-    height: 70px;
+    height: 6rem;
   }
 }
 </style>
