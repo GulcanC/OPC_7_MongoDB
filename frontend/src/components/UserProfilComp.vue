@@ -1,5 +1,5 @@
+<!-- User profil edit -->
 <template>
-  <!---- Card profil ---->
   <article class="card shadow-sm container">
     <ProfilPictureComp></ProfilPictureComp>
     <h2>Mon compte</h2>
