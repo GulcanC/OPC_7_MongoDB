@@ -1,121 +1,112 @@
+<!-- user post comp will be shown in the modal post -->
 <template>
-  <!---- Composition du post ---->
-  <article class="post-card p-2 mb-4 shadow-sm">
+  <article class="post-card p-2 mb-4 text-light">
     <div class="post-user">
-      <figure
-        class="post-user-info"
-        aria-label="informations de l'utilisateur qui à publié"
-      >
+      <figure class="post-user-info" aria-label="user information">
+        <!-- user picture on the post -->
         <div class="picture-user-container mx-auto mt-1 ms-4">
           <img
             class="picture-user-profile shadow"
             v-if="post.authorImg"
             :src="post.authorImg"
-            alt="image de profil"
+            alt="profil picture"
           />
           <img
             v-else
             src="../assets/avatar.png"
-            alt="image de profil par défaut"
+            alt="default profil picture"
             class="picture-user-profile shadow"
           />
         </div>
-
-        <figcaption aria-label="Nom de l'utilisateur et date de publication">
+        <!-- user name and date on the post -->
+        <figcaption aria-label="user name" class="text-capitalize">
           {{ post.userName }} <br />
-          <span class="date"> {{ timestamp }} </span>
+          <span class="date text-muted"> {{ timestamp }} </span>
         </figcaption>
       </figure>
       <div class="modif">
-        <!---- Button modal ---->
+        <!-- button to edit post -->
         <button
           role="button"
-          aria-label="Modifier ma publication"
+          aria-label="update your post"
           v-if="post.userId == user.userId || user.admin == true"
           type="button"
-          class="btn btn-primary"
+          class="btn button-type-1"
           @click="showModal = true"
         >
-          <fa icon="pencil" alt="image d'un crayon" />
+          <fa icon="fa-pen-to-square" alt="icon" />
         </button>
 
-        <!---- Modal pour editer le post ---->
+        <!-- this part of the modal will be replaced with the slot in ModalPostComp -->
         <transition name="modalFade">
           <ModalPostComp
             v-if="showModal"
-            title="Modifiez votre publication"
+            title="Update your post"
             @fermeLeModal="showModal = false"
           >
-            <h2>Modifier votre message et/ou votre image</h2>
             <form
               @submit.prevent="UpdatePost"
               style="text-align: left"
-              aria-label="modification des champs du post"
+              aria-label="form to edit post"
             >
               <div class="mb-3">
-                <div class="form-floating">
-                  <textarea
-                    aria-label="champs de modification du message"
-                    class="form-control text-left"
-                    placeholder="ajoutez vos modifications"
-                    id="floatingTextarea"
-                    v-model="newPost.post"
-                  ></textarea>
-                  <label for="floatingTextarea"
-                    >Changez ou ajoutez un message</label
-                  >
-                </div>
-              </div>
-              <div class="mb-5">
                 <label for="formFile" class="form-label"
-                  >Changez ou ajoutez une image</label
+                  >Add or change the image</label
                 >
                 <input
                   accept="image/*"
                   class="form-control"
                   type="file"
-                  aria-label="changer l'image"
                   @change="uploadFile"
                   id="formFile"
                 />
               </div>
+
+              <div class="mb-3">
+                <div class="form-floating">
+                  <p class="text-transparent">Add or change the message</p>
+                  <textarea
+                    class="form-control text-left"
+                    placeholder="ajoutez vos modifications"
+                    id="floatingTextarea"
+                    v-model="newPost.post"
+                  ></textarea>
+                </div>
+              </div>
+
               <div class="d-flex justify-content-between">
                 <button
                   role="button"
                   type="button"
-                  aria-label="Supprimer la publication"
-                  class="btn btn-danger"
+                  class="btn button-type-2"
                   @click="deletePost"
                 >
-                  <fa
-                    icon="trash-alt"
-                    class="me-2"
-                    alt="image d'une poubelle"
-                  />
-                  Supprimer ma publication
+                  <fa icon="fa-trash-alt" class="me-2" alt="icon" />
+                  Delete the post
                 </button>
 
                 <button
                   role="button"
                   aria-label="Enregistrer les modifications"
                   type="submit"
-                  class="btn btn-primary"
+                  class="btn button-type-2"
                 >
-                  Enregistrer les modifications
+                  <fa icon="fa-paper-plane" class="me-2" alt="icon" />
+                  Save the changes
                 </button>
               </div>
 
-              <p>{{ errMsg }}</p>
+              <p>{{ errorMessage }}</p>
             </form>
           </ModalPostComp>
         </transition>
       </div>
     </div>
-    <!---- Fin modal - affichage des éléments sur le post -->
+    <!-- user post and image  -->
     <div class="post-content">
-      <p>{{ post.post }}</p>
+      <p class="text-left-align">{{ post.post }}</p>
       <div class="post-content--img" v-if="post.imageUrl != null">
-        <img :src="post.imageUrl" alt="image du post" />
+        <img :src="post.imageUrl" alt="post image" />
       </div>
     </div>
     <!---- Partie Like ---->
@@ -158,7 +149,7 @@ export default {
         userId: this.$store.state.user._id,
       },
       timestamp: "",
-      errMsg: "",
+      errorMessage: "",
     };
   },
   created() {
@@ -212,7 +203,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg =
+          this.errorMessage =
             "Vous ne pouvez pas modifier votre publication pour le moment, veuillez réessayer plus tard.";
         });
     },
@@ -236,7 +227,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg =
+          this.errorMessage =
             "Vous ne pouvez pas supprimer votre publication pour le moment, veuillez réessayer plus tard.";
         });
     },
@@ -265,9 +256,23 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.button-type-1 {
+  background-color: #ffd7d7;
+  color: #4e5166;
+  border: 1px solid #4e5166;
+}
+
+.button-type-2 {
+  background-color: white;
+  color: #4e5166;
+  border: 1px solid #4e5166;
+}
+.button-type-2:hover {
+  border: 1px solid white;
+}
 .post-card {
-  border: none;
+  background-color: #4e5166;
 }
 .post-user {
   display: flex;
@@ -288,60 +293,33 @@ export default {
 }
 
 .post-content img {
-  max-height: 300px;
+  max-height: 20rem;
+  margin-bottom: 3rem;
   width: 100%;
-  margin: 10px 0px;
   object-fit: contain;
 }
 figcaption {
   min-width: fit-content;
-  margin: 5px;
+  margin: 0.5rem;
 }
-
-.profile-picture {
-  border-radius: 50%;
-  width: 80px;
-  box-shadow: 1px 1px grey;
-  height: 80px;
-  object-position: center;
-  object-fit: cover;
-}
-
-.date {
-  color: #b2b2b2;
-  font-size: 12px;
-}
-.modalFade-enter-from {
-  opacity: 0;
-}
-.modalFade-enter-to {
-  opacity: 1;
-}
-.modalFade-enter-active,
-.modalFade-leave-active {
-  transition: all 300ms ease;
-}
-.modalFade-leave-from {
-  opacity: 1;
-}
-
-.modalFade-leave-to {
-  opacity: 0;
+.text-left-align {
+  text-align: left !important;
+  margin-left: 3rem;
+  color: black;
 }
 
 .picture-user-container {
-  width: 78px;
+  width: 7rem;
 }
 .picture-user-profile {
   border-radius: 50%;
-  padding: 0;
-  height: 78px;
-  width: 78px;
+  height: 6rem;
+  width: 6rem;
   object-fit: cover;
 }
 
 .badge {
-  color: var(--tertiary-color);
+  color: green;
 }
 .like {
   margin: 0px 100px;

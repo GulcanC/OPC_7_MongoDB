@@ -1,7 +1,7 @@
+<!-- modal to edit user's post -->
 <template>
-  <!---- Modal pour mettre à jour un post ---->
   <div
-    class="modal"
+    class="modal text-light"
     tabindex="-1"
     role="dialog"
     aria-labelledby="modalLabel"
@@ -9,6 +9,7 @@
   >
     <div class="modal-dialog" role="Modifier la publication">
       <div class="modal-content">
+        <!-- modal header -->
         <div class="modal-header">
           <h5 class="modal-title" id="modalLabel">{{ title }}</h5>
           <button
@@ -18,13 +19,16 @@
             aria-label="Close"
             @click="$emit('fermeLeModal')"
           >
+            <!-- modal close button -->
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
+        <!-- modal body -->
         <div class="modal-body">
           <slot></slot>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button
             role="button"
             aria-label="annuler les modifications"
@@ -35,7 +39,7 @@
           >
             Annuler
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -43,7 +47,7 @@
 
 <script>
 export default {
-  name: "ModalUpdatePostComp",
+  name: "ModalPostComp",
   props: ["title"],
 };
 </script>
@@ -51,11 +55,18 @@ export default {
 <style scoped>
 .modal {
   display: block;
-  background-color: #4d47478a;
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(8px);
+}
+
+.modal-header {
+  background-color: #fd2d01;
+}
+.modal-body {
+  background-color: #4e5166;
 }
 
 .close {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  color: white;
 }
 </style>

@@ -74,16 +74,16 @@
           Submit changes
         </button>
       </div>
-      <p class="err-msg">{{ errMsg }}</p>
+      <p class="err-msg">{{ errorMessage }}</p>
     </form>
     <!-- button logout -->
     <button
       role="button"
       title="logout"
-      class="btn button-type-2"
+      class="btn button-type-2 mb-3"
       @click="handleClick"
     >
-      Logout
+      Log out
       <fa
         icon="fa fa-right-from-bracket"
         class="ms-4"
@@ -106,7 +106,7 @@ export default {
         picture: "",
         description: "",
       },
-      errMsg: "",
+      errorMessage: "",
     };
   },
   created() {
@@ -129,7 +129,7 @@ export default {
     deleteAccount() {
       const token = localStorage.getItem("token");
       const id = this.$store.state.user._id;
-      if (confirm("Attention cette action supprimera votre compte")) {
+      if (confirm("⚠️Are you sure you want to delete your account?⚠️")) {
         axios
           .delete("auth/" + id, {
             headers: {
@@ -137,13 +137,13 @@ export default {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then(localStorage.clear()); // <- on vide le localStorage(userId et token)
+          .then(localStorage.clear());
         this.$router.push({ path: "/" }).catch((error) => {
           error;
         });
       }
     },
-    /*Mettre à jour son profil */
+
     save() {
       let formData = new FormData();
       formData.append("file", this.user.picture);
@@ -164,7 +164,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg = error.response.data.message
+          this.errorMessage = error.response.data.message
             ? error.response.data.message
             : error;
         });
@@ -191,24 +191,17 @@ export default {
 .button-type-1:hover {
   border: 1px solid white !important;
 }
+.button-type-2 {
+  background-color: #4e5166;
+  color: #ffd7d7;
+  border: 1px solid #ffd7d7;
+}
+.button-type-2:hover {
+  border: 1px solid white !important;
+}
 .profil-username {
   font-weight: 700;
   font-size: medium;
-  margin-top: 8px;
-}
-
-.picture-user-container {
-  width: 78px;
-}
-.picture-user-profile {
-  border-radius: 50%;
-  padding: 0;
-  height: 78px;
-  object-fit: cover;
-}
-.err-msg {
-  color: var(--primary-color);
-  font-weight: 400;
-  margin-top: 20px;
+  margin-top: 0.7rem;
 }
 </style>
