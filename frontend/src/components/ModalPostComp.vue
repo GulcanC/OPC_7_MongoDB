@@ -1,4 +1,5 @@
 <template>
+  <!---- Modal pour mettre à jour un post ---->
   <div
     class="modal"
     tabindex="-1"
