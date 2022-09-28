@@ -1,10 +1,12 @@
 <!-- User profil edit -->
 <template>
-  <article class="card shadow-sm container">
+  <article
+    class="card container text-light d-flex flex-direction-column align-items-center justify-content-center"
+  >
     <ProfilPictureComp></ProfilPictureComp>
-    <h2>My account</h2>
+    <h2 class="text-uppercase text-dark fs-5 font-weight-bold">My account</h2>
     <span
-      ><h3 class="profil-username">
+      ><h3 class="profil-username text-capitalize font-italic">
         {{ $store.state.user.firstName }}
         {{ $store.state.user.lastName }}
       </h3></span
@@ -14,23 +16,32 @@
       {{ $store.state.user.description }}
     </p>
 
-    <!---- Button qui ouvre le modal pour update le profil ---->
+    <!-- user update profil picture -->
+    <div class="mb-3" aria-label="update profil picture">
+      <label for="formFile" class="form-label text-left text-dark"
+        >Change your profile picture</label
+      >
+      <input
+        class="form-control"
+        type="file"
+        aria-label="Chargez une image"
+        @change="uploadProfilFile"
+        id="formFile"
+      />
+    </div>
 
-    <!---- Modal d'édition---->
+    <!-- textarea to write a description -->
 
-    <h2>Ajoutez une description et une photo de profil</h2>
+    <p class="text-dark text-left">Describe yourself in one sentence</p>
     <form
       @submit.prevent="save"
       style="text-align: left"
-      aria-label="modification des informations utilisateur"
+      aria-label="update user profile"
     >
       <div class="mb-3">
-        <div
-          class="form-floating"
-          aria-label="Modification de la description utilisateur"
-        >
+        <div class="form-floating" aria-label="update user profile">
           <textarea
-            aria-label="champs description utilisateur"
+            aria-label="update user profile"
             class="form-control text-left"
             placeholder="description"
             id="floatingTextarea"
@@ -39,51 +50,42 @@
           <label for="floatingTextarea">Description</label>
         </div>
       </div>
-      <div class="mb-5" aria-label="Modification image profil">
-        <label for="formFile" class="form-label"
-          >Change ta photo de profil ici</label
-        >
-        <input
-          class="form-control"
-          type="file"
-          aria-label="Chargez une image"
-          @change="uploadProfilFile"
-          id="formFile"
-        />
-      </div>
 
-      <div class="d-flex justify-content-between">
+      <!-- button to delete account and submit the changes -->
+
+      <div class="d-flex flex-column gap-3">
         <button
           role="button"
-          aria-label="Supprimer mon compte"
-          class="btn btn-danger"
+          title="Delete user account"
+          class="btn button-type-1"
           @click.prevent="deleteAccount"
         >
-          <fa icon="trash-alt" class="me-2" alt="image d'une poubelle" />
-          Supprimer mon compte
+          <fa icon="fa fa-trash-alt" class="me-2" alt="icon" />
+          Delete account
         </button>
 
         <button
           role="button"
-          aria-label="Enregister les modifications"
+          title="Save changes"
           type="submit"
-          class="btn btn-primary"
+          class="btn button-type-1"
         >
-          Submit
+          <fa icon="fa fa-paper-plane" class="me-2" alt="icon" />
+          Submit changes
         </button>
       </div>
       <p class="err-msg">{{ errMsg }}</p>
     </form>
-
+    <!-- button logout -->
     <button
       role="button"
-      aria-label="Déconnexion du compte"
-      class="btn btn-outline-secondary my-2"
+      title="logout"
+      class="btn button-type-2"
       @click="handleClick"
     >
-      Déconnexion
+      Logout
       <fa
-        icon="right-from-bracket"
+        icon="fa fa-right-from-bracket"
         class="ms-4"
         alt="image d'une flèche de sortie"
       />
@@ -93,10 +95,10 @@
 
 <script>
 import axios from "axios";
-import ModalProfilComp from "./ModalProfilComp.vue";
+
 import ProfilPictureComp from "./ProfilPictureComp.vue";
 export default {
-  components: { ModalProfilComp, ProfilPictureComp },
+  components: { ProfilPictureComp },
   name: "UserProfileComp",
   data() {
     return {
@@ -173,35 +175,26 @@ export default {
 
 <style scoped>
 .card {
-  border: none;
-  margin-bottom: 20px;
+  background-color: #fd2d01;
+  opacity: 0.9;
+  transition: all 0.3s;
 }
-h2 {
-  font-size: 1.2em;
-  font-weight: 600;
+.card:hover {
+  opacity: 1;
+}
+
+.button-type-1 {
+  background-color: #ffd7d7;
+  color: #4e5166;
+  border: 1px solid #4e5166;
+}
+.button-type-1:hover {
+  border: 1px solid white !important;
 }
 .profil-username {
   font-weight: 700;
   font-size: medium;
   margin-top: 8px;
-}
-
-.modalFade-enter-from {
-  opacity: 0;
-}
-.modalFade-enter-to {
-  opacity: 1;
-}
-.modalFade-enter-active,
-.modalFade-leave-active {
-  transition: all 300ms ease;
-}
-.modalFade-leave-from {
-  opacity: 1;
-}
-
-.modalFade-leave-to {
-  opacity: 0;
 }
 
 .picture-user-container {
