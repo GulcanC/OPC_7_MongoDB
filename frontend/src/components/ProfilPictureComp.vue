@@ -1,7 +1,7 @@
 <template>
   <div class="picture-user-container">
     <img
-      class="picture-user-profile shadow"
+      class="picture-user-profile"
       v-if="$store.state.user.picture"
       :src="$store.state.user.picture"
       alt="profil picture"
@@ -10,7 +10,7 @@
       v-else
       src="../assets/avatar.png"
       alt="default profil picture"
-      class="picture-user-profile shadow"
+      class="picture-user-profile"
     />
   </div>
 </template>

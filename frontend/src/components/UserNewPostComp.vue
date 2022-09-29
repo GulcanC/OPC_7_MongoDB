@@ -1,51 +1,49 @@
+<!-- create a new post -->
 <template>
-  <!----Créer un nouveau post ---->
-  <article class="card post-card mb-4 shadow-sm">
+  <article class="card post-card mb-4">
     <form
       action=""
       @submit.prevent="createPost"
       class="form-post p-2"
       name="myForm"
       id="myForm"
-      aria-label="Formulaire de création d'un post"
+      aria-label="form for creating new post"
     >
-      <div class="row">
-        <div class="col-2">
+      <div class="d-flex flex-column">
+        <div class="">
           <ProfilPictureComp></ProfilPictureComp>
         </div>
-        <div class="col-10">
-          <label class="new-post" for="postContent">Nouveau post</label>
 
+        <!-- textarea for writing your post -->
+        <div class="">
+          <label class="new-post" for="postContent">Create your post</label>
           <div>
             <textarea
               name="post"
               id="floatingTextarea"
               rows="2"
-              placeholder="Que voulez vous partager aujourd'hui?"
+              placeholder="Create your post"
               class="form-control text-left"
               v-model="post"
-              aria-label="champs pour le message du post"
             ></textarea>
 
+            <!-- input to upload an image -->
             <div class="mb-5">
-              <label for="formFile" class="form-label"
-                >Ajoutez une image ci dessous</label
-              >
+              <label for="formFile" class="form-label">Add an image</label>
               <input
                 :key="fileInputKey"
+                @change="uploadFile"
                 name="file"
                 accept="image/*"
                 class="form-control"
                 type="file"
-                aria-label="Chargez une image"
-                @change="uploadFile"
                 id="formFile"
               />
             </div>
-            <p class="err-msg">{{ errMsg }}</p>
-            <button role="button" type="submit" class="btn-post">
-              <fa icon="check" />
-              Publier
+            <p class="err-msg">{{ errorMessage }}</p>
+            <button role="button" type="submit" class="btn-post text-dark">
+              <fa icon="fa fa-paper-plane" />
+              Submit
             </button>
           </div>
         </div>
@@ -66,7 +64,7 @@ export default {
     return {
       post: "",
       file: "",
-      errMsg: null,
+      errorMessage: null,
       fileInputKey: 0,
     };
   },
@@ -79,7 +77,7 @@ export default {
     createPost() {
       /*Il faut qu'il y est quelque chose à poster*/
       if (!this.post && !this.file) {
-        this.errMsg = "Vous devez publier une image ou un texte!";
+        this.errorMessage = "Vous devez publier une image ou un texte!";
         return;
       }
 
@@ -112,7 +110,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.errMsg = error.response.data.message
+          this.errorMessage = error.response.data.message
             ? error.response.data.message
             : error;
         });

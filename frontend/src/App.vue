@@ -39,8 +39,6 @@ export default {
   font-family: "CURSIVE";
 }
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   font-size: normal;
   background-color: #ffd7d7;

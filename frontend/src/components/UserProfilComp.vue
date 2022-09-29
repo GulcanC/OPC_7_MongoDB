@@ -56,22 +56,22 @@
       <div class="d-flex flex-column gap-3">
         <button
           role="button"
-          title="Delete user account"
-          class="btn button-type-1"
-          @click.prevent="deleteAccount"
-        >
-          <fa icon="fa fa-trash-alt" class="me-2" alt="icon" />
-          Delete account
-        </button>
-
-        <button
-          role="button"
           title="Save changes"
           type="submit"
           class="btn button-type-1"
         >
           <fa icon="fa fa-paper-plane" class="me-2" alt="icon" />
           Submit changes
+        </button>
+
+        <button
+          role="button"
+          title="Delete user account"
+          class="btn button-type-1"
+          @click.prevent="deleteAccount"
+        >
+          <fa icon="fa fa-trash-alt" class="me-2" alt="icon" />
+          Delete account
         </button>
       </div>
       <p class="err-msg">{{ errorMessage }}</p>

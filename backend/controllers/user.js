@@ -14,12 +14,12 @@ exports.signup = (req, res, next) => {
 
   // check the password is valid ?
   if (!Password.validate(req.body.password)) {
-    return res.status(400).json({
+    return res.status(401).json({
       message:
         "⛔️ Password must contain 1 uppercase letter, 1 lowercase letter, 1 special character and 1 digit!",
     });
   } else if (req.body.password != req.body.passwordConfirm) {
-    return res.status(400).json({
+    return res.status(401).json({
       message: "⛔️ Password  is not correct!",
     });
   } else if (
