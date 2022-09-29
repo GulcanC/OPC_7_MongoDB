@@ -6,21 +6,16 @@ const auth = require("../middleware/auth");
 const multer = require("../middleware/multer-config");
 
 // http://localhost:3000/api/publication
-router.get("/", auth, publicationCtrl.getAllPost);
-//créer un post
 router.post("/", auth, multer, publicationCtrl.createPost);
-//modifier un post
+// http://localhost:3000/api/publication
+router.get("/", auth, publicationCtrl.getAllPost);
+// http://localhost:3000/api/publication/:id
 router.put("/:id", auth, multer, publicationCtrl.updatePost);
-//supprimer un post
+// http://localhost:3000/api/publication/:id
 router.delete("/:id", auth, publicationCtrl.deletePost);
-//like & dislike
+// http://localhost:3000/api/publication/:id/like
 router.post("/:id/like", auth, publicationCtrl.likePost);
-
-//voir un post, pas sûre d'en avoir besoin
-//router.get('/:id', auth, publicationCtrl.getOnePost);
-//router.get("/:userId", auth, publicationCtrl.getAllPostsFromUser);
-
-// commenter un post
-//router.post('/:id/comment', auth, multer, publicationCtrl.commentPost);
+// http://localhost:3000/api/publication/:id/like
+router.post("/:id/dislike", auth, publicationCtrl.dislikePost);
 
 module.exports = router;

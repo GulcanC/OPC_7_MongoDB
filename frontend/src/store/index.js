@@ -14,7 +14,9 @@ export default createStore({
     setPosts(state, posts) {
       state.posts = posts;
     },
-    ajouterPost(state, newPost) {
+
+    // The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+    createUserPost(state, newPost) {
       state.posts.unshift(newPost);
     },
     updateUser(state, updatedUser) {
@@ -39,6 +41,7 @@ export default createStore({
         }
       });
     },
+
     deletePost(state, post) {
       console.log("runnning deletePost", post, state.posts);
       var index = state.posts.findIndex((p) => p.id == post._id);

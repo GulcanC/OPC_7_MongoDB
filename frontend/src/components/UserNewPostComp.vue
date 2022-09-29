@@ -30,8 +30,10 @@
             <!-- input to upload an image -->
             <div class="mb-5">
               <label for="formFile" class="form-label">Add an image</label>
+              <!-- This input will allow the user to open the browser file selection dialog and select one or more files -->
+              <!-- The key acts as a sort of flag that tells Vue "if the data associated with this child component is moved somewhere else, then move the component along with it to preserve the changes that already exist".-->
               <input
-                :key="fileInputKey"
+                :key="pictureInputKey"
                 @change="uploadFile"
                 name="file"
                 accept="image/*"
@@ -40,6 +42,8 @@
                 id="formFile"
               />
             </div>
+
+            <!-- If the fields are empties show an error message -->
             <p class="err-msg">{{ errorMessage }}</p>
             <button role="button" type="submit" class="btn-post text-dark">
               <fa icon="fa fa-paper-plane" />
@@ -54,8 +58,8 @@
 
 <script>
 import axios from "axios";
-
 import ProfilPictureComp from "./ProfilPictureComp.vue";
+
 export default {
   components: { ProfilPictureComp },
   name: "UserNewPostComp",
@@ -65,7 +69,7 @@ export default {
       post: "",
       file: "",
       errorMessage: null,
-      fileInputKey: 0,
+      pictureInputKey: 0,
     };
   },
 
@@ -75,24 +79,27 @@ export default {
     },
 
     createPost() {
-      /*Il faut qu'il y est quelque chose à poster*/
+      // if the post text and image are empties show an error message
       if (!this.post && !this.file) {
-        this.errorMessage = "Vous devez publier une image ou un texte!";
+        this.errorMessage =
+          "⛔️ Please write your message and choose a picture!";
         return;
       }
 
-      /* on créé un objet formData qui va contenir les élements à poster*/
+      // Create an object formData which contains the data that will be posted
       let formData = new FormData();
       formData.append("post", this.post);
       formData.append("file", this.file);
       formData.append("userId", this.$store.state.user._id);
+      // authorImg comes from model "publicaton", picture comes from model "User"
       formData.append("authorImg", this.$store.state.user.picture);
+      // userName comes from model "publicaton", firsName and lastName come from model "User"
       formData.append(
         "userName",
         this.$store.state.user.firstName + " " + this.$store.state.user.lastName
       );
 
-      /* envoi de l'objet formData via axios.post */
+      // use axios to send formData
       axios
         .post("publication", formData, {
           headers: {
@@ -101,10 +108,10 @@ export default {
         })
         .then((response) => {
           if (response.status === 201) {
-            this.$store.commit("ajouterPost", response.data.post);
+            this.$store.commit("createUserPost", response.data.post);
             this.post = "";
             this.file = "";
-            this.fileInputKey++;
+            this.pictureInputKey++;
             this.$emit("postCree", true);
           }
         })

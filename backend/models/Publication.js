@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
@@ -15,6 +15,4 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Post', postSchema);
-
-//ajouter userName + userImageUrl
+module.exports = mongoose.model("Post", postSchema);

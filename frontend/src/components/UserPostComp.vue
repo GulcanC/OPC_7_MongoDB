@@ -123,22 +123,7 @@
           <span aria-label="nombre de like" class="badge">{{
             post.likes
           }}</span>
-          <fa icon="heart" alt="image de coeur" />
-        </button>
-      </div>
-
-      <div class="like">
-        <button
-          type="button"
-          role="button"
-          aria-label="ajouter un like à ce post"
-          class="btn like-btn"
-          @click="likeIt()"
-        >
-          <span aria-label="nombre de like" class="badge">{{
-            post.likes
-          }}</span>
-          <fa icon="heart" alt="image de coeur" />
+          <fa icon="fa-thumbs-up" alt="icon" />
         </button>
       </div>
     </div>
