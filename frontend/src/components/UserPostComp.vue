@@ -211,7 +211,7 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "⛔️ You cannot edit your post, please try again later.";
+            "⛔️ You cannot edit this post, please try again later.";
         });
     },
 
@@ -220,8 +220,7 @@ export default {
       let id = this.post._id;
       const token = localStorage.getItem("token");
       axios
-        // you can use also this way => .delete("publication/" + `${id}`, {
-        .delete(`publication/${id}`, {
+        .delete("publication/" + `${id}`, {
           headers: {
             "content-type": "application/json",
             Authorization: "Bearer " + token,
@@ -229,7 +228,10 @@ export default {
         })
         .then((response) => {
           console.log("response", response.data);
-          if (response.data.delPost.acknowledged) {
+          // deleteUserPost comes from backend, it is an object,
+          // here "acknowledged" is a boolean, it means, if the deletion is accepted get all posts
+          // deleteUserPost is an object that contains "acknowledged" and "deletedCount" shows the quantity of deleted item
+          if (response.data.deleteUserPost.acknowledged) {
             this.$store.dispatch("getAllPosts");
           }
           this.showModal = false;
@@ -237,11 +239,10 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "⛔️ You cannot delete your post, please try again later.";
+            "⛔️ Error! You cannot delete this post, please try again later.";
         });
     },
 
-    /****************Like et dislikes*************** */
     likePost() {
       const userId = this.$store.state.user._id;
       const likeData = {

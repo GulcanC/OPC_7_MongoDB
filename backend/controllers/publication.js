@@ -78,31 +78,33 @@ exports.updatePost = (req, res, next) => {
   }
 };
 
-//Supprimer un post
+// Delete the post function
 exports.deletePost = (req, res, next) => {
   User.findOne({ _id: req.auth.userId }).then((user) => {
     Post.findOne({ _id: req.params.id }).then((post) => {
-      //console.log('post', post);
+      // if you are not owner of this post and you are not admin, you can not delete the post
       if (post.userId != req.auth.userId && user.admin == "false") {
-        res.status(401).json({ message: "Non-autorisé" });
+        res.status(401).json({
+          message: "⛔️ You do not have permission to delete the post!",
+        });
       } else {
         try {
           Post.findOne({ _id: req.params.id }).then((post) => {
             if (post.imageUrl) {
               const filename = post.imageUrl.split("images/")[1];
-              //console.log('filename', filename)
               fs.unlink(`images/${filename}`, (error) => {
-                console.log("image supp");
+                console.log("✅ Picture has been succesfully deleted!");
                 if (error) throw error;
-                console.log(error);
               });
             } else {
-              console.log("ce post n'a pas de fichier à supprimer");
+              console.log("⛔️ This post has no files to delete");
             }
+            // here deleteUserPost will go to the frontend, it will inform that delete is successfull
+
             Post.deleteOne({ _id: req.params.id })
-              .then((delPost) => {
-                console.log("Post supprimé");
-                res.status(200).json({ delPost });
+              .then((deleteUserPost) => {
+                console.log("✅ Post has been succesfully deleted!");
+                res.status(200).json({ deleteUserPost });
               })
               .catch((error) => res.status(400).json({ error }));
           });
