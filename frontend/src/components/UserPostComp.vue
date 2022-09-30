@@ -47,7 +47,7 @@
           @fermeLeModal="showModal = false"
         >
           <form
-            @submit.prevent="UpdatePost"
+            @submit.prevent="UpdatePost()"
             style="text-align: left"
             aria-label="form to edit post"
           >
@@ -179,26 +179,28 @@ export default {
       this.timestamp = date;
     },
 
-    /*Choisir une nouvelle image*/
+    // function for upload image when we open the modal, the name "postPicture" is not important
     uploadPicture(event) {
-      this.newPost.image = event.target.files[0];
+      this.newPost.postPicture = event.target.files[0];
     },
 
-    /* Modifier et envoyer le nouveau post */
+    // function to update post when we open the modal, newPost comes from store
     UpdatePost() {
       const token = localStorage.getItem("token");
       let formData = new FormData();
       formData.append("post", this.newPost.post);
       formData.append("id", this.post._id);
 
-      if (this.newPost.image != "") {
-        formData.append("file", this.newPost.image);
+      if (this.newPost.postPicture != "") {
+        formData.append("file", this.newPost.postPicture);
       }
       let id = this.post._id;
 
+      // http://localhost:3000/api/publication/:id
       axios
         .put(`publication/${id}`, formData, {
           headers: {
+            "content-type": "application/json",
             Authorization: "Bearer " + token,
           },
         })
@@ -209,21 +211,23 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "Vous ne pouvez pas modifier votre publication pour le moment, veuillez réessayer plus tard.";
+            "⛔️ You cannot edit your post at this time, please try again later.";
         });
     },
-    /* Supprimer le post */
 
+    // function to delete the post
     deletePost() {
+      let id = this.post._id;
       const token = localStorage.getItem("token");
       axios
-        .delete("publication/" + this.post._id, {
+        // you can use also this way => .delete("publication/" + `${id}`, {
+        .delete(`publication/${id}`, {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + token,
           },
         })
         .then((response) => {
-          console.log("response du delete", response.data);
+          console.log("response", response.data);
           if (response.data.delPost.acknowledged) {
             //appel la fonction pour remettre l'ensemble des post
             this.$store.dispatch("getAllPosts");
