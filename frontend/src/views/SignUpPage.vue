@@ -84,7 +84,7 @@ import axios from "axios";
 import HeaderComp from "@/components/HeaderComp.vue";
 
 export default {
-  name: "Signup",
+  name: "SignUpPage",
   data() {
     return {
       user: {
@@ -126,9 +126,12 @@ export default {
           "⛔️ Please fill in all the fields of the form and check your password.";
         return;
       }
-      const response = await axios
+
+      // http://localhost:3000/api/auth/signup
+      await axios
         .post("auth/signup", this.user)
         .then((response) => {
+          console.log(response);
           this.$router.push("/login");
         })
         .catch((error) => {

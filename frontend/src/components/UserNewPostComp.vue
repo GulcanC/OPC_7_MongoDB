@@ -2,7 +2,6 @@
 <template>
   <article class="card post-card mb-4">
     <form
-      action=""
       @submit.prevent="createPost"
       class="form-post p-2"
       name="myForm"
@@ -34,7 +33,7 @@
               <!-- The key acts as a sort of flag that tells Vue "if the data associated with this child component is moved somewhere else, then move the component along with it to preserve the changes that already exist".-->
               <input
                 :key="pictureInputKey"
-                @change="uploadFile"
+                @change="uploadPicture"
                 name="file"
                 accept="image/*"
                 class="form-control"
@@ -74,7 +73,7 @@ export default {
   },
 
   methods: {
-    uploadFile(event) {
+    uploadPicture(event) {
       this.file = event.target.files[0];
     },
 
@@ -93,16 +92,17 @@ export default {
       formData.append("userId", this.$store.state.user._id);
       // authorImg comes from model "publicaton", picture comes from model "User"
       formData.append("authorImg", this.$store.state.user.picture);
-      // userName comes from model "publicaton", firsName and lastName come from model "User"
+      // userName comes from model "publication", firsName and lastName come from model "User"
       formData.append(
         "userName",
         this.$store.state.user.firstName + " " + this.$store.state.user.lastName
       );
 
-      // use axios to send formData
+      // use axios to send formData, http://localhost:3000/api/publication
       axios
         .post("publication", formData, {
           headers: {
+            "content-type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
@@ -112,7 +112,7 @@ export default {
             this.post = "";
             this.file = "";
             this.pictureInputKey++;
-            this.$emit("postCree", true);
+            // this.$emit("postCree", true);
           }
         })
         .catch((error) => {
@@ -141,7 +141,7 @@ export default {
 }
 .btn-post {
   border-radius: 15px;
-  background-color: var(--tertiary-color);
+
   transition: all 300ms ease-in-out;
   border: none;
   padding: 5px 13px;

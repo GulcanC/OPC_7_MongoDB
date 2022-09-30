@@ -55,12 +55,14 @@ export default {
         email: "",
         password: "",
       },
+      // error message will come from the backend
       errorMessage: "",
     };
   },
   components: { HeaderComp },
   methods: {
     async login() {
+      // http://localhost:3000/api/auth/login
       await axios
         .post("auth/login", this.user)
         .then((response) => {

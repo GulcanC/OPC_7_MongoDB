@@ -3,7 +3,7 @@
   <article class="post-card p-2 mb-4 text-light">
     <div class="post-user">
       <figure class="post-user-info" aria-label="user information">
-        <!-- user picture on the post -->
+        <!-- user profil picture on the post, if user does not choose a profil picture, show default one -->
         <div class="picture-user-container mx-auto mt-1 ms-4">
           <img
             class="picture-user-profile shadow"
@@ -24,93 +24,94 @@
           <span class="date text-muted"> {{ timestamp }} </span>
         </figcaption>
       </figure>
+
+      <!-- button on the post container which will open a modal to edit post -->
       <div class="modif">
-        <!-- button to edit post -->
+        <!-- button to edit post, user can delete her own post and administrator can delete all user's post -->
         <button
           role="button"
-          aria-label="update your post"
-          v-if="post.userId == user.userId || user.admin == true"
           type="button"
           class="btn button-type-1"
+          title="Update your post"
+          v-if="post.userId == user.userId || user.admin == true"
           @click="showModal = true"
         >
           <fa icon="fa-pen-to-square" alt="icon" />
         </button>
 
         <!-- this part of the modal will be replaced with the slot in ModalPostComp -->
-        <transition name="modalFade">
-          <ModalPostComp
-            v-if="showModal"
-            title="Update your post"
-            @fermeLeModal="showModal = false"
+
+        <ModalPostComp
+          v-if="showModal"
+          title="Update your post"
+          @fermeLeModal="showModal = false"
+        >
+          <form
+            @submit.prevent="UpdatePost"
+            style="text-align: left"
+            aria-label="form to edit post"
           >
-            <form
-              @submit.prevent="UpdatePost"
-              style="text-align: left"
-              aria-label="form to edit post"
-            >
-              <div class="mb-3">
-                <label for="formFile" class="form-label"
-                  >Add or change the image</label
-                >
-                <input
-                  accept="image/*"
-                  class="form-control"
-                  type="file"
-                  @change="uploadFile"
-                  id="formFile"
-                />
+            <!-- upload picture field on the modal -->
+            <div class="mb-3">
+              <label for="formFile" class="form-label"
+                >Add or change the image</label
+              >
+              <input
+                accept="image/*"
+                class="form-control"
+                type="file"
+                @change="uploadPicture"
+                id="formFile"
+              />
+            </div>
+
+            <!-- textarea to change user's message on the modal -->
+            <div class="mb-3">
+              <div class="form-floating">
+                <p class="text-light">Add or change the message</p>
+                <textarea
+                  class="form-control text-left"
+                  placeholder="Write your message"
+                  id="floatingTextarea"
+                  v-model="newPost.post"
+                ></textarea>
               </div>
+            </div>
 
-              <div class="mb-3">
-                <div class="form-floating">
-                  <p class="text-transparent">Add or change the message</p>
-                  <textarea
-                    class="form-control text-left"
-                    placeholder="ajoutez vos modifications"
-                    id="floatingTextarea"
-                    v-model="newPost.post"
-                  ></textarea>
-                </div>
-              </div>
+            <!-- delete and submit changes buttons on the post -->
+            <div class="d-flex justify-content-between">
+              <button
+                role="button"
+                type="button"
+                class="btn button-type-2"
+                @click="deletePost()"
+              >
+                <fa icon="fa-trash-alt" class="me-2" alt="icon" />
+                Delete the post
+              </button>
 
-              <div class="d-flex justify-content-between">
-                <button
-                  role="button"
-                  type="button"
-                  class="btn button-type-2"
-                  @click="deletePost"
-                >
-                  <fa icon="fa-trash-alt" class="me-2" alt="icon" />
-                  Delete the post
-                </button>
+              <button role="button" type="submit" class="btn button-type-2">
+                <fa icon="fa-paper-plane" class="me-2" alt="icon" />
+                Save the changes
+              </button>
+            </div>
 
-                <button
-                  role="button"
-                  aria-label="Enregistrer les modifications"
-                  type="submit"
-                  class="btn button-type-2"
-                >
-                  <fa icon="fa-paper-plane" class="me-2" alt="icon" />
-                  Save the changes
-                </button>
-              </div>
-
-              <p>{{ errorMessage }}</p>
-            </form>
-          </ModalPostComp>
-        </transition>
+            <p>{{ errorMessage }}</p>
+          </form>
+        </ModalPostComp>
       </div>
     </div>
 
-    <!-- user post and image -->
+    <!-- user post and image on the post container-->
     <div class="post-content">
       <p class="text-left-align">{{ post.post }}</p>
+
       <div class="post-content--img" v-if="post.imageUrl != null">
         <img :src="post.imageUrl" alt="post image" />
       </div>
     </div>
-    <!---- Partie Like ---->
+
+    <!-- like button on the post container -->
     <div>
       <div class="like">
         <button
@@ -118,7 +119,7 @@
           role="button"
           aria-label="ajouter un like à ce post"
           class="btn like-btn"
-          @click="likeIt()"
+          @click="likePost()"
         >
           <span aria-label="nombre de like" class="badge">{{
             post.likes
@@ -179,7 +180,7 @@ export default {
     },
 
     /*Choisir une nouvelle image*/
-    uploadFile(event) {
+    uploadPicture(event) {
       this.newPost.image = event.target.files[0];
     },
 
@@ -237,7 +238,7 @@ export default {
     },
 
     /****************Like et dislikes*************** */
-    likeIt() {
+    likePost() {
       const userId = this.$store.state.user._id;
       const likeData = {
         userId,
