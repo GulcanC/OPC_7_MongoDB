@@ -49,6 +49,8 @@ export default createStore({
     },
   },
 
+  // we will use dispatching actions to trigger actions
+  // we can dispatch actions in components with this.$store.dispatch('getAllPosts')
   actions: {
     async getAllPosts(context) {
       try {
