@@ -204,14 +204,14 @@ export default {
             Authorization: "Bearer " + token,
           },
         })
-        .then((res) => {
-          this.$store.commit("updatePost", res.data.post);
+        .then((response) => {
+          this.$store.commit("updatePost", response.data.post);
           this.showModal = false;
         })
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "⛔️ You cannot edit your post at this time, please try again later.";
+            "⛔️ You cannot edit your post, please try again later.";
         });
     },
 
@@ -223,13 +223,13 @@ export default {
         // you can use also this way => .delete("publication/" + `${id}`, {
         .delete(`publication/${id}`, {
           headers: {
+            "content-type": "application/json",
             Authorization: "Bearer " + token,
           },
         })
         .then((response) => {
           console.log("response", response.data);
           if (response.data.delPost.acknowledged) {
-            //appel la fonction pour remettre l'ensemble des post
             this.$store.dispatch("getAllPosts");
           }
           this.showModal = false;
@@ -237,7 +237,7 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "Vous ne pouvez pas supprimer votre publication pour le moment, veuillez réessayer plus tard.";
+            "⛔️ You cannot delete your post, please try again later.";
         });
     },
 
