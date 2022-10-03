@@ -16,6 +16,6 @@ router.delete("/:id", auth, publicationCtrl.deletePost);
 // http://localhost:3000/api/publication/:id/like
 router.post("/:id/like", auth, publicationCtrl.likePost);
 // http://localhost:3000/api/publication/:id/like
-router.post("/:id/dislike", auth, publicationCtrl.dislikePost);
+// router.post("/:id/dislike", auth, publicationCtrl.dislikePost);
 
 module.exports = router;

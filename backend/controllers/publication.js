@@ -125,7 +125,6 @@ exports.deletePost = (req, res, next) => {
 // increment the number of likes with the operator $inc
 // add userId in the usersLiked array with the operator $push, when the user likes the post
 // remove userId from the usersLiked array with the operator $pull, when the user cancels the like
-// we will use updatedPost in the fronend, be careful
 
 exports.likePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
@@ -134,8 +133,8 @@ exports.likePost = (req, res, next) => {
         { _id: req.params.id },
         { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } }
       )
-
         .then(() => {
+          // we will use updatedPost in the fronend, be careful
           Post.findOne({ _id: req.params.id }).then((updatedPost) =>
             res
               .status(200)
@@ -153,38 +152,6 @@ exports.likePost = (req, res, next) => {
             res
               .status(200)
               .json({ message: "✅ User unliked the post", updatedPost })
-          );
-        })
-        .catch((error) => res.status(400).json({ error }));
-    }
-  });
-};
-
-exports.dislikePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id }).then((post) => {
-    if (!post.usersDisliked.includes(req.body.userId)) {
-      let toChange = {
-        $inc: { dislikes: 1 },
-        $push: { usersDisliked: req.body.userId },
-      };
-
-      Post.updateOne({ _id: req.params.id }, toChange)
-
-        .then(() => {
-          Post.findOne({ _id: req.params.id }).then((updatedPost) =>
-            res.status(200).json({ message: "Post disliked!", updatedPost })
-          );
-        })
-        .catch((error) => res.status(400).json({ error }));
-    } else if (post.usersDisliked.includes(req.body.userId)) {
-      Post.updateOne(
-        { _id: req.params.id },
-
-        { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } }
-      )
-        .then(() => {
-          Post.findOne({ _id: req.params.id }).then((updatedPost) =>
-            res.status(200).json({ message: "Disliked canceled", updatedPost })
           );
         })
         .catch((error) => res.status(400).json({ error }));
