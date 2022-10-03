@@ -54,6 +54,7 @@ export default createStore({
   actions: {
     async getAllPosts(context) {
       try {
+        // publication
         const response = await axios.get("publication", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
