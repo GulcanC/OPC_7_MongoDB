@@ -2,6 +2,7 @@ const Post = require("../models/Publication");
 const User = require("../models/User");
 const fs = require("fs");
 
+// create post
 exports.createPost = (req, res, next) => {
   const postObject = req.body;
   let imageUrl = null;
@@ -19,12 +20,17 @@ exports.createPost = (req, res, next) => {
     .save()
     .then(() => res.status(201).json({ post }))
     .catch((error) => res.status(400).json({ error }));
+
+  console.log("💧 Create Post 💧");
+  console.log(req.body);
 };
 
+// get all posts, use mongoose $sort operator to sort the post
+// createdAt:-1 the last post at the top, if you write createdAt:1, the last post will be at the bottom
 exports.getAllPost = (req, res, next) => {
   let postArray = [];
-  Post.find()
-    .sort({ createdAt: -1 })
+  Post.find({ $sort: { createdAt: -1 } })
+
     .then((posts) => {
       posts.forEach((post) => {
         User.findOne({ _id: post.userId }).then((user) => {
@@ -35,11 +41,12 @@ exports.getAllPost = (req, res, next) => {
       res.status(200).json(postArray);
     })
     .catch((error) => res.status(400).json({ error }));
+  console.log("💧 Gat All Posts 💧");
+  console.log(req.body);
 };
 
-//modifier un post logique ok mais ne supprime pas les images du back
+// updatePost, The $set operator replaces the value of a field with the specified value.
 exports.updatePost = (req, res, next) => {
-  const postObject = req.body;
   let imageUrl = null;
 
   if (req.file) {
@@ -78,7 +85,7 @@ exports.updatePost = (req, res, next) => {
   }
 };
 
-// Delete the post function
+// Delete post, use the file system to manage the files
 exports.deletePost = (req, res, next) => {
   User.findOne({ _id: req.auth.userId }).then((user) => {
     Post.findOne({ _id: req.params.id }).then((post) => {
@@ -100,7 +107,6 @@ exports.deletePost = (req, res, next) => {
               console.log("⛔️ This post has no files to delete");
             }
             // here deleteUserPost will go to the frontend, it will inform that delete is successfull
-
             Post.deleteOne({ _id: req.params.id })
               .then((deleteUserPost) => {
                 console.log("✅ Post has been succesfully deleted!");
@@ -116,33 +122,38 @@ exports.deletePost = (req, res, next) => {
   });
 };
 
+// increment the number of likes with the operator $inc
+// add userId in the usersLiked array with the operator $push, when the user likes the post
+// remove userId from the usersLiked array with the operator $pull, when the user cancels the like
+// we will use updatedPost in the fronend, be careful
+
 exports.likePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (!post.usersLiked.includes(req.body.userId)) {
-      let toChange = {
-        $inc: { likes: +1 },
-        $push: { usersLiked: req.body.userId },
-      };
-
-      Post.updateOne({ _id: req.params.id }, toChange)
+      Post.updateOne(
+        { _id: req.params.id },
+        { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } }
+      )
 
         .then(() => {
           Post.findOne({ _id: req.params.id }).then((updatedPost) =>
-            res.status(200).json({ message: "Post liked!", updatedPost })
+            res
+              .status(200)
+              .json({ message: "✅ User liked the post!", updatedPost })
           );
         })
         .catch((error) => res.status(400).json({ error }));
     } else if (post.usersLiked.includes(req.body.userId)) {
       Post.updateOne(
         { _id: req.params.id },
-
         { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } }
       )
         .then(() => {
           Post.findOne({ _id: req.params.id }).then((updatedPost) =>
-            res.status(200).json({ message: "Like canceled", updatedPost })
+            res
+              .status(200)
+              .json({ message: "✅ User unliked the post", updatedPost })
           );
-          // res.status(200).json({ message: 'Post unliked', post })
         })
         .catch((error) => res.status(400).json({ error }));
     }
@@ -153,7 +164,7 @@ exports.dislikePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (!post.usersDisliked.includes(req.body.userId)) {
       let toChange = {
-        $inc: { dislikes: +1 },
+        $inc: { dislikes: 1 },
         $push: { usersDisliked: req.body.userId },
       };
 
