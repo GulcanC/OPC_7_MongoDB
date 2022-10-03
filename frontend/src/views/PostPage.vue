@@ -10,10 +10,7 @@
       <!-- welcome message, new post area and all posts at the right of the page -->
       <section class="col-lg-8">
         <!-- welcome message at the top of the page -->
-        <h3
-          v-if="firstPost"
-          class="first-post profil-username text-capitalize font-italic"
-        >
+        <h3 class="first-post profil-username text-capitalize font-italic">
           Hi
           {{ $store.state.user.firstName }}
           {{ $store.state.user.lastName }}, share your message!
@@ -43,9 +40,7 @@ import UserProfilComp from "@/components/UserProfilComp.vue";
 export default {
   name: "PostPage",
   data() {
-    return {
-      firstPost: false,
-    };
+    return {};
   },
 
   components: {
@@ -59,7 +54,6 @@ export default {
     if (this.$store.state.user) {
       this.$store.dispatch("getAllPosts");
       if (!this.$store.state.posts || this.$store.state.posts.length === 0) {
-        this.firstPost = true;
       }
     } else {
       this.$router.push("/login");

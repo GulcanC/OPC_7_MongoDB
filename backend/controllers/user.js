@@ -141,7 +141,8 @@ exports.deleteUser = (req, res, next) => {
   }
 };
 
-exports.identifyUser = (req, res) => {
+// http://localhost:3000/api/auth/verify
+exports.verifyUser = (req, res) => {
   if (!req.headers.authorization) {
     res.status(403).json({
       message: "⛔️ There is an authentication problem! ",
