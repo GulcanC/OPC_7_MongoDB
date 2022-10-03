@@ -1,4 +1,3 @@
-//récupération du plugin password-validator qui permettra de renforcer le choix du mot de passe
 const passwordValidator = require("password-validator");
 
 // npm install password-validator
