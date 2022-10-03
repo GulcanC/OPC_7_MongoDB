@@ -144,7 +144,7 @@ exports.deleteUser = (req, res, next) => {
 exports.identifyUser = (req, res) => {
   if (!req.headers.authorization) {
     res.status(403).json({
-      message: "Il n'y a pas de headers d'authentification",
+      message: "⛔️ There is an authentication problem! ",
     });
   }
   const token = req.headers.authorization.split(" ")[1];
