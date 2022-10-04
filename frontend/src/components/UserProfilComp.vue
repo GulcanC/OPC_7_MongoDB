@@ -7,8 +7,7 @@
     <h2 class="text-uppercase text-dark fs-5 font-weight-bold">My account</h2>
     <span
       ><h3 class="profil-username text-capitalize font-italic">
-        {{ $store.state.user.firstName }}
-        {{ $store.state.user.lastName }}
+        {{ $store.getters["fullName"] }}
       </h3></span
     >
 
@@ -95,7 +94,6 @@
 
 <script>
 import axios from "axios";
-
 import ProfilPictureComp from "./ProfilPictureComp.vue";
 export default {
   components: { ProfilPictureComp },
@@ -121,7 +119,7 @@ export default {
     /* Se déconnecter */
     handleClick() {
       localStorage.removeItem("token");
-      this.$store.commit("setUser", null);
+      this.$store.commit("SET_USER", null);
       this.$router.push("/");
     },
 
@@ -175,7 +173,7 @@ export default {
 
 <style scoped>
 .card {
-  background-color: #fd2d01;
+  background-color: green;
   opacity: 0.9;
   transition: all 0.3s;
 }

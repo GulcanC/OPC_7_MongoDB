@@ -70,20 +70,6 @@ export default {
   padding: 0.5rem;
   font-weight: bold;
   font-size: 1.2rem;
-  background-image: linear-gradient(
-    120deg,
-    transparent 0%,
-    #ffd7d7 50%,
-    #4e5166 50%
-  );
-  background-size: 220%;
-  transition: all 0.4s;
-}
-
-.btn-connection:hover,
-.btn-connection:active {
-  background-position: 100%;
-  color: white;
 }
 
 /* @media (max-width: 992px) {

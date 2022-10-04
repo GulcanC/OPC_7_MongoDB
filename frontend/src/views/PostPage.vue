@@ -11,9 +11,8 @@
       <section class="col-lg-8">
         <!-- welcome message at the top of the page -->
         <h3 class="first-post profil-username text-capitalize font-italic">
-          Hi
-          {{ $store.state.user.firstName }}
-          {{ $store.state.user.lastName }}, share your message!
+          Hello
+          {{ $store.getters["fullName"] }}, share your message!
         </h3>
 
         <!-- area to choose a picture and to share a text -->

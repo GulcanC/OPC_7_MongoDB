@@ -69,7 +69,7 @@ export default {
           if (response.status == 200) {
             localStorage.setItem("token", response.data.token);
             this.$router.push("/post");
-            this.$store.commit("setUser", response.data);
+            this.$store.commit("SET_USER", response.data);
           }
         })
         .catch((error) => {

@@ -266,7 +266,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .button-type-1 {
   background-color: #ffd7d7;
   color: #4e5166;
@@ -282,7 +282,7 @@ export default {
   border: 1px solid white;
 }
 .post-card {
-  background-color: #4e5166;
+  background-color: white;
 }
 .post-user {
   display: flex;
@@ -290,12 +290,6 @@ export default {
 }
 .post-user-info {
   display: flex;
-}
-
-.fa-heart {
-  color: #dd0303;
-  font-size: 1.7em;
-  transition: all 600ms ease;
 }
 
 .post-content {
@@ -311,6 +305,7 @@ export default {
 figcaption {
   min-width: fit-content;
   margin: 0.5rem;
+  color: black;
 }
 .text-left-align {
   text-align: left !important;
