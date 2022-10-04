@@ -134,13 +134,11 @@
 <script>
 import axios from "axios";
 import ModalPostComp from "./ModalPostComp.vue";
-
 export default {
   name: "UserPostComp",
   components: {
     ModalPostComp,
   },
-
   data() {
     return {
       publications: [],
@@ -178,24 +176,20 @@ export default {
         today.getFullYear();
       this.timestamp = date;
     },
-
     // function for upload image when we open the modal, the name "postPicture" is not important
     uploadPicture(event) {
       this.newPost.postPicture = event.target.files[0];
     },
-
     // function to update post when we open the modal, newPost comes from store
     UpdatePost() {
       const token = localStorage.getItem("token");
       let formData = new FormData();
       formData.append("post", this.newPost.post);
       formData.append("id", this.post._id);
-
       if (this.newPost.postPicture != "") {
         formData.append("file", this.newPost.postPicture);
       }
       let id = this.post._id;
-
       // http://localhost:3000/api/publication/:id
       axios
         .put(`publication/${id}`, formData, {
@@ -214,7 +208,6 @@ export default {
             "⛔️ You cannot edit this post, please try again later.";
         });
     },
-
     // function to delete the post
     deletePost() {
       let id = this.post._id;
@@ -242,7 +235,6 @@ export default {
             "⛔️ Error! You cannot delete this post, please try again later.";
         });
     },
-
     likePost() {
       const userId = this.$store.state.user._id;
       const likeData = {
@@ -250,7 +242,6 @@ export default {
         postId: this.post._id,
         like: 1,
       };
-
       axios
         .post(`publication/${this.post._id}/like/`, likeData, {
           headers: {
@@ -266,13 +257,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .button-type-1 {
   background-color: #ffd7d7;
   color: #4e5166;
   border: 1px solid #4e5166;
 }
-
 .button-type-2 {
   background-color: white;
   color: #4e5166;
@@ -282,7 +272,7 @@ export default {
   border: 1px solid white;
 }
 .post-card {
-  background-color: white;
+  background-color: #4e5166;
 }
 .post-user {
   display: flex;
@@ -291,11 +281,14 @@ export default {
 .post-user-info {
   display: flex;
 }
-
+.fa-heart {
+  color: #dd0303;
+  font-size: 1.7em;
+  transition: all 600ms ease;
+}
 .post-content {
   margin: -10px 100px;
 }
-
 .post-content img {
   max-height: 20rem;
   margin-bottom: 3rem;
@@ -305,14 +298,12 @@ export default {
 figcaption {
   min-width: fit-content;
   margin: 0.5rem;
-  color: black;
 }
 .text-left-align {
   text-align: left !important;
   margin-left: 3rem;
   color: black;
 }
-
 .picture-user-container {
   width: 7rem;
 }
@@ -322,7 +313,6 @@ figcaption {
   width: 6rem;
   object-fit: cover;
 }
-
 .badge {
   color: green;
 }
@@ -341,7 +331,6 @@ figcaption {
   background-color: white;
   border-color: white;
 }
-
 .like .like-btn:hover .fa-heart {
   transform: scale(1.2);
 }

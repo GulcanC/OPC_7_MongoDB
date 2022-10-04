@@ -6,23 +6,21 @@ export default createStore({
     user: {},
     posts: [],
   },
-  // combine the first and last name and add it to the components like => {{ $store.getters["fullName"]
   getters: {
     fullName: function (state) {
       return `${state.user.firstName} ${state.user.lastName}`;
     },
   },
-
-  // mutations should be written in the format SET_USER
-  // Go to the components to add these mutations, use =>  this.$store.commit("SET_USER", payload)
   mutations: {
-    SET_USER(state, user) {
+    setUser(state, user) {
       state.user = user;
     },
     setPosts(state, posts) {
       state.posts = posts;
     },
-    ajouterPost(state, newPost) {
+
+    // The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+    createUserPost(state, newPost) {
       state.posts.unshift(newPost);
     },
     updateUser(state, updatedUser) {
@@ -47,6 +45,7 @@ export default createStore({
         }
       });
     },
+
     deletePost(state, post) {
       console.log("runnning deletePost", post, state.posts);
       var index = state.posts.findIndex((p) => p.id == post._id);
@@ -54,9 +53,12 @@ export default createStore({
     },
   },
 
+  // we will use dispatching actions to trigger actions
+  // we can dispatch actions in components with this.$store.dispatch('getAllPosts')
   actions: {
     async getAllPosts(context) {
       try {
+        // publication
         const response = await axios.get("publication", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

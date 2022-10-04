@@ -11,8 +11,7 @@
       <section class="col-lg-8">
         <!-- welcome message at the top of the page -->
         <h3 class="first-post profil-username text-capitalize font-italic">
-          Hello
-          {{ $store.getters["fullName"] }}, share your message!
+          Hello {{ $store.getters["fullName"] }}, share your message!
         </h3>
 
         <!-- area to choose a picture and to share a text -->
@@ -35,19 +34,16 @@
 import UserNewPostComp from "@/components/UserNewPostComp.vue";
 import UserPostComp from "@/components/UserPostComp.vue";
 import UserProfilComp from "@/components/UserProfilComp.vue";
-
 export default {
   name: "PostPage",
   data() {
     return {};
   },
-
   components: {
     UserNewPostComp,
     UserPostComp,
     UserProfilComp,
   },
-
   // getAllPosts is an action to trigger this action, we use dispatch => this.$store.dispatch("action");
   async created() {
     if (this.$store.state.user) {
@@ -74,7 +70,6 @@ export default {
   margin-top: 25px;
   margin-bottom: 25px;
 }
-
 @media (max-width: 992px) {
   .conteiner-main {
     padding: 8px;

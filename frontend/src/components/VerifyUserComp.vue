@@ -2,12 +2,10 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "VerifyUserComp",
   created() {
     const token = localStorage.getItem("token");
-
     if (token) {
       axios
         .post(
@@ -19,7 +17,7 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
-          this.$store.commit("SET_USER", res.data);
+          this.$store.commit("setUser", res.data);
           this.$router.push("/post");
         });
     } else if (!token) {

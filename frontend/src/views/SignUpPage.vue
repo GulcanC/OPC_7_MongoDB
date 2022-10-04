@@ -82,7 +82,6 @@
 <script>
 import axios from "axios";
 import HeaderComp from "@/components/HeaderComp.vue";
-
 export default {
   name: "SignUpPage",
   data() {
@@ -106,15 +105,12 @@ export default {
       let regExEmail = new RegExp(
         /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
       );
-
       let testEmail = regExEmail.test(req.body.user.email);
       let testPassword = regExPassword.test(req.body.user.password);
-
       if (testEmail && testPassword === false) {
         this.errorMessage = "⛔️ error regex";
         return;
       }  */
-
       if (
         !this.user.firstName ||
         !this.user.lastName ||
@@ -126,7 +122,6 @@ export default {
           "⛔️ Please fill in all the fields of the form and check your password.";
         return;
       }
-
       // http://localhost:3000/api/auth/signup
       await axios
         .post("auth/signup", this.user)
@@ -159,7 +154,6 @@ export default {
 .btn-login {
   background-color: #4e5166;
 }
-
 .form-login {
   display: flex;
   flex-direction: column;
@@ -171,7 +165,6 @@ export default {
   margin: 0.5rem 0 0 0.4rem;
   font-weight: bold;
 }
-
 .form-group label {
   color: white;
 }
@@ -191,13 +184,11 @@ export default {
   border-bottom: none;
   transform: translateY(0.1rem);
 }
-
 .go-to-login-button,
 .btn-login {
   color: #fd2d01;
   font-weight: bold;
 }
-
 .go-to-login-button:hover,
 .btn-login {
   background-color: white;

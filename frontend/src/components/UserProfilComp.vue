@@ -115,14 +115,12 @@ export default {
     uploadProfilFile(event) {
       this.user.picture = event.target.files[0];
     },
-
     /* Se déconnecter */
     handleClick() {
       localStorage.removeItem("token");
-      this.$store.commit("SET_USER", null);
+      this.$store.commit("setUser", null);
       this.$router.push("/");
     },
-
     /* Supprimer son compte */
     deleteAccount() {
       const token = localStorage.getItem("token");
@@ -141,15 +139,12 @@ export default {
         });
       }
     },
-
     save() {
       let formData = new FormData();
       formData.append("file", this.user.picture);
       formData.append("description", this.user.description);
-
       const token = localStorage.getItem("token");
       const id = this.$store.state.user._id;
-
       axios
         .put("auth/" + id, formData, {
           headers: {
@@ -173,14 +168,13 @@ export default {
 
 <style scoped>
 .card {
-  background-color: green;
+  background-color: #fd2d01;
   opacity: 0.9;
   transition: all 0.3s;
 }
 .card:hover {
   opacity: 1;
 }
-
 .button-type-1 {
   background-color: #ffd7d7;
   color: #4e5166;

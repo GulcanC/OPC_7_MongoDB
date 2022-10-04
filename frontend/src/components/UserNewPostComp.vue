@@ -58,11 +58,9 @@
 <script>
 import axios from "axios";
 import ProfilPictureComp from "./ProfilPictureComp.vue";
-
 export default {
   components: { ProfilPictureComp },
   name: "UserNewPostComp",
-
   data() {
     return {
       post: "",
@@ -71,12 +69,10 @@ export default {
       pictureInputKey: 0,
     };
   },
-
   methods: {
     uploadPicture(event) {
       this.file = event.target.files[0];
     },
-
     createPost() {
       // if the post text and image are empties show an error message
       if (!this.post && !this.file) {
@@ -84,7 +80,6 @@ export default {
           "⛔️ Please write your message and choose a picture!";
         return;
       }
-
       // Create an object formData which contains the data that will be posted
       let formData = new FormData();
       formData.append("post", this.post);
@@ -97,7 +92,6 @@ export default {
         "userName",
         this.$store.state.user.firstName + " " + this.$store.state.user.lastName
       );
-
       // use axios to send formData, http://localhost:3000/api/publication
       axios
         .post("publication", formData, {
@@ -130,7 +124,6 @@ export default {
 .card {
   margin: auto;
 }
-
 .post-card {
   border: none;
 }
@@ -141,7 +134,6 @@ export default {
 }
 .btn-post {
   border-radius: 15px;
-
   transition: all 300ms ease-in-out;
   border: none;
   padding: 5px 13px;

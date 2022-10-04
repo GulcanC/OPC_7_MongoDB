@@ -7,7 +7,7 @@
 
 <script>
 import VerifyUserComp from "@/components/VerifyUserComp.vue";
-
+// import axios from "axios";
 export default {
   name: "App",
   components: {

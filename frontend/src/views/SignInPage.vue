@@ -46,7 +46,6 @@
 <script>
 import axios from "axios";
 import HeaderComp from "@/components/HeaderComp.vue";
-
 export default {
   name: "SignInPage",
   data() {
@@ -69,7 +68,7 @@ export default {
           if (response.status == 200) {
             localStorage.setItem("token", response.data.token);
             this.$router.push("/post");
-            this.$store.commit("SET_USER", response.data);
+            this.$store.commit("setUser", response.data);
           }
         })
         .catch((error) => {
