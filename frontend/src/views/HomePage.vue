@@ -23,7 +23,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+//
 import HeaderComp from "@/components/HeaderComp.vue";
 import HomeMsgComp from "@/components/HomeMsgComp.vue";
 import FooterComp from "@/components/FooterComp.vue";

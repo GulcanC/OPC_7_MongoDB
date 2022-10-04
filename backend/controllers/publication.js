@@ -29,8 +29,8 @@ exports.createPost = (req, res, next) => {
 // createdAt:-1 the last post at the top, if you write createdAt:1, the last post will be at the bottom
 exports.getAllPost = (req, res, next) => {
   let postArray = [];
-  Post.find({ $sort: { createdAt: -1 } })
-
+  Post.find()
+    .sort({ createdAt: -1 })
     .then((posts) => {
       posts.forEach((post) => {
         User.findOne({ _id: post.userId }).then((user) => {

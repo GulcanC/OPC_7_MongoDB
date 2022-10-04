@@ -97,6 +97,15 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+exports.getOneUser = (req, res, next) => {
+  // pour trouver le sauce unique ayant le même _id que le paramètre de la requête
+  User.findOne({ _id: req.params.id })
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(400).json({ error }));
+
+  console.log("💧 Get one sauce 💧");
+  console.log(req.params.id);
+};
 // http://localhost:3000/api/auth/:id
 exports.updateUser = (req, res, next) => {
   let imageUrl = null;
