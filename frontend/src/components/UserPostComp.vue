@@ -199,7 +199,7 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.commit("updatePost", response.data.post);
+          this.$store.commit("UPDATE_POST", response.data.post);
           this.showModal = false;
         })
         .catch((error) => {
@@ -249,7 +249,7 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.commit("updateLikes", response.data.updatedPost);
+          this.$store.commit("LIKE_POST", response.data.updatedPost);
         })
         .catch((error) => console.log(error));
     },

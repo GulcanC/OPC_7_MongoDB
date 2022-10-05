@@ -28,18 +28,6 @@
         <div class="modal-body">
           <slot></slot>
         </div>
-        <!-- <div class="modal-footer">
-          <button
-            role="button"
-            aria-label="annuler les modifications"
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal"
-            @click="$emit('fermeLeModal')"
-          >
-            Annuler
-          </button>
-        </div> -->
       </div>
     </div>
   </div>

@@ -17,7 +17,7 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
-          this.$store.commit("setUser", res.data);
+          this.$store.commit("SET_USER", res.data);
           this.$router.push("/post");
         });
     } else if (!token) {

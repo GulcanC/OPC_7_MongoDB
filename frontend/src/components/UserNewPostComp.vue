@@ -102,7 +102,7 @@ export default {
         })
         .then((response) => {
           if (response.status === 201) {
-            this.$store.commit("createPost", response.data.post);
+            this.$store.commit("CREATE_POST", response.data.post);
             this.post = "";
             this.file = "";
             this.pictureInputKey++;

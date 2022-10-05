@@ -118,14 +118,14 @@ export default {
     /* Se déconnecter */
     handleClick() {
       localStorage.removeItem("token");
-      this.$store.commit("setUser", null);
+      this.$store.commit("SET_USER", null);
       this.$router.push("/");
     },
     /* Supprimer son compte */
     deleteAccount() {
       const token = localStorage.getItem("token");
       const id = this.$store.state.user._id;
-      if (confirm("⚠️Are you sure you want to delete your account?⚠️")) {
+      if (confirm("⚠️ Are you sure you want to delete this account? ⚠️")) {
         axios
           .delete("auth/" + id, {
             headers: {
@@ -153,7 +153,7 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.commit("updateUser", response.data);
+          this.$store.commit("UPDATE_USER", response.data);
         })
         .catch((error) => {
           console.log(error);

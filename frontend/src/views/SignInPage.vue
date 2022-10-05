@@ -54,7 +54,7 @@ export default {
         email: "",
         password: "",
       },
-      // error message will come from the backend
+
       errorMessage: "",
     };
   },
@@ -65,10 +65,11 @@ export default {
       await axios
         .post("auth/login", this.user)
         .then((response) => {
+          console.log(response);
           if (response.status == 200) {
             localStorage.setItem("token", response.data.token);
             this.$router.push("/post");
-            this.$store.commit("setUser", response.data);
+            this.$store.commit("SET_USER", response.data);
           }
         })
         .catch((error) => {

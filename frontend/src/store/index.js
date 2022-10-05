@@ -6,26 +6,32 @@ export default createStore({
     user: {},
     posts: [],
   },
+  // use this function in the PostPage.vue and UserProfilComp.vue
   getters: {
     fullName: function (state) {
       return `${state.user.firstName} ${state.user.lastName}`;
     },
   },
+
   mutations: {
-    setUser(state, user) {
+    // call SET_USER in the components SignInPage, VerifyUserComp, UserProfilComp
+    SET_USER(state, user) {
       state.user = user;
     },
-    setPosts(state, posts) {
+    SET_POST(state, posts) {
       state.posts = posts;
     },
-    createPost(state, newPost) {
+    // call CREATE_POST in the component UserNewPostComp
+    CREATE_POST(state, newPost) {
       state.posts.unshift(newPost);
     },
-    updateUser(state, updatedUser) {
+    // call UPDATE_USER in the component UserProfilComp
+    UPDATE_USER(state, updatedUser) {
       state.user.description = updatedUser.description;
       state.user.picture = updatedUser.picture;
     },
-    updatePost(state, updatedPost) {
+    // call UPDATE_POST in the action
+    UPDATE_POST(state, updatedPost) {
       state.posts.forEach((post) => {
         if (post._id === updatedPost._id) {
           post.post = updatedPost.post;
@@ -33,23 +39,20 @@ export default createStore({
         }
       });
     },
-    updateLikes(state, updatedPost) {
+    // call LIKE_POST in the component UserPostComp
+    LIKE_POST(state, updatedPost) {
       state.posts.forEach((post) => {
         if (post._id == updatedPost._id) {
           post.likes = updatedPost.likes;
           //post.usersLiked = updatedPost.usersLiked
-          console.log("updatePost.likes", updatedPost.likes);
+          console.log("UPDATE_POST.likes", updatedPost.likes);
           console.log("post.likes", post.likes);
         }
       });
     },
-    deletePost(state, post) {
-      console.log("runnning deletePost", post, state.posts);
-      var index = state.posts.findIndex((p) => p.id == post._id);
-      state.posts.splice(index, 1);
-    },
   },
-
+  // the actions like the methods, it contains a name, a parameter context and second argument optional
+  // to use the actions in the components, use dispatch
   actions: {
     async getAllPosts(context) {
       try {
@@ -58,7 +61,7 @@ export default createStore({
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        context.commit("setPosts", response.data);
+        context.commit("SET_POST", response.data);
       } catch (err) {
         console.log(err);
       }
