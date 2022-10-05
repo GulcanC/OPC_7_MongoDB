@@ -18,9 +18,7 @@ export default createStore({
     setPosts(state, posts) {
       state.posts = posts;
     },
-
-    // The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
-    createUserPost(state, newPost) {
+    createPost(state, newPost) {
       state.posts.unshift(newPost);
     },
     updateUser(state, updatedUser) {
@@ -45,7 +43,6 @@ export default createStore({
         }
       });
     },
-
     deletePost(state, post) {
       console.log("runnning deletePost", post, state.posts);
       var index = state.posts.findIndex((p) => p.id == post._id);
@@ -53,12 +50,9 @@ export default createStore({
     },
   },
 
-  // we will use dispatching actions to trigger actions
-  // we can dispatch actions in components with this.$store.dispatch('getAllPosts')
   actions: {
     async getAllPosts(context) {
       try {
-        // publication
         const response = await axios.get("publication", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

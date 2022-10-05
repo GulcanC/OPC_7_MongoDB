@@ -38,7 +38,7 @@ exports.signup = (req, res, next) => {
           password: hash,
           picture: "",
           description: "",
-          admin: true,
+          admin: false,
         });
         user
           .save() // save the new user in the database
