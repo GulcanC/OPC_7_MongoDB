@@ -26,8 +26,20 @@ export default {
   color: transparent;
   letter-spacing: 0.2rem;
   transition: all 0.2s;
+  margin: 0 1rem 0 1rem;
 }
-.home h1:hover {
-  transform: skewY(2deg);
+
+@media (max-width: 992px) {
+  h1 {
+    display: inline-block;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 400px) {
+  h1 {
+    margin-left: 1.8rem;
+    text-align: left;
+  }
 }
 </style>

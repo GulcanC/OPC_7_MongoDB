@@ -9,7 +9,7 @@
       aria-label="form for creating new post"
     >
       <div class="d-flex flex-column">
-        <div class="">
+        <div class="m-auto">
           <ProfilPictureComp></ProfilPictureComp>
         </div>
 
@@ -28,7 +28,7 @@
 
             <!-- input to upload an image -->
             <div class="mb-5">
-              <label for="formFile" class="form-label">Add an image</label>
+              <label for="formFile" class="form-label mt-3">Add an image</label>
               <!-- This input will allow the user to open the browser file selection dialog and select one or more files -->
               <!-- The key acts as a sort of flag that tells Vue "if the data associated with this child component is moved somewhere else, then move the component along with it to preserve the changes that already exist".-->
               <input
@@ -123,6 +123,8 @@ export default {
 <style scoped>
 .card {
   margin: auto;
+  background-color: #4e5166;
+  color: white;
 }
 .post-card {
   border: none;

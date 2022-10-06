@@ -67,8 +67,10 @@
         </div>
 
         <button role="button" class="btn-login" type="submit">Sign up</button>
-        <div class="errors-messages" v-if="errors.length">
-          <b> ⛔️ Please correct the errors to sign up!</b>
+        <div class="errors-message" v-if="errors.length">
+          <p class="text-light">
+            <b> Please correct the errors to sign up!</b>
+          </p>
           <ul>
             <li v-for="error in errors" :key="error.message">{{ error }}</li>
           </ul>
@@ -76,9 +78,9 @@
       </form>
     </div>
     <div class="go-to-login">
-      <p>Already have an account?</p>
+      <p class="text-center">Already have an account?</p>
       <router-link to="/login" class="go-to-login-button">
-        <p>Sign in &rarr;</p>
+        <p class="text-center">Sign in &rarr;</p>
       </router-link>
     </div>
   </div>
@@ -115,23 +117,21 @@ export default {
       this.errors = [];
       // firstname validty
       if (regExText.test(this.user.firstName) === false) {
-        this.errors.push(
-          "❗️ Please provide a valide name between 2-10 characters! "
-        );
+        this.errors.push("❗️ Provide a valide name between 2-10 characters! ");
       } else if (regExText.test(this.user.firstName)) {
         this.errors.push("✅ First name is valid!");
       }
       // lastname validty
       if (regExText.test(this.user.lastName) === false) {
         this.errors.push(
-          "❗️ Please provide a valide last name between 2-10 characters!"
+          "❗️ Provide a valide last name between 2-10 characters!"
         );
       } else if (regExText.test(this.user.lastName)) {
         this.errors.push("✅ Last name is valid!");
       }
       // email validty
       if (regExEmail.test(this.user.email) === false) {
-        this.errors.push("❗️ Please provide a valide e-mail address!");
+        this.errors.push("❗️ Provide a valide e-mail address!");
       } else if (regExEmail.test(this.user.email)) {
         this.errors.push("✅ E-mail address is valid!");
       }
@@ -150,7 +150,10 @@ export default {
         );
       } else if (this.user.password !== this.user.passwordConfirm) {
         this.errors.push("❗️ Password does not match!");
-      } else if (this.user.password === this.user.passwordConfirm) {
+      } else if (
+        this.user.password === this.user.passwordConfirm &&
+        regExPassword.test(this.user.password)
+      ) {
         this.errors.push("✅ Password is correct!");
       }
       if (
@@ -239,9 +242,12 @@ export default {
   background-color: white;
   text-decoration: none;
 }
-.form-error-message {
+.errors-message ul li {
   color: white;
-  margin: 1rem 0.5rem 1rem 0.5rem;
-  background-color: transparent;
+  list-style: none;
+  font-size: small;
+}
+.errors-message p {
+  margin-left: 2rem !important;
 }
 </style>

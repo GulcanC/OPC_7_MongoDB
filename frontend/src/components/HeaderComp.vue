@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="m-auto">
     <img
       id="logo"
       alt="Groupomania logo"
@@ -10,6 +10,9 @@
 </template>
 
 <style>
+img {
+  width: 50%;
+}
 @media (max-width: 992px) {
   img {
     width: 50%;

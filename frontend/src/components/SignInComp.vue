@@ -35,9 +35,9 @@
     </div>
 
     <div class="go-to-login">
-      <p>If you have not registered yet, click!</p>
+      <p class="text-center">If you have not registered yet, click!</p>
       <router-link to="/signup" class="go-to-login-button">
-        <p>Sign up &rarr;</p>
+        <p class="text-center">Sign up &rarr;</p>
       </router-link>
     </div>
   </div>

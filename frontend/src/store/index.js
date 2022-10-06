@@ -18,6 +18,7 @@ export default createStore({
     SET_USER(state, user) {
       state.user = user;
     },
+    // call SET_POST in the components ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     SET_POST(state, posts) {
       state.posts = posts;
     },
@@ -44,7 +45,7 @@ export default createStore({
       state.posts.forEach((post) => {
         if (post._id == updatedPost._id) {
           post.likes = updatedPost.likes;
-          //post.usersLiked = updatedPost.usersLiked
+
           console.log("UPDATE_POST.likes", updatedPost.likes);
           console.log("post.likes", post.likes);
         }

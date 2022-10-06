@@ -1,8 +1,8 @@
 <!-- user post comp will be shown in the modal post -->
 <template>
   <article class="post-card p-2 mb-4 text-light">
-    <div class="post-user">
-      <figure class="post-user-info" aria-label="user information">
+    <div class="d-flex justify-content-between">
+      <figure class="d-flex" aria-label="user information">
         <!-- user profil picture on the post, if user does not choose a profil picture, show default one -->
         <div class="picture-user-container mx-auto mt-1 ms-4">
           <img
@@ -24,7 +24,6 @@
           <span class="date text-muted"> {{ timestamp }} </span>
         </figcaption>
       </figure>
-
       <!-- button on the post container which will open a modal to edit post -->
       <div class="modif">
         <!-- button to edit post, user can delete her own post and administrator can delete all user's post -->
@@ -104,12 +103,14 @@
 
     <!-- user post and image on the post container-->
     <div class="post-content">
-      <p class="text-left-align">{{ post.post }}</p>
-
       <div class="post-content--img" v-if="post.imageUrl != null">
         <img :src="post.imageUrl" alt="post image" />
       </div>
     </div>
+
+    <p class="post-text">
+      {{ post.post }}
+    </p>
 
     <!-- like button on the post container -->
     <div>
@@ -117,13 +118,11 @@
         <button
           type="button"
           role="button"
-          aria-label="ajouter un like à ce post"
-          class="btn like-btn"
+          aria-label="like"
+          class="button d-flex flex-row gap-1 mt-3 mb-3 m-auto border-0"
           @click="likePost()"
         >
-          <span aria-label="nombre de like" class="badge">{{
-            post.likes
-          }}</span>
+          <span class="like-number" aria-label="likes">{{ post.likes }}</span>
           <fa icon="fa-thumbs-up" alt="icon" />
         </button>
       </div>
@@ -274,23 +273,15 @@ export default {
 .post-card {
   background-color: #4e5166;
 }
-.post-user {
-  display: flex;
-  justify-content: space-between;
-}
-.post-user-info {
-  display: flex;
-}
-.fa-heart {
-  color: #dd0303;
-  font-size: 1.7em;
-  transition: all 600ms ease;
-}
-.post-content {
-  margin: -10px 100px;
+.post-text {
+  color: white;
+  background-color: transparent;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  margin: 0 1rem 0 1rem;
 }
 .post-content img {
-  max-height: 20rem;
+  max-height: 15rem;
   margin-bottom: 3rem;
   width: 100%;
   object-fit: contain;
@@ -299,50 +290,34 @@ figcaption {
   min-width: fit-content;
   margin: 0.5rem;
 }
-.text-left-align {
-  text-align: left !important;
-  margin-left: 3rem;
-  color: black;
-}
+
 .picture-user-container {
   width: 7rem;
 }
 .picture-user-profile {
   border-radius: 50%;
-  height: 6rem;
   width: 6rem;
+  height: 6rem;
   object-fit: cover;
 }
-.badge {
-  color: green;
+.like button {
+  color: #ffd7d7;
+  background-color: transparent;
 }
-.like {
-  margin: 0px 100px;
-  display: flex;
-  justify-content: flex-end;
-}
-.like-btn {
-  display: flex;
-  align-items: center;
-}
-.like .like-btn:hover,
-.like .like-btn:focus,
-.like .like-btn:active {
-  background-color: white;
-  border-color: white;
-}
-.like .like-btn:hover .fa-heart {
+.like button:hover,
+.like button:focus {
   transform: scale(1.2);
+  color: #fd2d01;
 }
-.fa-pencil {
-  font-size: 1.2em;
-}
+
 @media (max-width: 768px) {
   .picture-user-container {
-    width: 65px !important;
+    width: 5rem !important;
+    height: 5rem !important;
+    margin-right: 2rem !important;
   }
   .picture-user-profile {
-    height: 70px;
+    height: 5rem;
   }
 }
 </style>

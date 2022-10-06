@@ -11,7 +11,7 @@
       </h3></span
     >
 
-    <p v-if="$store.state.user.description">
+    <p class="text-capitalize" v-if="$store.state.user.description">
       {{ $store.state.user.description }}
     </p>
 
@@ -171,6 +171,7 @@ export default {
   background-color: #fd2d01;
   opacity: 0.9;
   transition: all 0.3s;
+  margin-top: 5rem;
 }
 .card:hover {
   opacity: 1;

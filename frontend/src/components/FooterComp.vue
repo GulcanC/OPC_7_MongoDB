@@ -1,6 +1,6 @@
 <template>
   <footer class="footer fixed-bottom">
-    <p class="footer-text">
+    <p class="text-center">
       Gulcan COSKUN | OpenClassrooms Project 7 - Groupmania | September, 2022
     </p>
   </footer>
@@ -19,6 +19,7 @@ footer {
   position: absolute;
 }
 footer p {
+  text-align: center;
   margin: 1.7rem;
   background: transparent;
   color: white;
@@ -29,19 +30,25 @@ footer p:hover {
   color: #ffd7d7;
 }
 
-/* @media (max-width: 992px) {
+@media (max-width: 992px) {
   footer {
     text-align: center;
     font-size: 1.2rem;
   }
 }
-@media (max-width: 398px) {
+@media (max-width: 400px) {
   footer {
-    background-color: #4e5166;
-    width: 120%;
-    height: auto;
-    position: absolute;
+    background-color: transparent;
     text-align: center;
   }
-} */
+  footer p {
+    color: #4e5166;
+    margin: auto !important;
+  }
+}
+@media (max-width: 300px) {
+  footer p {
+    display: none;
+  }
+}
 </style>
