@@ -122,62 +122,75 @@ export default {
       var regExEmail = new RegExp(
         /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
       );
-      var regExText = new RegExp(/^[a-zA-Zà-ùÀ-Ù- -']+$/);
+      var regExText = new RegExp(/^[a-zA-Z\s\'\-]{2,10}$/);
       // create an array for the errors
       this.errors = [];
-
-      if (!this.user.firstName || !regExText.test(this.user.firstName)) {
+      // firstname validty
+      if (regExText.test(this.user.firstName) === false) {
         this.errors.push(
           "❗️ Please provide a valide name between 2-10 characters! "
         );
       } else if (regExText.test(this.user.firstName)) {
         this.errors.push("✅ First name is valid!");
       }
-
-      if (!this.user.lastName || !regExText.test(this.user.lastName)) {
+      // lastname validty
+      if (regExText.test(this.user.lastName) === false) {
         this.errors.push(
           "❗️ Please provide a valide last name between 2-10 characters!"
         );
       } else if (regExText.test(this.user.lastName)) {
         this.errors.push("✅ Last name is valid!");
       }
-
-      if (!this.user.email || !regExEmail.test(this.user.email)) {
+      // email validty
+      if (regExEmail.test(this.user.email) === false) {
         this.errors.push("❗️ Please provide a valide e-mail address!");
       } else if (regExEmail.test(this.user.email)) {
-        this.errors.push("✅ Email address is valid!");
+        this.errors.push("✅ E-mail address is valid!");
       }
-      if (!this.user.password || !regExPassword.test(this.user.password)) {
+      // password validty
+      if (regExPassword.test(this.user.password) === false) {
         this.errors.push(
           "❗️ Password have to contain 4 characters; 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character!"
         );
-      } else if (regExPassword.test(this.password)) {
+      } else if (regExPassword.test(this.user.password)) {
         this.errors.push("✅ Password is valid!");
       }
-      if (this.user.password !== this.user.passwordConfirm) {
+      // password confirmation
+      if (!this.user.passwordConfirm) {
+        this.errors.push(
+          "❗️ You must fill in the password confirmation field!"
+        );
+      } else if (this.user.password !== this.user.passwordConfirm) {
         this.errors.push("❗️ Password does not match!");
-      } else if (
-        this.user.password === this.user.passwordConfirm &&
-        regExPassword.test(this.password)
-      ) {
+      } else if (this.user.password === this.user.passwordConfirm) {
         this.errors.push("✅ Password is correct!");
       }
-      if (!this.errors.length) {
-        this.signup();
+      if (
+        this.user.firstName &&
+        this.user.lastName &&
+        this.user.email &&
+        this.user.password &&
+        this.user.passwordConfirm &&
+        regExText.test(this.user.firstName) &&
+        regExText.test(this.user.lastName) &&
+        regExEmail.test(this.user.email) &&
+        regExPassword.test(this.user.password) &&
+        this.user.password === this.user.passwordConfirm
+      ) {
+        // http://localhost:3000/api/auth/signup
+        await axios
+          .post("auth/signup", this.user)
+          .then((response) => {
+            console.log(response);
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            console.log(error);
+            this.errorMessage =
+              "⛔️ We don't have access to the server at the moment, please try again later.";
+          });
+      } else {
       }
-
-      // http://localhost:3000/api/auth/signup
-      await axios
-        .post("auth/signup", this.user)
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errorMessage =
-            "⛔️ We don't have access to the server at the moment, please try again later.";
-        });
     },
   },
 };
