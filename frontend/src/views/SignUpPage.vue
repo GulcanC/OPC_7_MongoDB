@@ -67,7 +67,12 @@
         </div>
 
         <button role="button" class="btn-login" type="submit">Sign up</button>
-        <p class="form-error-message">{{ errorMessage }}</p>
+        <div class="errors-messages" v-if="errors.length">
+          <b> ⛔️ Please correct the errors to sign up!</b>
+          <ul>
+            <li v-for="error in errors" :key="error.message">{{ error }}</li>
+          </ul>
+        </div>
       </form>
     </div>
     <div class="go-to-login">
@@ -93,25 +98,13 @@ export default {
         password: "",
         passwordConfirm: "",
       },
-      errorMessage: null,
+      errors: [],
     };
   },
   components: { HeaderComp },
   methods: {
     async signup() {
-      /*     let regExPassword = new RegExp(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{4}$/
-      );
-      let regExEmail = new RegExp(
-        /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
-      );
-      let testEmail = regExEmail.test(req.body.user.email);
-      let testPassword = regExPassword.test(req.body.user.password);
-      if (testEmail && testPassword === false) {
-        this.errorMessage = "⛔️ error regex";
-        return;
-      }  */
-      if (
+      /* if (
         !this.user.firstName ||
         !this.user.lastName ||
         !this.user.email ||
@@ -121,7 +114,58 @@ export default {
         this.errorMessage =
           "⛔️ Please fill in all the fields of the form and check your password.";
         return;
+      } */
+
+      var regExPassword = new RegExp(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{4}$/
+      );
+      var regExEmail = new RegExp(
+        /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
+      );
+      var regExText = new RegExp(/^[a-zA-Zà-ùÀ-Ù- -']+$/);
+      // create an array for the errors
+      this.errors = [];
+
+      if (!this.user.firstName || !regExText.test(this.user.firstName)) {
+        this.errors.push(
+          "❗️ Please provide a valide name between 2-10 characters! "
+        );
+      } else if (regExText.test(this.user.firstName)) {
+        this.errors.push("✅ First name is valid!");
       }
+
+      if (!this.user.lastName || !regExText.test(this.user.lastName)) {
+        this.errors.push(
+          "❗️ Please provide a valide last name between 2-10 characters!"
+        );
+      } else if (regExText.test(this.user.lastName)) {
+        this.errors.push("✅ Last name is valid!");
+      }
+
+      if (!this.user.email || !regExEmail.test(this.user.email)) {
+        this.errors.push("❗️ Please provide a valide e-mail address!");
+      } else if (regExEmail.test(this.user.email)) {
+        this.errors.push("✅ Email address is valid!");
+      }
+      if (!this.user.password || !regExPassword.test(this.user.password)) {
+        this.errors.push(
+          "❗️ Password have to contain 4 characters; 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character!"
+        );
+      } else if (regExPassword.test(this.password)) {
+        this.errors.push("✅ Password is valid!");
+      }
+      if (this.user.password !== this.user.passwordConfirm) {
+        this.errors.push("❗️ Password does not match!");
+      } else if (
+        this.user.password === this.user.passwordConfirm &&
+        regExPassword.test(this.password)
+      ) {
+        this.errors.push("✅ Password is correct!");
+      }
+      if (!this.errors.length) {
+        this.signup();
+      }
+
       // http://localhost:3000/api/auth/signup
       await axios
         .post("auth/signup", this.user)
