@@ -2,8 +2,11 @@
   <div>
     <HeaderComp />
     <div class="login">
+      <!-- if you use @input when you write in the input field, error messages are visible automatically -->
+      <!-- if you use @change, error messages are not visible automatically, so you must click anywhere to make visible the error mesages -->
       <form
         @submit.prevent="signup"
+        @input="signup"
         method="post"
         aria-label="Signup Form"
         class="form-login"
@@ -37,9 +40,9 @@
           <input
             type="email"
             id="email"
+            class="form-control"
             placeholder="xxxx@xxxx.com"
             v-model="user.email"
-            class="form-control"
           />
         </div>
 
@@ -113,7 +116,7 @@ export default {
         /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/
       );
       var regExText = new RegExp(/^[a-zA-Z\s\'\-]{2,10}$/);
-      // create an array for the errors
+      // create an array for the error message
       this.errors = [];
       // firstname validty
       if (regExText.test(this.user.firstName) === false) {
@@ -173,6 +176,7 @@ export default {
           .post("auth/signup", this.user)
           .then((response) => {
             console.log(response);
+            // this.$router.go("/login");
             this.$router.push("/login");
           })
           .catch((error) => {

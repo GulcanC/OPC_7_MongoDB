@@ -17,7 +17,7 @@
             type="button"
             class="close btn"
             aria-label="Close"
-            @click="$emit('fermeLeModal')"
+            @click="$emit('closePostModal')"
           >
             <!-- modal close button -->
             <span aria-hidden="true">&times;</span>

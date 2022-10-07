@@ -43,7 +43,7 @@
         <ModalPostComp
           v-if="showModal"
           title="Update your post"
-          @fermeLeModal="showModal = false"
+          @closePostModal="showModal = false"
         >
           <form
             @submit.prevent="UpdatePost()"
@@ -304,10 +304,14 @@ figcaption {
   color: #ffd7d7;
   background-color: transparent;
 }
-.like button:hover,
+.like button:active,
 .like button:focus {
   transform: scale(1.2);
   color: #fd2d01;
+}
+.like button:hover {
+  transform: scale(1.2);
+  color: black;
 }
 
 @media (max-width: 768px) {

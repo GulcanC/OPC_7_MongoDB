@@ -6,7 +6,7 @@
   </footer>
 </template>
 
-<style scoped>
+<style>
 :root {
   --primary-color: "#fd2d01";
   --secondary-color: #ffd7d7;

@@ -8,13 +8,9 @@ export default {
     const token = localStorage.getItem("token");
     if (token) {
       axios
-        .post(
-          "auth/verify",
-          {},
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
+        .post("auth/verify", this.user, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then((res) => {
           console.log(res.data);
           this.$store.commit("SET_USER", res.data);

@@ -24,16 +24,15 @@
         class="form-control"
         type="file"
         aria-label="Chargez une image"
-        @change="uploadProfilFile"
+        @change="uploadProfilPicture"
         id="formFile"
       />
     </div>
 
     <!-- textarea to write a description -->
-
     <p class="text-dark text-left">Describe yourself in one sentence</p>
     <form
-      @submit.prevent="save"
+      @submit.prevent="userProfil"
       style="text-align: left"
       aria-label="update user profile"
     >
@@ -51,7 +50,6 @@
       </div>
 
       <!-- button to delete account and submit the changes -->
-
       <div class="d-flex flex-column gap-3">
         <button
           role="button"
@@ -75,12 +73,13 @@
       </div>
       <p class="err-msg">{{ errorMessage }}</p>
     </form>
+
     <!-- button logout -->
     <button
       role="button"
       title="logout"
       class="btn button-type-2 mb-3"
-      @click="handleClick"
+      @click="logOut"
     >
       Log out
       <fa
@@ -111,35 +110,12 @@ export default {
     this.user.description = this.$store.state.user.description;
   },
   methods: {
-    /*choisir  une image de profil */
-    uploadProfilFile(event) {
+    // choose profil picture
+    uploadProfilPicture(event) {
       this.user.picture = event.target.files[0];
     },
-    /* Se déconnecter */
-    handleClick() {
-      localStorage.removeItem("token");
-      this.$store.commit("SET_USER", null);
-      this.$router.push("/");
-    },
-    /* Supprimer son compte */
-    deleteAccount() {
-      const token = localStorage.getItem("token");
-      const id = this.$store.state.user._id;
-      if (confirm("⚠️ Are you sure you want to delete this account? ⚠️")) {
-        axios
-          .delete("auth/" + id, {
-            headers: {
-              "content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then(localStorage.clear());
-        this.$router.push({ path: "/" }).catch((error) => {
-          error;
-        });
-      }
-    },
-    save() {
+    // send the picture and profil description with FormData
+    userProfil() {
       let formData = new FormData();
       formData.append("file", this.user.picture);
       formData.append("description", this.user.description);
@@ -153,6 +129,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response);
           this.$store.commit("UPDATE_USER", response.data);
         })
         .catch((error) => {
@@ -161,6 +138,34 @@ export default {
             ? error.response.data.message
             : error;
         });
+    },
+
+    // delete account
+    deleteAccount() {
+      const token = localStorage.getItem("token");
+      const id = this.$store.state.user._id;
+      if (confirm("⚠️ Are you sure you want to delete this account? ⚠️")) {
+        axios
+          .delete("auth/" + id, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(localStorage.removeItem("token"));
+        // .then(localStorage.clear());
+        this.$router.push({ path: "/" }).catch((error) => {
+          error;
+        });
+      }
+    },
+
+    // logOut function, remove token from localhost
+    logOut() {
+      localStorage.removeItem("token");
+      // localStorage.clear()
+      this.$store.commit("SET_USER", null);
+      this.$router.push({ path: "/" });
+      // this.$router.push("/");
     },
   },
 };
