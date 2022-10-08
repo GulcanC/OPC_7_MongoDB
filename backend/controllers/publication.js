@@ -18,7 +18,11 @@ exports.createPost = (req, res, next) => {
   });
   post
     .save()
-    .then(() => res.status(201).json({ post }))
+    .then(() =>
+      res
+        .status(201)
+        .json({ message: "✅ Post has been successfully created!", post })
+    )
     .catch((error) => res.status(400).json({ error }));
 
   console.log("💧 Create Post 💧");
@@ -61,7 +65,11 @@ exports.updatePost = (req, res, next) => {
     )
       .then(() => {
         Post.findById({ _id: req.params.id })
-          .then((post) => res.status(200).json({ post }))
+          .then((post) =>
+            res
+              .status(200)
+              .json({ message: "✅ Post has been successfully updated!", post })
+          )
           .catch((error) => res.status(400).json({ error }));
       })
       .catch((error) => {
@@ -110,7 +118,10 @@ exports.deletePost = (req, res, next) => {
             Post.deleteOne({ _id: req.params.id })
               .then((deleteUserPost) => {
                 console.log("✅ Post has been succesfully deleted!");
-                res.status(200).json({ deleteUserPost });
+                res.status(200).json({
+                  message: "✅ Post has been successfully deleted!",
+                  deleteUserPost,
+                });
               })
               .catch((error) => res.status(400).json({ error }));
           });

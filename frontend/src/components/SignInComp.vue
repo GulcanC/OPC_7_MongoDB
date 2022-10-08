@@ -15,6 +15,7 @@
             id="email"
             placeholder="xxxx@xxxx.com"
             class="form-control"
+            autocomplete="off"
             v-model="user.email"
           />
         </div>
@@ -26,6 +27,7 @@
             id="password"
             placeholder="Password"
             class="form-control"
+            autocomplete="off"
             v-model="user.password"
           />
         </div>

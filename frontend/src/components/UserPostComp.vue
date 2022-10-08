@@ -198,6 +198,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response.data);
           this.$store.commit("UPDATE_POST", response.data.post);
           this.showModal = false;
         })
@@ -214,12 +215,11 @@ export default {
       axios
         .delete("publication/" + `${id}`, {
           headers: {
-            "content-type": "application/json",
             Authorization: "Bearer " + token,
           },
         })
         .then((response) => {
-          console.log("response", response.data);
+          console.log(response.data);
           // deleteUserPost comes from backend, it is an object,
           // here "acknowledged" is a boolean, it means, if the deletion is accepted get all posts
           // deleteUserPost is an object that contains "acknowledged" and "deletedCount" shows the quantity of deleted item
@@ -231,7 +231,7 @@ export default {
         .catch((error) => {
           console.log(error);
           this.errorMessage =
-            "⛔️ Error! You cannot delete this post, please try again later.";
+            "⛔️ Error! You can not delete this post, please try again later.";
         });
     },
     likePost() {

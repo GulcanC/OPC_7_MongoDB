@@ -32,7 +32,7 @@
               <!-- This input will allow the user to open the browser file selection dialog and select one or more files -->
               <!-- The key acts as a sort of flag that tells Vue "if the data associated with this child component is moved somewhere else, then move the component along with it to preserve the changes that already exist".-->
               <input
-                :key="pictureInputKey"
+                :key="profilPictureInputKey"
                 @change="uploadPicture"
                 name="file"
                 accept="image/*"
@@ -66,7 +66,7 @@ export default {
       post: "",
       file: "",
       errorMessage: null,
-      pictureInputKey: 0,
+      profilPictureInputKey: 0,
     };
   },
   methods: {
@@ -74,10 +74,9 @@ export default {
       this.file = event.target.files[0];
     },
     createPost() {
-      // if the post text and image are empties show an error message
-      if (!this.post && !this.file) {
-        this.errorMessage =
-          "⛔️ Please write your message and choose a picture!";
+      // if the post text or image is empty show an error message
+      if (!this.post || !this.file) {
+        this.errorMessage = "⛔️ Write your message and choose a picture!";
         return;
       }
       // Create an object formData which contains the data that will be posted
@@ -85,27 +84,23 @@ export default {
       formData.append("post", this.post);
       formData.append("file", this.file);
       formData.append("userId", this.$store.state.user._id);
-      // authorImg comes from model "publicaton", picture comes from model "User"
       formData.append("authorImg", this.$store.state.user.picture);
-      // userName comes from model "publication", firsName and lastName come from model "User"
-      formData.append(
-        "userName",
-        this.$store.state.user.firstName + " " + this.$store.state.user.lastName
-      );
+      formData.append("userName", this.$store.getters["fullName"]);
       // use axios to send formData, http://localhost:3000/api/publication
       axios
         .post("publication", formData, {
           headers: {
-            "content-type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
+          console.log(response.data);
           if (response.status === 201) {
             this.$store.commit("CREATE_POST", response.data.post);
             this.post = "";
-            this.file = "";
-            this.pictureInputKey++;
+            this.errorMessage = "";
+            this.profilPictureInputKey++;
             // this.$emit("postCree", true);
           }
         })

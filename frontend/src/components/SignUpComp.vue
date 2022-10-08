@@ -18,6 +18,7 @@
             id="firstname"
             class="form-control"
             placeholder="First Name"
+            autocomplete="off"
             v-model="user.firstName"
           />
         </div>
@@ -30,6 +31,7 @@
             id="lastname"
             class="form-control"
             placeholder="Last Name"
+            autocomplete="off"
             v-model="user.lastName"
           />
         </div>
@@ -42,6 +44,7 @@
             id="email"
             class="form-control"
             placeholder="xxxx@xxxx.com"
+            autocomplete="off"
             v-model="user.email"
           />
         </div>
@@ -52,9 +55,10 @@
           <input
             type="password"
             id="password"
-            placeholder="Xx1-"
-            v-model="user.password"
             class="form-control"
+            placeholder="Xx1-"
+            autocomplete="off"
+            v-model="user.password"
           />
         </div>
         <br />
@@ -64,8 +68,9 @@
             type="password"
             id="confirm-password"
             placeholder="Confirm your Password"
-            v-model="user.passwordConfirm"
             class="form-control"
+            autocomplete="off"
+            v-model="user.passwordConfirm"
           />
         </div>
 

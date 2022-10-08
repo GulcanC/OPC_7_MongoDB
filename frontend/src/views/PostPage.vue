@@ -58,9 +58,6 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  background-color: var(--secondary-color);
-}
 .conteiner-main {
   padding: 1.5rem;
   max-width: 1300px;

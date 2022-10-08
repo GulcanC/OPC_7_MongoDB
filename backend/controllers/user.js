@@ -75,6 +75,7 @@ exports.login = (req, res, next) => {
             // if password is correct we have userId and token
             else {
               res.status(200).json({
+                message: "✅ User login is successful!",
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -116,9 +117,11 @@ exports.updateUser = (req, res, next) => {
   )
     .then(() => {
       User.findById({ _id: req.params.id }).then((user) =>
-        res
-          .status(200)
-          .json({ picture: user.picture, description: user.description })
+        res.status(200).json({
+          message: "✅ User profile update is successful!",
+          picture: user.picture,
+          description: user.description,
+        })
       );
     })
     .catch((err) => res.status(500).json({ msg: err }));
@@ -131,9 +134,14 @@ exports.deleteUser = (req, res, next) => {
   User.findOne({ _id: req.params.id });
   try {
     User.deleteOne({ _id: req.params.id })
-      .then(() => {
+      .then((deleteProfile) => {
         console.log("✅ User has been succesfully deleted!");
-        res.status(200);
+        res
+          .status(200)
+          .json({
+            message: "✅ User has been succesfully deleted!",
+            deleteProfile,
+          });
       })
       .catch((error) => res.status(400).json(error));
   } catch {

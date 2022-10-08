@@ -35,10 +35,12 @@
       @submit.prevent="userProfil"
       style="text-align: left"
       aria-label="update user profile"
+      autocomplete="off"
     >
       <div class="mb-3">
         <div class="form-floating" aria-label="update user profile">
           <textarea
+            autocomplete="off"
             aria-label="update user profile"
             class="form-control text-left"
             placeholder="description"
@@ -65,13 +67,13 @@
           role="button"
           title="Delete user account"
           class="btn button-type-1"
-          @click.prevent="deleteAccount"
+          @click="deleteAccount()"
         >
           <fa icon="fa fa-trash-alt" class="me-2" alt="icon" />
           Delete account
         </button>
       </div>
-      <p class="err-msg">{{ errorMessage }}</p>
+      <p class="text-white text-small mt-3">{{ errorMessage }}</p>
     </form>
 
     <!-- button logout -->
@@ -116,6 +118,10 @@ export default {
     },
     // send the picture and profil description with FormData
     userProfil() {
+      if (!this.user.picture || !this.user.description) {
+        this.errorMessage = "⚠️ Describe yourself and choose a picture!";
+        return;
+      }
       let formData = new FormData();
       formData.append("file", this.user.picture);
       formData.append("description", this.user.description);
@@ -130,6 +136,12 @@ export default {
         })
         .then((response) => {
           console.log(response);
+
+          // after submit the data, remove the error message from the card
+          this.errorMessage = "";
+          // after submit the data, remove the text in the textarea
+          this.user.description = "";
+          this.user.picture = "";
           this.$store.commit("UPDATE_USER", response.data);
         })
         .catch((error) => {
@@ -151,20 +163,30 @@ export default {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then(localStorage.removeItem("token"));
-        // .then(localStorage.clear());
-        this.$router.push({ path: "/" }).catch((error) => {
-          error;
-        });
+          .then((response) => {
+            console.log(response.data);
+            // deleteProfile comes from backend, it is an object, it is response
+            // here "acknowledged" is a boolean, it means, if the deletion is accepted get all posts
+            // deleteProfile is an object that contains "acknowledged" and "deletedCount" shows the quantity of deleted item
+            if (response.data.deleteProfile.acknowledged) {
+              this.$router.push({ path: "/" });
+            }
+            localStorage.clear();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.errorMessage =
+              "⛔️ Error! You can not delete this post, please try again later.";
+          });
       }
     },
 
     // logOut function, remove token from localhost
     logOut() {
       localStorage.removeItem("token");
-      // localStorage.clear()
-      this.$store.commit("SET_USER", null);
       this.$router.push({ path: "/" });
+      // localStorage.clear()
+      // this.$store.commit("SET_USER", null);
       // this.$router.push("/");
     },
   },
