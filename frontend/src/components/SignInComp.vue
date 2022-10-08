@@ -32,7 +32,7 @@
           />
         </div>
         <button role="button" class="btn-login" type="submit">Sign in</button>
-        <p class="form-error-message">{{ errorMessage }}</p>
+        <p class="text-center text-light">{{ errorMessage }}</p>
       </form>
     </div>
 
@@ -63,27 +63,33 @@ export default {
   components: { HeaderComp },
   methods: {
     async login() {
-      // http://localhost:3000/api/auth/login
-      await axios
-        .post("auth/login", this.user)
-        .then((response) => {
-          console.log(response);
-          if (response.status == 200) {
-            localStorage.setItem("token", response.data.token);
-            this.$router.push("/post");
-            this.$store.commit("SET_USER", response.data);
-          }
-        })
-        .catch((error) => {
-          if (error.response.status == 401) {
-            this.errorMessage = error.response.data.message
-              ? error.response.data.message
-              : error;
-          } else {
-            this.errorMessage =
-              "⛔️ We don't have access to the server at the moment, please try again later.";
-          }
-        });
+      if (!this.user.email || !this.user.password) {
+        this.errorMessage = "⛔️ Fill in all the fields!";
+      }
+      // other error messages will come from backend. if user not found in tha data base and if the password is not correct
+      else {
+        // http://localhost:3000/api/auth/login
+        await axios
+          .post("auth/login", this.user)
+          .then((response) => {
+            console.log(response);
+            if (response.status == 200) {
+              localStorage.setItem("token", response.data.token);
+              this.$router.push("/post");
+              this.$store.commit("SET_USER", response.data);
+            }
+          })
+          .catch((error) => {
+            if (error.response.status == 401) {
+              this.errorMessage = error.response.data.message
+                ? error.response.data.message
+                : error;
+            } else {
+              this.errorMessage =
+                "⛔️ We don't have access to the server at the moment, please try again later.";
+            }
+          });
+      }
     },
   },
 };

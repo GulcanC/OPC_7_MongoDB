@@ -61,7 +61,7 @@ exports.login = (req, res, next) => {
       if (user === null) {
         res
           .status(401)
-          .json({ message: "⛔️ Email and password do not match!" });
+          .json({ message: "⛔️ Account does not exist! Please register!" });
         // if we have a value, compare the password which is in the database and user password
       } else {
         bcrypt
@@ -73,7 +73,7 @@ exports.login = (req, res, next) => {
                 .json({ message: "⛔️ Email and password do not match" });
             }
             // if password is correct we have userId and token
-            else {
+            else if (valid) {
               res.status(200).json({
                 message: "✅ User login is successful!",
                 email: user.email,
@@ -136,12 +136,10 @@ exports.deleteUser = (req, res, next) => {
     User.deleteOne({ _id: req.params.id })
       .then((deleteProfile) => {
         console.log("✅ User has been succesfully deleted!");
-        res
-          .status(200)
-          .json({
-            message: "✅ User has been succesfully deleted!",
-            deleteProfile,
-          });
+        res.status(200).json({
+          message: "✅ User has been succesfully deleted!",
+          deleteProfile,
+        });
       })
       .catch((error) => res.status(400).json(error));
   } catch {
