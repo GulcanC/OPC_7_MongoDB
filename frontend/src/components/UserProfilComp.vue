@@ -4,20 +4,19 @@
     class="card container text-light d-flex flex-direction-column align-items-center justify-content-center"
   >
     <ProfilPictureComp></ProfilPictureComp>
-    <h2 class="text-uppercase text-dark fs-5 font-weight-bold">My account</h2>
-    <span
-      ><h3 class="profil-username text-capitalize font-italic">
+    <h2 class="text-uppercase text-dark fs-5">My account</h2>
+    <div class="user-profile border-0 mb-3 mt-3">
+      <h3 class="profil-username text-capitalize text-dark">
         {{ $store.getters["fullName"] }}
-      </h3></span
-    >
+      </h3>
 
-    <p class="text-capitalize" v-if="$store.state.user.description">
-      {{ $store.state.user.description }}
-    </p>
-
+      <p class="text-capitalize text-dark" v-if="$store.state.user.description">
+        {{ $store.state.user.description }}
+      </p>
+    </div>
     <!-- user update profil picture -->
     <div class="mb-3" aria-label="update profil picture">
-      <label for="formFile" class="form-label text-left text-dark"
+      <label for="formFile" class="form-label text-left text-white"
         >Change your profile picture</label
       >
       <input
@@ -30,7 +29,7 @@
     </div>
 
     <!-- textarea to write a description -->
-    <p class="text-dark text-left">Describe yourself in one sentence</p>
+    <p class="text-white text-left">Describe yourself in one sentence</p>
     <form
       @submit.prevent="userProfil"
       style="text-align: left"
@@ -135,7 +134,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
 
           // after submit the data, remove the error message from the card
           this.errorMessage = "";
@@ -196,7 +195,7 @@ export default {
 <style scoped>
 .card {
   background-color: #fd2d01;
-  opacity: 0.9;
+  opacity: 0.8;
   transition: all 0.3s;
   margin-top: 5rem;
 }
@@ -223,5 +222,11 @@ export default {
   font-weight: 700;
   font-size: medium;
   margin-top: 0.7rem;
+}
+.user-profile {
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  padding: 0 0.5rem 0 0.5rem;
+  border-radius: 0.3rem;
 }
 </style>

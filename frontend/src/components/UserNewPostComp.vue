@@ -3,7 +3,7 @@
   <article class="card post-card mb-4">
     <form
       @submit.prevent="createPost"
-      class="form-post p-2"
+      class="form-post p-2 d-flex flex-column"
       name="myForm"
       id="myForm"
       aria-label="form for creating new post"
@@ -15,7 +15,7 @@
 
         <!-- textarea for writing your post -->
         <div class="">
-          <label class="new-post" for="postContent">Create your post</label>
+          <label class="new-post m-2" for="postContent">Create your post</label>
           <div>
             <textarea
               name="post"
@@ -118,32 +118,25 @@ export default {
 <style scoped>
 .card {
   margin: auto;
-  background-color: #4e5166;
+  background-color: #fd2d01;
   color: white;
+  opacity: 0.8;
+  transition: all 0.3s;
 }
-.post-card {
-  border: none;
+.card:hover {
+  opacity: 1;
 }
-.form-post {
-  padding: 5%;
-  display: flex;
-  flex-direction: column;
-}
+
 .btn-post {
-  border-radius: 15px;
+  border-radius: 0.3rem;
   transition: all 300ms ease-in-out;
   border: none;
-  padding: 5px 13px;
   color: white;
 }
 .btn-post:hover {
-  background-color: var(--primary-color);
   transform: scale(1.1);
 }
-.err-msg {
-  color: var(--primary-color);
-  font-weight: 400;
-}
+
 @media (max-width: 768px) {
   .new-post {
     margin-top: 15px;

@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const publicationRoutes = require("./routes/publication");
+const publicationRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
 
 mongoose
@@ -36,8 +36,6 @@ app.use("/api/auth", userRoutes);
 
 //indique comment traiter la requête vers la route /image
 app.use("/images", express.static(path.join(__dirname, "images")));
-
-// app.use("/images-posts", express.static(path.join(__dirname, "images-posts")));
 
 // app.use("/api/auth", postRoutes);
 

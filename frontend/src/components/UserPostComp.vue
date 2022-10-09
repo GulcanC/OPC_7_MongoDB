@@ -175,9 +175,9 @@ export default {
         today.getFullYear();
       this.timestamp = date;
     },
-    // function for upload image when we open the modal, the name "postPicture" is not important
+    // function for upload image when we open the modal,
     uploadPicture(event) {
-      this.newPost.postPicture = event.target.files[0];
+      this.newPost.image = event.target.files[0];
     },
     // function to update post when we open the modal, newPost comes from store
     UpdatePost() {
@@ -185,16 +185,16 @@ export default {
       let formData = new FormData();
       formData.append("post", this.newPost.post);
       formData.append("id", this.post._id);
-      if (this.newPost.postPicture != "") {
-        formData.append("file", this.newPost.postPicture);
+      if (this.newPost.image != "") {
+        formData.append("file", this.newPost.image);
       }
       let id = this.post._id;
       // http://localhost:3000/api/publication/:id
       axios
         .put(`publication/${id}`, formData, {
           headers: {
-            "content-type": "application/json",
             Authorization: "Bearer " + token,
+            "Content-Type": "multipart/form-data",
           },
         })
         .then((response) => {
@@ -279,6 +279,7 @@ export default {
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
   padding: 1rem;
   margin: 0 1rem 0 1rem;
+  border-radius: 0.3rem;
 }
 .post-content img {
   max-height: 15rem;
