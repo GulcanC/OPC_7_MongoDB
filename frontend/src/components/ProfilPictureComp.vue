@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .picture-user-container {
   width: 7rem;
-  margin-top: 10px;
+  margin: 1rem 0 0 0;
   background-color: transparent;
 }
 .picture-user-profile {
@@ -38,9 +38,11 @@ export default {
 @media (max-width: 768px) {
   .picture-user-container {
     width: 5rem !important;
+    height: 5rem !important;
   }
   .picture-user-profile {
     height: 6rem;
+    width: 6rem;
   }
 }
 </style>

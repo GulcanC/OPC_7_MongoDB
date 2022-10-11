@@ -11,7 +11,6 @@ require("dotenv").config();
 exports.signup = (req, res, next) => {
   console.log("🎉🎉🎉USER SIGNUP🎉🎉🎉");
   console.log(req.body);
-
   // check the password is valid ?
   if (!Password.validate(req.body.password)) {
     return res.status(401).json({

@@ -3,7 +3,9 @@
   <article
     class="card container text-light d-flex flex-direction-column align-items-center justify-content-center"
   >
-    <ProfilPictureComp></ProfilPictureComp>
+    <div class="mb-3">
+      <ProfilPictureComp></ProfilPictureComp>
+    </div>
     <h2 class="text-uppercase text-dark fs-5">My account</h2>
     <div class="user-profile border-0 mb-3 mt-3">
       <h3 class="profil-username text-capitalize text-dark">
@@ -197,7 +199,7 @@ export default {
   background-color: #fd2d01;
   opacity: 0.8;
   transition: all 0.3s;
-  margin-top: 5rem;
+  margin-top: 4rem;
 }
 .card:hover {
   opacity: 1;

@@ -1,6 +1,17 @@
 <!-- Post page -->
 <template>
   <main class="main">
+    <!-- logo and welcome message -->
+    <div
+      class="navbar-post d-flex flex-row justify-content-between align-items-center"
+    >
+      <img src="../assets/icon-left-font-monochrome-white.svg" alt="logo" />
+      <h5 class="mt-3 mb-3 profil-username text-light">
+        Hello
+        <b class="text-uppercase"> {{ $store.getters["fullName"] }}</b
+        >, share your message!
+      </h5>
+    </div>
     <div class="row overflow-hidden flex-row conteiner-main">
       <!-- user profil at the left of the page-->
       <section class="col-lg-3 mx-4 conteiner-profil">
@@ -10,9 +21,6 @@
       <!-- welcome message, new post area and all posts at the right of the page -->
       <section class="col-lg-8">
         <!-- welcome message at the top of the page -->
-        <h3 class="first-post profil-username text-capitalize font-italic">
-          Hello {{ $store.getters["fullName"] }}, share your message!
-        </h3>
 
         <!-- area to choose a picture and to share a text -->
         <!-- <UserNewPostComp @postCree="this.firstPost = false" /> -->
@@ -60,19 +68,32 @@ export default {
 <style scoped>
 .conteiner-main {
   padding: 1.5rem;
-  max-width: 1300px;
   margin: auto;
 }
-.first-post {
-  margin-top: 25px;
-  margin-bottom: 25px;
+div .navbar-post img {
+  width: 10rem;
+  padding: 1rem 0 1rem 0;
 }
+div .navbar-post {
+  padding-right: 4rem;
+  padding-left: 4rem;
+  background-color: #4e5166;
+}
+
 @media (max-width: 992px) {
   .conteiner-main {
     padding: 8px;
   }
   .conteiner-profil {
     margin: 0px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-post {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 }
 </style>

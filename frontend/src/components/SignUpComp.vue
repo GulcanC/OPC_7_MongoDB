@@ -77,8 +77,9 @@
         <button role="button" class="btn-login" type="submit">Sign up</button>
         <div class="errors-message" v-if="errors.length">
           <p class="text-light">
-            <b> Please correct the errors to sign up!</b>
+            <b> Please check the errors to sign up!</b>
           </p>
+
           <ul>
             <li v-for="error in errors" :key="error.message">{{ error }}</li>
           </ul>
@@ -219,7 +220,7 @@ export default {
   box-shadow: 0.3rem 0.3rem 0.3rem black;
 }
 .form-group label {
-  margin: 0.5rem 0 0 0.4rem;
+  margin: 0.5rem 0 0.4rem 0;
   font-weight: bold;
 }
 .form-group label {
@@ -251,12 +252,14 @@ export default {
   background-color: white;
   text-decoration: none;
 }
-.errors-message ul li {
+.errors-message ul li,
+.error-email {
   color: white;
   list-style: none;
   font-size: small;
 }
-.errors-message p {
+.errors-message p,
+.error-email {
   margin-left: 2rem !important;
 }
 </style>

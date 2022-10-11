@@ -59,7 +59,6 @@ export default {
 .connection:hover {
   opacity: 1;
   transform: scale(1.05);
-  outline: 0.5rem solid #fd2d01;
   z-index: 15;
 }
 .btn-connection {

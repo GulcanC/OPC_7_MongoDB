@@ -320,9 +320,7 @@ figcaption {
     width: 5rem !important;
     height: 5rem !important;
     margin-right: 2rem !important;
-  }
-  .picture-user-profile {
-    height: 5rem;
+    margin-bottom: 1rem !important;
   }
 }
 </style>

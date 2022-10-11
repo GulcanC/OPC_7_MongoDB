@@ -1,6 +1,7 @@
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3000/api/";
 
+// chaque application vue commence par créer une nouvelle instance d'application avec la fonction creatApp()
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
