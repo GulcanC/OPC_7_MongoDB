@@ -25,6 +25,7 @@
         </div>
 
         <!-- modal body -->
+        <!-- 👋🏻👋🏻 modal body in the UserPostComp, it will be replaced with slot 👋🏻👋🏻-->
         <div class="modal-body">
           <slot></slot>
         </div>

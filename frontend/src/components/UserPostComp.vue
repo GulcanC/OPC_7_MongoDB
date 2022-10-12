@@ -25,7 +25,7 @@
         </figcaption>
       </figure>
       <!-- button on the post container which will open a modal to edit post -->
-      <div class="modif">
+      <div>
         <!-- button to edit post, user can delete her own post and administrator can delete all user's post -->
         <button
           role="button"
@@ -38,7 +38,7 @@
           <fa icon="fa-pen-to-square" alt="icon" />
         </button>
 
-        <!-- this part of the modal will be replaced with the slot in ModalPostComp -->
+        <!-- 👋🏻👋🏻 this part of the modal will be replaced with the slot in ModalPostComp 👋🏻👋🏻 -->
 
         <ModalPostComp
           v-if="showModal"
@@ -59,7 +59,7 @@
                 accept="image/*"
                 class="form-control"
                 type="file"
-                @change="uploadPicture"
+                @change="uploadPicture()"
                 id="formFile"
               />
             </div>
@@ -155,7 +155,7 @@ export default {
     };
   },
   created() {
-    setInterval(this.getNow, 1000);
+    setInterval(this.getDate, 1000);
   },
   props: {
     post: {
@@ -164,16 +164,16 @@ export default {
     },
   },
   methods: {
-    //afficher la date sur le post
-    getNow: function () {
-      const today = new Date();
-      const date =
-        today.getDate() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getFullYear();
-      this.timestamp = date;
+    // show the date and time
+    getDate() {
+      const currentDate = new Date();
+      const timeStamp =
+        currentDate.getDate() +
+        "/" +
+        (currentDate.getMonth() + 1) +
+        "/" +
+        currentDate.getFullYear();
+      this.timestamp = timeStamp;
     },
     // function for upload image when we open the modal,
     uploadPicture(event) {
@@ -236,13 +236,14 @@ export default {
     },
     likePost() {
       const userId = this.$store.state.user._id;
+      const postId = this.post._id;
       const likeData = {
         userId,
-        postId: this.post._id,
+        postId,
         like: 1,
       };
       axios
-        .post(`publication/${this.post._id}/like/`, likeData, {
+        .post(`publication/${postId}/like/`, likeData, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -319,8 +320,11 @@ figcaption {
   .picture-user-container {
     width: 5rem !important;
     height: 5rem !important;
-    margin-right: 2rem !important;
+    margin-right: 1rem !important;
     margin-bottom: 1rem !important;
   }
+}
+figcaption {
+  font-size: 0.8rem;
 }
 </style>
