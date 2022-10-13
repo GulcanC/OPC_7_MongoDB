@@ -33,6 +33,9 @@ JWT_KEY_TOKEN="Create an API token"
 ```
 npm start
 ```
+10. Be sure that you see these messages!
+
+![image](https://user-images.githubusercontent.com/80323415/195582036-5e1988b5-2696-4b77-9d89-525764bf2a37.png)
 
 ## :pushpin: Project Frontend Setup
 
@@ -53,3 +56,10 @@ npm install
 ```
 npm run serve
 ```
+5. Be sure that you see this message!
+
+![image](https://user-images.githubusercontent.com/80323415/195582194-75fba201-02de-4a46-9af0-3887349f1c47.png)
+
+6. Type the following URL in your browser to reach the application
+
+👉 http://localhost:8080/
