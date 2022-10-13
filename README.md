@@ -21,7 +21,7 @@ npm install
 ```
 PORT=3000
 DB_USERNAME="your mongoDB user name"
-DB_PWD="your mongoDB password"
+DB_PWD="your mongoDB user password"
 DB_CLUSTER="your mongoDB cluster name"
 JWT_KEY_TOKEN="Create an API token"
 
@@ -29,27 +29,27 @@ JWT_KEY_TOKEN="Create an API token"
 7. In this file, write your own MongoDB project user name, password and cluster name
 8. Generate your own API token and write it also in the file .env for JWT_KEY_TOKEN
 9. Run backend server with this command
-10. 
+
 ```
 npm start
 ```
 
+## :pushpin: Project Frontend Setup
 
+1. Open a terminal at the root of the project
 
-### Compiles and hot-reloads for development
+2. Run the following command to reach the directory "frontend"
+
+```
+cd frontend
+```
+3. Install the Dependencies
+
+```
+npm install
+```
+4. Run backend server with this command
+
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
