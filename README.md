@@ -1,4 +1,17 @@
-## Project 7 | OpenClassrooms | Créez un Réseau Social d'Entreprise
+## Project 7 | OpenClassrooms | Créez un Réseau Social d'Entreprise | Groupmania
+
+## :pushpin: The Purpose of the Project
+
+1. Creating a logical data model and translatint it into the API 
+2. Ipmlementing CRUD fonctionalty, Create, Read, Update, and Delete
+3. Storing data in a database, I choosed mongoDB
+4. Protecting data stored on an app (OWASP/RGPD)
+5. Creating a user, verifying and securing the user's session
+6. Creating a component design system using a framework js, I choosed Vue.js
+
+## :pushpin: The Technologies used
+
+✏️Node.js ✏️Express ✏️MongoDB ✏️Vue.js ✏️CSS ✏️Bootstrap ✏️API REST 
 
 ## :pushpin: Project Backend Setup
 
@@ -9,7 +22,7 @@
 ```
 cd backend
 ```
-3. Install the Dependencies
+3. Install the dependencies
 
 ```
 npm install
