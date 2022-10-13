@@ -11,7 +11,7 @@
 
 ## :pushpin: The Technologies used
 
-✏️Node.js ✏️Express ✏️MongoDB ✏️Vue.js ✏️CSS ✏️Bootstrap ✏️API REST 
+✏️Node.js ✏️Express ✏️MongoDB ✏️Vue.js ✏️VueCLI ✏️CSS ✏️Bootstrap ✏️API REST 
 
 ## :pushpin: Project Backend Setup
 
