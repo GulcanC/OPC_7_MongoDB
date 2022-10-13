@@ -2,7 +2,7 @@
 
 ## :pushpin: The Purpose of the Project
 
-1. Creating a logical data model and translatint it into the API 
+1. Creating a logical data model and translating it into the API 
 2. Ipmlementing CRUD fonctionalty, Create, Read, Update, and Delete
 3. Storing data in a database, I choosed mongoDB
 4. Protecting data stored on an app (OWASP/RGPD)
@@ -29,7 +29,7 @@ npm install
 ```
 4. Create a "images" folder in the "backend" folder (whose name must be "images")
 5. Create a project in mongoDB, specify a user with a specific username and password, and create a cluster
-6. Create a file .env likes the file .env.example and write the following informations in this file
+6. Create a file .env likes the file .env.example and write the following informations using your own data in this file
 
 ```
 PORT=3000
