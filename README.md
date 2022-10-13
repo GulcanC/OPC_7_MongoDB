@@ -1,4 +1,4 @@
-# Project 7 | OpenClassrooms | Créez un réseau social d'entreprise
+# Project 7 | OpenClassrooms | Créez un Réseau Social d'Entreprise
 
 ## :pushpin: Project Backend Setup
 
