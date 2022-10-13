@@ -1,4 +1,3 @@
-<!-- user post comp will be shown in the modal post -->
 <template>
   <article class="post-card p-2 mb-4 text-light">
     <div class="d-flex justify-content-between">
@@ -46,7 +45,7 @@
           @closePostModal="showModal = false"
         >
           <form
-            @submit.prevent="UpdatePost()"
+            @submit.prevent="UpdatePost"
             style="text-align: left"
             aria-label="form to edit post"
           >
@@ -59,7 +58,7 @@
                 accept="image/*"
                 class="form-control"
                 type="file"
-                @change="uploadPicture()"
+                @change="uploadPicture"
                 id="formFile"
               />
             </div>
@@ -292,7 +291,6 @@ figcaption {
   min-width: fit-content;
   margin: 0.5rem;
 }
-
 .picture-user-container {
   width: 7rem;
 }
@@ -315,7 +313,6 @@ figcaption {
   transform: scale(1.2);
   color: black;
 }
-
 @media (max-width: 768px) {
   .picture-user-container {
     width: 5rem !important;
