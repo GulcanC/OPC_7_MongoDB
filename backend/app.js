@@ -33,10 +33,7 @@ app.use(
 // http://localhost:3000/api
 app.use("/api/publication", publicationRoutes);
 app.use("/api/auth", userRoutes);
-
-//indique comment traiter la requête vers la route /image
+// add images to the folder backend/images
 app.use("/images", express.static(path.join(__dirname, "images")));
-
-// app.use("/api/auth", postRoutes);
 
 module.exports = app;

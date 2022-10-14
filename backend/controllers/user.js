@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Password = require("../password-validation//Password");
 
-const fs = require("fs");
-
 require("dotenv").config();
 
 // http://localhost:3000/api/auth/signup

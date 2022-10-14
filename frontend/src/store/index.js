@@ -6,6 +6,7 @@ export default createStore({
     user: {},
     posts: [],
   },
+
   // use this function in the PostPage.vue and UserProfilComp.vue
   getters: {
     fullName: function (state) {
@@ -68,6 +69,4 @@ export default createStore({
       }
     },
   },
-
-  modules: {},
 });
