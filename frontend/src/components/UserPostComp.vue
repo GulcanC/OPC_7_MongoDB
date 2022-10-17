@@ -38,7 +38,7 @@
         </button>
 
         <!-- 👋🏻👋🏻 this part of the modal will be replaced with the slot in ModalPostComp 👋🏻👋🏻 -->
-
+<!--👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻👋🏻-->
         <ModalPostComp
           v-if="showModal"
           title="Update your post"
@@ -223,6 +223,7 @@ export default {
           // here "acknowledged" is a boolean, it means, if the deletion is accepted get all posts
           // deleteUserPost is an object that contains "acknowledged" and "deletedCount" shows the quantity of deleted item
           if (response.data.deleteUserPost.acknowledged) {
+            // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
             this.$store.dispatch("getAllPosts");
           }
           this.showModal = false;

@@ -138,11 +138,12 @@ export default {
         .then((response) => {
           console.log(response.data);
 
-          // after submit the data, remove the error message from the card
+          // aft r submit the data, remove the error message from the card
           this.errorMessage = "";
           // after submit the data, remove the text in the textarea
           this.user.description = "";
           this.user.picture = "";
+          // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
           this.$store.commit("UPDATE_USER", response.data);
         })
         .catch((error) => {

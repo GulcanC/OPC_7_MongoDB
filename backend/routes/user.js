@@ -14,3 +14,4 @@ router.delete("/:id", auth, userControllers.deleteUser);
 router.post("/verify", auth, userControllers.verifyUser);
 
 module.exports = router;
+ 
