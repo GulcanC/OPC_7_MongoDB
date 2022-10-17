@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const helmet = require("helmet");
 const cors = require("cors");
 const path = require("path");
+// security
 const dotenv = require("dotenv");
-
 dotenv.config();
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const morgan = require("morgan");
+const hpp = require("hpp");
 
 const publicationRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
@@ -23,6 +26,13 @@ mongoose
 app.use(cors());
 app.use(express.json());
 
+// security
+// Mongo sanitize to sanitizes inputs against query selector injection attacks
+app.use(mongoSanitize());
+// Morgan middleware to create logs
+app.use(morgan("combined"));
+// HPP middleware to protect against HTTP parameter pollution attacks
+app.use(hpp());
 // Middleware Helmet afin d'améliorer la sécurité. crossOriginResourcePolicy sur false afin d'autoriser l'affichage des images
 app.use(
   helmet({
