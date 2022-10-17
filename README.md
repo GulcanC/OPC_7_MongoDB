@@ -68,3 +68,16 @@ npm run serve
 5. Type the following URL in your browser to reach the application
 
 👉 http://localhost:8080/
+
+## :pushpin: Password Validation
+
+Password must be 6 characters: 
+
+:star: 1 uppercase letter
+:star: 1 lowercase letter
+:star: 1 special character
+:star: 3 digits
+
+
+
+
