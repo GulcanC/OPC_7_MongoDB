@@ -59,7 +59,7 @@ cd frontend
 ```
 npm install
 ```
-4. Run backend server with this command
+4. Run frontend server with this command
 
 ```
 npm run serve
