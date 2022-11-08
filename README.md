@@ -1,5 +1,7 @@
 ## Project 7 | OpenClassrooms | Créez un Réseau Social d'Entreprise | Groupmania
 
+https://www.youtube.com/watch?v=rM21HN7NaPQ
+
 ## :pushpin: The Purpose of the Project
 
 1. Creating a logical data model and translating it into the API 
