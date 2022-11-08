@@ -33,8 +33,8 @@ npm install
 
 ```
 PORT=3000
-DB_USERNAME="your mongoDB user name"
-DB_PWD="your mongoDB user password"
+DB_USERNAME="your mongoDB project user name"
+DB_PWD="your mongoDB project user password"
 DB_CLUSTER="your mongoDB cluster name"
 JWT_KEY_TOKEN="Create an API token"
 ```
